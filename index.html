@@ -35,7 +35,72 @@
     <img src="https://raw.githubusercontent.com/shafiurrahman99/Pad/main/Alnawa%20pad.jpeg" alt="Alnawa Pad">
     
     <!-- মাঝখানের লেখা -->
-    <div class="text-center">Hello</div>
+    <div class="text-center">
+
+<!-- Authentication Box (Sign In / Sign Up) -->
+      <div id="auth-section" class="card">
+        <div class="auth-tabs">
+          <button class="tab-btn active" id="btn-signin-tab" onclick="switchTab('signin')">সাইন ইন</button>
+          <button class="tab-btn" id="btn-signup-tab" onclick="switchTab('signup')">সাইন আপ</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <form id="signin-form" onsubmit="handleSignIn(event)">
+          <div class="form-group">
+            <label>ইউজার আইডি</label>
+            <input type="text" id="signin-userid" placeholder="আপনার ইউজার আইডি লিখুন" required>
+          </div>
+          <div class="form-group">
+            <label>পাসওয়ার্ড</label>
+            <input type="password" id="signin-password" placeholder="পাসওয়ার্ড লিখুন" required>
+          </div>
+          <button type="submit" class="btn-submit">সাইন ইন করুন</button>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signup-form" class="hidden" onsubmit="handleSignUp(event)">
+          <div class="form-group">
+            <label>সম্পূর্ণ নাম</label>
+            <input type="text" id="signup-name" placeholder="আপনার নাম লিখুন" required>
+          </div>
+          <div class="form-group">
+            <label>ইমেইল এড্রেস</label>
+            <input type="email" id="signup-email" placeholder="example@mail.com" required>
+          </div>
+          <div class="form-group">
+            <label>ইউজার আইডি</label>
+            <input type="text" id="signup-userid" placeholder="নতুন ইউজার আইডি তৈরি করুন" required>
+          </div>
+          <div class="form-group">
+            <label>পাসওয়ার্ড</label>
+            <input type="password" id="signup-password" placeholder="পাসওয়ার্ড লিখুন" required>
+          </div>
+          <button type="submit" class="btn-submit">সাইন আপ করুন</button>
+        </form>
+      </div>
+
+      <!-- Dashboard Section (Visible after login) -->
+      <div id="dashboard-section" class="hidden">
+        
+        <!-- User Bar -->
+        <div class="user-bar">
+          <div>
+            <strong>ইউজার আইডি:</strong> <span id="display-user-id"></span>
+          </div>
+          <button onclick="handleLogOut()" style="padding: 4px 10px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer;">লগ আউট</button>
+        </div>
+
+        <!-- Deposit Submit Form -->
+        <div class="card">
+          <h3 style="margin-bottom: 12px; color: var(--primary-green); border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">টাকা জমার আবেদন</h3>
+          <form onsubmit="handleDepositSubmit(event)">
+            <div class="form-group">
+              <label>ইউজার আইডি</label>
+              <input type="text" id="deposit-userid" readonly style="background: #f1f5f9;">
+            </div>
+
+      
+    </div>
   </div>
 
 </body>
