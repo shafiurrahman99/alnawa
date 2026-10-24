@@ -2,6 +2,100 @@
 <div class="pad-box">
     <img src="https://raw.githubusercontent.com/shafiurrahman99/alnawa/main/Alnawa%20pad.jpeg" alt="Alnawa Pad"
         class="pad-image" alt=="Alnawa Pad">
+    .pad-box {
+    position: relative;
+      width: 750px; /* প্যাডের সাইজ */
+      background-color: #ffffff;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    /* ২. ব্যাকগ্রাউন্ড প্যাডের ছবি */
+    .pad-image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* ৩. ছবির ঠিক মাঝখানের সাদা অংশে বসানো লগইন বক্স (position: absolute) */
+    .login-overlay {
+      position: absolute;
+      top: 50%;          /* উপর থেকে ঠিক ৫০% নিচে */
+      left: 50%;         /* বাম থেকে ঠিক ৫০% ডানে */
+      transform: translate(-50%, -50%); /* কেন্দ্রবিন্দুতে পারফেক্ট পজিশন করার জন্য */
+      width: 360px;       /* লগইন বক্সের চওড়া */
+      background: rgba(255, 255, 255, 0.92); /* হালকা স্বচ্ছ সাদা ব্যাকগ্রাউন্ড */
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+      border: 1px solid #cbd5e1;
+      text-align: center;
+    }
+
+    .login-overlay h2 {
+      color: #15803d; /* সবুজ কালার */
+      font-size: 22px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      border-bottom: 2px solid #15803d;
+      padding-bottom: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #1e293b;
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus {
+      border-color: #15803d;
+      box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.15);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 11px;
+      background-color: #1e3a8a; /* নীল কালার */
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-login:hover {
+      background-color: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ১. মেইন কন্টেইনার -->
+  <div class="pad-box">
+    
+    <!-- আপনার প্যাডের মূল ছবি -->
+    <img src="pad_image.jpg" class="pad-image" alt="মেসার্স আল নাওয়া কোম্পানী প্যাড">
 <!DOCTYPE html>
 <html lang="bn">
 <head>
