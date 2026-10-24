@@ -1,131 +1,29 @@
 <!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alnawa Pad</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
 
-    <div class="middle-overlay">
+    <!-- গিটহাবের সঠিক Raw লিঙ্ক এখানে বসানো হয়েছে -->
+    <img src="https://raw.githubusercontent.com/shafiurrahman99/alnawa/main/Alnawa%20pad.jpeg" alt="Alnawa Pad">
 
-      <!-- সাইন-ইন / সাইন-আপ কার্ড -->
-      <div id="auth-section" class="card">
-        <div class="auth-tabs">
-          <button class="tab-btn active" id="btn-signin-tab" onclick="switchTab('signin')">সাইন ইন</button>
-          <button class="tab-btn" id="btn-signup-tab" onclick="switchTab('signup')">সাইন আপ</button>
-        </div>
-
-        <!-- সাইন ইন ফর্ম -->
-        <form id="signin-form" onsubmit="handleSignIn(event)">
-          <div class="form-group">
-            <label>ইউজার আইডি</label>
-            <input type="text" id="signin-userid" placeholder="আপনার ইউজার আইডি লিখুন" required>
-          </div>
-          <div class="form-group">
-            <label>পাসওয়ার্ড</label>
-            <input type="password" id="signin-password" placeholder="পাসওয়ার্ড লিখুন" required>
-          </div>
-          <button type="submit" class="btn-submit">সাইন ইন করুন</button>
-        </form>
-
-        <!-- সাইন আপ ফর্ম -->
-        <form id="signup-form" class="hidden" onsubmit="handleSignUp(event)">
-          <div class="form-group">
-            <label>সম্পূর্ণ নাম</label>
-            <input type="text" id="signup-name" placeholder="আপনার নাম লিখুন" required>
-          </div>
-          <div class="form-group">
-            <label>ইমেইল এড্রেস</label>
-            <input type="email" id="signup-email" placeholder="example@mail.com" required>
-          </div>
-          <div class="form-group">
-            <label>ইউজার আইডি</label>
-            <input type="text" id="signup-userid" placeholder="নতুন ইউজার আইডি তৈরি করুন" required>
-          </div>
-          <div class="form-group">
-            <label>পাসওয়ার্ড</label>
-            <input type="password" id="signup-password" placeholder="পাসওয়ার্ড লিখুন" required>
-          </div>
-          <button type="submit" class="btn-submit">সাইন আপ করুন</button>
-        </form>
-      </div>
-
-      <!-- ড্যাশবোর্ড সেকশন -->
-      <div id="dashboard-section" class="hidden">
-        
-        <!-- ইউজার বার -->
-        <div class="user-bar">
-          <div><strong>ইউজার আইডি:</strong> <span id="display-user-id"></span></div>
-          <button onclick="handleLogOut()" style="padding: 4px 8px; background: #ef4444; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">লগ আউট</button>
-        </div>
-
-        <!-- টাকা জমার আবেদন ফর্ম -->
-        <div class="card">
-          <h4 style="margin-bottom: 10px; color: var(--primary-green); border-bottom: 1px solid #e2e8f0; padding-bottom: 4px;">টাকা জমার আবেদন</h4>
-          <form onsubmit="handleDepositSubmit(event)">
-            <div class="form-group">
-              <label>ইউজার আইডি</label>
-              <input type="text" id="deposit-userid" readonly style="background: #f1f5f9;">
-            </div>
-            <div class="form-group">
-              <label>বিবরণী</label>
-              <input type="text" id="deposit-details" placeholder="জমার কারণ লিখুন" required>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
-              <div class="form-group">
-                <label>দাতা ব্যাংক</label>
-                <input type="text" id="deposit-sender-bank" placeholder="প্রেনণকারী ব্যাংক" required>
-              </div>
-              <div class="form-group">
-                <label>গ্রহীতা ব্যাংক</label>
-                <input type="text" id="deposit-receiver-bank" placeholder="গ্রহণকারী ব্যাংক" required>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>জমার পরিমাণ (টাকা)</label>
-              <input type="number" id="deposit-amount" min="1" placeholder="০.০০" required>
-            </div>
-            <button type="submit" class="btn-submit" style="background-color: var(--primary-green);">জমা সাবমিট করুন</button>
-          </form>
-        </div>
-
-        <!-- টোটাল সামারি বক্স -->
-        <div class="summary-grid">
-          <div class="summary-box bg-approved">
-            <h4>টোটাল অ্যাপ্রুভ জমা</h4>
-            <p id="total-approved-amount">৳ ০</p>
-          </div>
-          <div class="summary-box bg-pending">
-            <h4>টোটাল পেন্ডিং জমা</h4>
-            <p id="total-pending-amount">৳ ০</p>
-          </div>
-        </div>
-
-        <!-- লেনদেনের রিয়েল-টাইম টেবিল -->
-        <div class="card">
-          <h4 style="margin-bottom: 8px; color: var(--secondary-blue);">লেনদেনের তালিকা</h4>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>তারিখ</th>
-                  <th>বিবরণী</th>
-                  <th>দাতা ব্যাংক</th>
-                  <th>গ্রহীতা ব্যাংক</th>
-                  <th>স্ট্যাটাস</th>
-                  <th>পরিমাণ</th>
-                  <th>যোগফল</th>
-                </tr>
-              </thead>
-              <tbody id="transaction-rows"></tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-  <!-- সম্পূর্ণ জাভাস্ক্রিপ্ট লজিক -->
-  <script>
-    let currentUser = null;
-    
-    let users = JSON.parse(localStorage.getItem('al_nawa_users')) || {
-      'user123': { name: 'রহিম আহমেদ', email: 'rahim@gmail.com', password: '123' }
-    };
+</body>
+</html>
