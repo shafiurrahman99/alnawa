@@ -1,1 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* মেইন কন্টেইনার */
+    .image-container {
+      position: relative;
+      display: inline-block;
+    }
 
+    /* ছবি */
+    .image-container img {
+      width: 100%;
+      max-width: 500px; /* প্রয়োজন অনুযায়ী ছবির সাইজ কম-বেশি করতে পারেন */
+      display: block;
+    }
+
+    /* মাঝখানের লেখা */
+    .text-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #000000;       /* লেখার রঙ (কালো) */
+      font-size: 32px;      /* লেখার সাইজ */
+      font-weight: bold;    /* লেখা মোটা করার জন্য */
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="image-container">
+    <!-- আপনার ছবির ফাইল নেম বা লিংক এখানে বসাবেন -->
+    <img src="https://raw.githubusercontent.com/shafiurrahman99/Pad/main/Alnawa%20pad.jpeg" alt="Alnawa Pad">
+    
+    <!-- মাঝখানের লেখা -->
+    <div class="text-center">Hello</div>
+  </div>
+
+</body>
+</html>
