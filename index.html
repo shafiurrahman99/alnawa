@@ -1,42 +1,487 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    /* মেইন কন্টেইনার */
-    .image-container {
-      position: relative;
-      display: inline-block;
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #eef2f7;
     }
-
-    /* ছবি */
-    .image-container img {
-      width: 100%;
-      max-width: 500px; /* প্রয়োজন অনুযায়ী ছবির সাইজ কম-বেশি করতে পারেন */
-      display: block;
+    .pad-container {
+      background-image: url('1000244496.jpg');
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      background-position: center;
     }
-
-    /* মাঝখানের লেখা */
-    .text-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #000000;       /* লেখার রঙ (কালো) */
-      font-size: 32px;      /* লেখার সাইজ */
-      font-weight: bold;    /* লেখা মোটা করার জন্য */
-      font-family: Arial, sans-serif;
+    .watermark-overlay {
+      background-color: rgba(255, 255, 255, 0.88);
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen py-4 px-2 sm:px-4 flex flex-col items-center justify-start">
 
-  <div class="image-container">
-    <!-- আপনার ছবির ফাইল নেম বা লিংক এখানে বসাবেন -->
-    <img src="https://github.com/shafiurrahman99/alnawa/blob/main/Alnawa%20pad.jpeg" alt="Alnawapad">
+  <!-- Main Document Pad Container -->
+  <div class="pad-container w-full max-w-4xl bg-white shadow-2xl rounded-lg overflow-hidden border border-gray-300 flex flex-col min-h-[1100px] relative">
     
-    <!-- মাঝখানের লেখা -->
-    <div class="text-center">Hello</div>
+    <!-- TOP HEADER SPACE -->
+    <div class="w-full h-[150px] sm:h-[185px] shrink-0"></div>
+
+    <!-- MIDDLE WHITE PORTION -->
+    <main class="flex-1 px-4 sm:px-8 py-4 relative flex flex-col items-center justify-start watermark-overlay">
+
+      <!-- 1. BEFORE LOGIN: SIGN IN CARD -->
+      <div id="login-section" class="w-full max-w-md bg-white rounded-xl shadow-2xl border border-gray-200 p-6 sm:p-8 my-auto z-30 transition-all duration-500">
+        
+        <div class="text-center mb-6">
+          <h2 class="text-base sm:text-lg font-bold text-emerald-800 mb-1">
+            আসসালামু আলাইকুম ওয়া রহমাতুল্লাহি ওয়া বারাকাতুহু
+          </h2>
+          <p class="text-xs text-gray-500 font-medium">ইনভেস্টমেন্ট পোর্টালে সাইন ইন করুন</p>
+        </div>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">ইউজার আইডি (alnawa_ + ৩ ডিজিট)</label>
+            <input type="text" id="login-user" required placeholder="যেমন: alnawa_123" 
+                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none font-mono">
+            <span class="text-[10px] text-gray-400">alnawa_ এবং ৩টি সংখ্যা লিখুন</span>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-gray-700 mb-1">পাসওয়ার্ড (৪ সংখ্যা / 4 Digits)</label>
+            <input type="password" id="login-pass" maxlength="4" required placeholder="••••" 
+                   class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none tracking-widest">
+          </div>
+
+          <button type="submit" 
+                  class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-semibold py-2.5 rounded-lg shadow-md transition text-sm">
+            Sign In (সাইন ইন)
+          </button>
+
+          <div class="text-center pt-2">
+            <button type="button" id="forgot-pass-link" class="text-xs text-blue-600 hover:underline font-medium">
+              পাসওয়ার্ড ভুলে গেছেন? মোবাইল দিয়ে রিসেট করুন
+            </button>
+          </div>
+        </form>
+
+        <!-- Password Reset Modal/Section -->
+        <div id="reset-section" class="hidden mt-4 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+          <h3 class="text-xs font-bold text-gray-800 mb-2">পাসওয়ার্ড পুনরুদ্ধার (Password Reset)</h3>
+          <form id="reset-form" class="space-y-3">
+            <input type="text" id="reset-phone" required placeholder="আপনার রেজিস্টার্ড মোবাইল নম্বর (যেমন: 017xxxxxxxx)" 
+                   class="w-full px-3 py-1.5 border border-gray-300 rounded text-xs">
+            <div class="flex gap-2">
+              <button type="submit" class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded hover:bg-blue-700">OTP পাঠান</button>
+              <button type="button" id="cancel-reset" class="bg-gray-300 text-gray-700 text-xs px-3 py-1.5 rounded">বাতিল</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- 2. AFTER LOGIN: FULL DASHBOARD PORTAL -->
+      <div id="dashboard-section" class="w-full z-30 space-y-6 hidden transition-all duration-500">
+        
+        <!-- Signed User & Validity Countdown Bar -->
+        <div class="bg-gradient-to-r from-emerald-900 to-blue-950 rounded-xl p-4 text-white shadow-md flex flex-col sm:flex-row justify-between items-center gap-4 border border-emerald-700/30">
+          <div>
+            <div class="flex items-center space-x-2">
+              <span class="w-2.5 h-2.5 bg-green-400 rounded-full animate-pulse"></span>
+              <span class="text-xs text-emerald-200 font-medium uppercase tracking-wider">Signed User</span>
+            </div>
+            <h3 id="signed-user-display" class="text-lg font-bold text-white tracking-wide mt-0.5">alnawa_123</h3>
+          </div>
+
+          <!-- Validity Countdown -->
+          <div class="bg-black/30 backdrop-blur-md px-4 py-2 rounded-lg border border-white/10 text-right w-full sm:w-auto">
+            <div class="text-[10px] text-emerald-200 uppercase tracking-wider">Session Validity Countdown</div>
+            <div id="validity-timer" class="text-sm font-mono font-bold text-amber-300 tracking-wider">
+              29d 23h 59m 59s
+            </div>
+          </div>
+        </div>
+
+        <!-- Invest Submission Form -->
+        <div class="bg-white/95 backdrop-blur rounded-xl shadow-md border border-gray-200 p-5 sm:p-6">
+          <h3 class="text-base font-bold text-gray-800 mb-4 pb-2 border-b flex items-center justify-between">
+            <span>Invest Submission Form (বিনিয়োগ ফর্ম)</span>
+          </h3>
+
+          <form id="invest-form" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- 1. User (Auto generated, Not editable) -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">User / ইউজার</label>
+              <input type="text" id="form-user" readonly 
+                     class="w-full px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg text-sm text-gray-600 font-semibold cursor-not-allowed">
+            </div>
+
+            <!-- 2. Description -->
+            <div class="sm:col-span-2 lg:col-span-2">
+              <label class="block text-xs font-semibold text-gray-700 mb-1">Description / বিবরণ</label>
+              <input type="text" id="form-desc" required placeholder="যেমন: ব্যবসা সম্প্রসারণ প্রজেক্ট" 
+                     class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+            </div>
+
+            <!-- 3. From Bank (30 Bangladeshi Banks) -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">From Bank / প্রেরক ব্যাংক</label>
+              <select id="form-from-bank" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+                <option value="">ব্যাংক নির্বাচন করুন</option>
+                <option value="সোনালী ব্যাংক">সোনালী ব্যাংক (Sonali Bank)</option>
+                <option value="জনতা ব্যাংক">জনতা ব্যাংক (Janata Bank)</option>
+                <option value="অগ্রণী ব্যাংক">অগ্রণী ব্যাংক (Agrani Bank)</option>
+                <option value="রূপালী ব্যাংক">রূপালী ব্যাংক (Rupali Bank)</option>
+                <option value="বাংলাদেশ ডেভেলপমেন্ট ব্যাংক">বাংলাদেশ ডেভেলপমেন্ট ব্যাংক (BDBL)</option>
+                <option value="বেসিক ব্যাংক">বেসিক ব্যাংক (Basic Bank)</option>
+                <option value="ব্র্যাক ব্যাংক">ব্র্যাক ব্যাংক (BRAC Bank)</option>
+                <option value="ইস্টার্ন ব্যাংক">ইস্টার্ন ব্যাংক (EBL)</option>
+                <option value="ডাচ-বাংলা ব্যাংক">ডাচ-বাংলা ব্যাংক (DBBL)</option>
+                <option value="সিটি ব্যাংক">সিটি ব্যাংক (City Bank)</option>
+                <option value="ইউনাইটেড কমার্শিয়াল ব্যাংক (ইউসিবি)">ইউনাইটেড কমার্শিয়াল ব্যাংক (UCB)</option>
+                <option value="মিউচুয়াল ট্রাস্ট ব্যাংক">মিউচুয়াল ট্রাস্ট ব্যাংক (MTB)</option>
+                <option value="উত্তরা ব্যাংক">উত্তরা ব্যাংক (Uttara Bank)</option>
+                <option value="পূবালী ব্যাংক">পূবালী ব্যাংক (Pubali Bank)</option>
+                <option value="প্রিমিয়ার ব্যাংক">প্রিমিয়ার ব্যাংক (Premier Bank)</option>
+                <option value="ট্রাস্ট ব্যাংক">ট্রাস্ট ব্যাংক (Trust Bank)</option>
+                <option value="সাউথইস্ট ব্যাংক">সাউথইস্ট ব্যাংক (Southeast Bank)</option>
+                <option value="এনসিসি ব্যাংক">এনসিসি ব্যাংক (NCC Bank)</option>
+                <option value="মার্কেন্টাইল ব্যাংক">মার্কেন্টাইল ব্যাংক (Mercantile Bank)</option>
+                <option value="সোশ্যাল ইসলামী ব্যাংক">সোশ্যাল ইসলামী ব্যাংক (SIBL)</option>
+                <option value="ইসলামী ব্যাংক বাংলাদেশ">ইসলামী ব্যাংক বাংলাদেশ (IBBL)</option>
+                <option value="আল-আরাফাহ ইসলামী ব্যাংক">আল-আরাফাহ ইসলামী ব্যাংক (AIBL)</option>
+                <option value="এক্সিম ব্যাংক">এক্সিম ব্যাংক (Exim Bank)</option>
+                <option value="শাহ্‌জালাল ইসলামী ব্যাংক">শাহ্‌জালাল ইসলামী ব্যাংক (SJIBL)</option>
+                <option value="ফার্স্ট সিকিউরিটি ইসলামী ব্যাংক">ফার্স্ট সিকিউরিটি ইসলামী ব্যাংক (FSIBL)</option>
+                <option value="আইসিবি ইসলামিক ব্যাংক">আইসিবি ইসলামিক ব্যাংক (ICB)</option>
+                <option value="স্ট্যান্ডার্ড ব্যাংক">স্ট্যান্ডার্ড ব্যাংক (Standard Bank)</option>
+                <option value="গ্লোবাল ইসলামী ব্যাংক">গ্লোবাল ইসলামী ব্যাংক (Global Islami Bank)</option>
+                <option value="ইউনিয়ন ব্যাংক">ইউনিয়ন ব্যাংক (Union Bank)</option>
+                <option value="পদ্মা ব্যাংক">পদ্মা ব্যাংক (Padma Bank)</option>
+              </select>
+            </div>
+
+            <!-- 4. To Bank (Specific 4 options) -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">To Bank / প্রাপক ব্যাংক</label>
+              <select id="form-to-bank" required class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white">
+                <option value="">প্রাপক হিসাব নির্বাচন করুন</option>
+                <option value="আলনাওয়া কারেন্ট একাউন্ট">আলনাওয়া কারেন্ট একাউন্ট (Alnawa Current Account)</option>
+                <option value="ইউসিবি (UCB)">ইউসিবি (UCB)</option>
+                <option value="আইবিপিএল (IBPL)">আইবিপিএল (IBPL)</option>
+                <option value="ডিবিবিএল (DBBL)">ডিবিবিএল (DBBL)</option>
+                <option value="ব্র্যাক ব্যাংক (BRAC Bank)">ব্র্যাক ব্যাংক (BRAC Bank)</option>
+              </select>
+            </div>
+
+            <!-- 5. Invest Amount -->
+            <div>
+              <label class="block text-xs font-semibold text-gray-700 mb-1">Invest Amount / বিনিয়োগ পরিমাণ (৳)</label>
+              <input type="number" id="form-amount" required min="100" placeholder="0.00" 
+                     class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none font-semibold text-emerald-700">
+            </div>
+
+            <!-- Submit Area & Progress -->
+            <div class="sm:col-span-2 lg:col-span-3 pt-2">
+              <div id="submission-progress-container" class="hidden bg-gray-50 border border-emerald-200 rounded-lg p-3 mb-3">
+                <div class="flex justify-between items-center mb-1 text-xs font-semibold">
+                  <span class="text-emerald-800">জমাদান প্রক্রিয়াধীন রয়েছে... (<span id="countdown-sec">10</span>s)</span>
+                  <button type="button" id="cancel-submit-btn" class="text-rose-600 hover:text-rose-800 font-bold underline text-xs">Cancel (বাতিল)</button>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+                  <div id="submission-progress-bar" class="bg-emerald-600 h-2 w-0 transition-all duration-1000 ease-linear"></div>
+                </div>
+              </div>
+
+              <button type="submit" id="submit-now-btn" 
+                      class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-2.5 rounded-lg shadow transition flex items-center justify-center space-x-2 text-sm">
+                <span>Submit Now (১০ সেকেন্ড সময় নেবে)</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Summary Report Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="bg-white border-l-4 border-emerald-600 rounded-lg p-4 shadow-sm border border-gray-100">
+            <div class="text-xs text-emerald-800 font-semibold uppercase tracking-wider">Total Approved Investment</div>
+            <div id="report-approved" class="text-xl font-extrabold text-emerald-700 mt-1">৳ 0.00</div>
+          </div>
+
+          <div class="bg-white border-l-4 border-amber-500 rounded-lg p-4 shadow-sm border border-gray-100">
+            <div class="text-xs text-amber-800 font-semibold uppercase tracking-wider">Total Pending Investment</div>
+            <div id="report-pending" class="text-xl font-extrabold text-amber-600 mt-1">৳ 0.00</div>
+          </div>
+
+          <div class="bg-white border-l-4 border-rose-500 rounded-lg p-4 shadow-sm border border-gray-100">
+            <div class="text-xs text-rose-800 font-semibold uppercase tracking-wider">Total Withdrawal Amount</div>
+            <div id="report-withdraw" class="text-xl font-extrabold text-rose-600 mt-1">৳ 0.00</div>
+          </div>
+        </div>
+
+        <!-- Transaction Table with Bilingual Headers -->
+        <div class="bg-white/95 backdrop-blur rounded-xl shadow-md border border-gray-200 overflow-hidden">
+          <div class="px-5 py-4 border-b bg-gray-50/80 flex justify-between items-center">
+            <h3 class="font-bold text-gray-800 text-sm sm:text-base">বিনিয়োগ ও লেনদেন বিবরণী (Transaction Ledger)</h3>
+            <span class="text-[11px] text-gray-500 font-medium">সর্বশেষ এন্ট্রি উপরে প্রদর্শিত (Newest on Top)</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs sm:text-sm">
+              <thead class="bg-gray-100 text-gray-700 uppercase font-semibold border-b">
+                <tr>
+                  <th class="py-3 px-3">তারিখ / Date</th>
+                  <th class="py-3 px-3">বিবরণ / Description</th>
+                  <th class="py-3 px-3">প্রেরক ব্যাংক / From Bank</th>
+                  <th class="py-3 px-3">প্রাপক ব্যাংক / To Bank</th>
+                  <th class="py-3 px-3 text-center">স্ট্যাটাস / Status</th>
+                  <th class="py-3 px-3 text-right">বিনিয়োগ / Amount</th>
+                  <th class="py-3 px-3 text-right">মোট / Cumulative Total</th>
+                </tr>
+              </thead>
+              <tbody id="transaction-tbody" class="divide-y divide-gray-100">
+                <!-- Data injected dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- BOTTOM FOOTER -->
+    <div class="w-full h-[110px] sm:h-[135px] shrink-0 relative flex flex-col justify-end">
+      <div class="bg-blue-950/85 text-white text-[10px] sm:text-xs py-1.5 px-4 text-center font-medium border-t border-amber-400/40 z-20">
+        <span><strong>Mobile :</strong> 01942-341889, 01911591746, 01818-589423</span>
+        <span class="mx-2">|</span>
+        <span class="text-orange-300"><strong>E-mail :</strong> alnawacompany@gmail.com</span>
+      </div>
+    </div>
+
   </div>
 
+  <!-- JAVASCRIPT -->
+  <script>
+    let currentUser = null;
+    let submitTimer = null;
+    let countdownSec = 10;
+    
+    let transactions = [
+      { id: 1, date: "2026-10-20 10:30 AM", desc: "প্রাথমিক মূলধন জমা", fromBank: "ডাচ-বাংলা ব্যাংক", toBank: "আলনাওয়া কারেন্ট একাউন্ট", status: "approved", amount: 500000 },
+      { id: 2, date: "2026-10-22 02:15 PM", desc: "ব্যবসা সম্প্রসারণ প্রজেক্ট", fromBank: "ইসলামী ব্যাংক বাংলাদেশ", toBank: "ব্র্যাক ব্যাংক (BRAC Bank)", status: "approved", amount: 250000 },
+      { id: 3, date: "2026-10-24 11:00 AM", desc: "জরুরি লাভ্যাংশ উত্তোলন", fromBank: "আলনাওয়া কারেন্ট একাউন্ট", toBank: "ইউসিবি (UCB)", status: "withdraw", amount: 50000 },
+      { id: 4, date: "2026-10-25 09:45 AM", desc: "নতুন প্রজেক্ট শেয়ার বিনিয়োগ", fromBank: "ব্র্যাক ব্যাংক", toBank: "আলনাওয়া কারেন্ট একাউন্ট", status: "pending", amount: 100000 }
+    ];
+
+    const loginSection = document.getElementById('login-section');
+    const dashboardSection = document.getElementById('dashboard-section');
+    const loginForm = document.getElementById('login-form');
+    const loginUser = document.getElementById('login-user');
+    const loginPass = document.getElementById('login-pass');
+    
+    const forgotPassLink = document.getElementById('forgot-pass-link');
+    const resetSection = document.getElementById('reset-section');
+    const resetForm = document.getElementById('reset-form');
+    const cancelReset = document.getElementById('cancel-reset');
+
+    const signedUserDisplay = document.getElementById('signed-user-display');
+    const formUser = document.getElementById('form-user');
+    const investForm = document.getElementById('invest-form');
+    
+    const submitBtn = document.getElementById('submit-now-btn');
+    const progressContainer = document.getElementById('submission-progress-container');
+    const progressBar = document.getElementById('submission-progress-bar');
+    const countdownSecEl = document.getElementById('countdown-sec');
+    const cancelSubmitBtn = document.getElementById('cancel-submit-btn');
+
+    // Toggle Password Reset View
+    forgotPassLink.addEventListener('click', () => {
+      resetSection.classList.toggle('hidden');
+    });
+    cancelReset.addEventListener('click', () => {
+      resetSection.classList.add('hidden');
+    });
+    resetForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert("আপনার নিবন্ধিত মোবাইল নম্বরে একটি পাসওয়ার্ড রিসেট OTP পাঠানো হয়েছে।");
+      resetSection.classList.add('hidden');
+    });
+
+    // Login Authentication
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const uVal = loginUser.value.trim();
+      const pVal = loginPass.value.trim();
+
+      if (uVal.startsWith("alnawa_") && pVal.length === 4) {
+        currentUser = {
+          name: uVal,
+          id: uVal
+        };
+
+        loginSection.classList.add('hidden');
+        dashboardSection.classList.remove('hidden');
+
+        signedUserDisplay.innerText = currentUser.name;
+        formUser.value = currentUser.id;
+
+        startValidityTimer();
+        renderLedger();
+      } else {
+        alert("ইউজার আইডি 'alnawa_' সহ সঠিক হতে হবে এবং পাসওয়ার্ড ৪ ডিজিটের হতে হবে!");
+      }
+    });
+
+    function startValidityTimer() {
+      let duration = 30 * 24 * 60 * 60;
+      const timerDisplay = document.getElementById('validity-timer');
+
+      setInterval(() => {
+        duration--;
+        if(duration <= 0) duration = 0;
+        
+        const d = Math.floor(duration / (3600 * 24));
+        const h = Math.floor((duration % (3600 * 24)) / 3600);
+        const m = Math.floor((duration % 3600) / 60);
+        const s = duration % 60;
+
+        timerDisplay.innerText = `${d}d ${h}h ${m}m ${s}s`;
+      }, 1000);
+    }
+
+    investForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      progressContainer.classList.remove('hidden');
+      
+      countdownSec = 10;
+      countdownSecEl.innerText = countdownSec;
+      progressBar.style.width = '0%';
+
+      let elapsed = 0;
+      submitTimer = setInterval(() => {
+        elapsed++;
+        countdownSec--;
+        countdownSecEl.innerText = countdownSec;
+        progressBar.style.width = `${(elapsed / 10) * 100}%`;
+
+        if (elapsed >= 10) {
+          clearInterval(submitTimer);
+          finalizeSubmission();
+        }
+      }, 1000);
+    });
+
+    cancelSubmitBtn.addEventListener('click', () => {
+      if (submitTimer) {
+        clearInterval(submitTimer);
+        resetSubmissionUI();
+        alert("বিনিয়োগ জমাদান বাতিল করা হয়েছে।");
+      }
+    });
+
+    function finalizeSubmission() {
+      const desc = document.getElementById('form-desc').value.trim();
+      const fromBank = document.getElementById('form-from-bank').value;
+      const toBank = document.getElementById('form-to-bank').value;
+      const amount = parseFloat(document.getElementById('form-amount').value);
+
+      const now = new Date();
+      const dateStr = now.toISOString().split('T')[0] + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+      const newEntry = {
+        id: Date.now(),
+        date: dateStr,
+        desc: desc,
+        fromBank: fromBank,
+        toBank: toBank,
+        status: "pending",
+        amount: amount
+      };
+
+      transactions.push(newEntry);
+      
+      resetSubmissionUI();
+      investForm.reset();
+      formUser.value = currentUser.id;
+
+      renderLedger();
+      alert("বিনিয়োগ সফলভাবে জমা নেওয়া হয়েছে!");
+    }
+
+    function resetSubmissionUI() {
+      submitBtn.disabled = false;
+      submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      progressContainer.classList.add('hidden');
+      progressBar.style.width = '0%';
+    }
+
+    function renderLedger() {
+      const tbody = document.getElementById('transaction-tbody');
+      tbody.innerHTML = '';
+
+      let totalApproved = 0;
+      let totalPending = 0;
+      let totalWithdraw = 0;
+
+      transactions.forEach(t => {
+        if (t.status === 'approved') totalApproved += t.amount;
+        if (t.status === 'pending') totalPending += t.amount;
+        if (t.status === 'withdraw') totalWithdraw += t.amount;
+      });
+
+      document.getElementById('report-approved').innerText = `৳ ${totalApproved.toLocaleString('en-IN')}`;
+      document.getElementById('report-pending').innerText = `৳ ${totalPending.toLocaleString('en-IN')}`;
+      document.getElementById('report-withdraw').innerText = `৳ ${totalWithdraw.toLocaleString('en-IN')}`;
+
+      let cumulativeSum = 0;
+      const transactionsWithCumulative = transactions.map(t => {
+        if (t.status === 'approved' || t.status === 'pending') {
+          cumulativeSum += t.amount;
+        } else if (t.status === 'withdraw') {
+          cumulativeSum -= t.amount;
+        }
+        return { ...t, cumulative: cumulativeSum };
+      });
+
+      const displayData = [...transactionsWithCumulative].reverse();
+
+      displayData.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-gray-50 transition border-b";
+
+        let statusBadge = '';
+        if (item.status === 'approved') {
+          statusBadge = `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-300">Approved (+)</span>`;
+        } else if (item.status === 'pending') {
+          statusBadge = `<span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-amber-300">Pending</span>`;
+        } else if (item.status === 'withdraw') {
+          statusBadge = `<span class="bg-rose-100 text-rose-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-rose-300">Withdraw (-)</span>`;
+        } else {
+          statusBadge = `<span class="bg-gray-100 text-gray-700 text-[10px] font-bold px-2 py-0.5 rounded-full">Cancelled</span>`;
+        }
+
+        const isWithdraw = item.status === 'withdraw';
+        const amtDisplay = isWithdraw ? `- ৳ ${item.amount.toLocaleString('en-IN')}` : `+ ৳ ${item.amount.toLocaleString('en-IN')}`;
+
+        tr.innerHTML = `
+          <td class="py-3 px-3 text-gray-600 whitespace-nowrap">${item.date}</td>
+          <td class="py-3 px-3 font-medium text-gray-800">${item.desc}</td>
+          <td class="py-3 px-3 text-gray-600">${item.fromBank}</td>
+          <td class="py-3 px-3 text-gray-600">${item.toBank}</td>
+          <td class="py-3 px-3 text-center">${statusBadge}</td>
+          <td class="py-3 px-3 text-right font-semibold ${isWithdraw ? 'text-rose-600' : 'text-emerald-700'}">${amtDisplay}</td>
+          <td class="py-3 px-3 text-right font-bold text-gray-900">৳ ${item.cumulative.toLocaleString('en-IN')}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+  </script>
 </body>
 </html>
