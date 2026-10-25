@@ -514,7 +514,7 @@
                                 <i class="fa-solid fa-list-check text-alnawaGreen"></i> Report Table (ট্রানজেকশন সামারি ছক)
                             </h3>
                             <span class="text-[10px] bg-emerald-50 text-emerald-800 px-2.5 py-0.5 rounded font-bold border border-emerald-200">
-                                Supabase Live Data (Descending Order)
+                                Supabase Live Data (Cumulative Sum)
                             </span>
                         </div>
 
@@ -528,7 +528,7 @@
                                         <th class="p-2.5">To Bank / প্রাপক ব্যাংক</th>
                                         <th class="p-2.5 text-center">Status / স্ট্যাটাস</th>
                                         <th class="p-2.5 text-right">Amount / পরিমাণ</th>
-                                        <th class="p-2.5 text-right rounded-tr">Type / ধরণ</th>
+                                        <th class="p-2.5 text-right rounded-tr">Cumulative Sum / ক্রমিক যোগফল</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody" class="divide-y divide-gray-200 font-medium text-[11px]">
@@ -638,6 +638,7 @@
                 fetchTransactionsFromSupabase();
                 switchSubPage('submission');
             } else {
+                document.getElementById('loginError').classList.add('hidden'); // Fixed fallback display logic
                 document.getElementById('loginError').classList.remove('hidden');
             }
         }
@@ -718,7 +719,7 @@
             setInterval(updateTimer, 1000);
         }
 
-        // Fetch Data from Supabase Tables (Investments & Withdrawals)
+        // Fetch Data from Supabase Tables & Calculate Cumulative Sum based on status
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> ডাটা লোড হচ্ছে...</td></tr>`;
@@ -728,13 +729,13 @@
                 const { data: investments, error: invError } = await supabaseClient
                     .from('investments')
                     .select('*')
-                    .order('created_at', { ascending: false });
+                    .order('created_at', { ascending: true });
 
                 // Fetch Withdrawals
                 const { data: withdrawals, error: witError } = await supabaseClient
                     .from('withdrawals')
                     .select('*')
-                    .order('created_at', { ascending: false });
+                    .order('created_at', { ascending: true });
 
                 if (invError || witError) {
                     console.error('Supabase Fetch Error:', invError || witError);
@@ -742,58 +743,94 @@
                     return;
                 }
 
+                let allTransactions = [];
+
+                if (investments) {
+                    investments.forEach(item => {
+                        allTransactions.push({
+                            date: item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A',
+                            timestamp: item.created_at ? new Date(item.created_at).getTime() : 0,
+                            desc: item.description || 'ইনভেস্টমেন্ট',
+                            fromBank: item.from_bank,
+                            toBank: item.to_bank,
+                            status: item.status || 'pending',
+                            amount: Number(item.amount),
+                            type: 'investment'
+                        });
+                    });
+                }
+
+                if (withdrawals) {
+                    withdrawals.forEach(item => {
+                        allTransactions.push({
+                            date: item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A',
+                            timestamp: item.created_at ? new Date(item.created_at).getTime() : 0,
+                            desc: item.description || 'উইথড্রল',
+                            fromBank: item.withdrawal_bank,
+                            toBank: item.company_account,
+                            status: 'withdraw (-)',
+                            amount: Number(item.amount),
+                            type: 'withdrawal'
+                        });
+                    });
+                }
+
+                // Sort ascending by date/timestamp to calculate cumulative sum properly
+                allTransactions.sort((a, b) => a.timestamp - b.timestamp);
+
                 let totalApproved = 0;
                 let totalPending = 0;
                 let totalWithdraw = 0;
+                let runningSum = 0;
+
+                allTransactions.forEach(t => {
+                    if (t.status === 'approved (+)') {
+                        totalApproved += t.amount;
+                        runningSum += t.amount;
+                    } else if (t.status === 'pending') {
+                        totalPending += t.amount;
+                    } else if (t.status === 'withdraw (-)') {
+                        totalWithdraw += t.amount;
+                        runningSum -= t.amount;
+                    }
+                    t.cumulative = runningSum;
+                });
+
+                // Reverse for descending display (Newest first)
+                allTransactions.sort((a, b) => b.timestamp - a.timestamp);
 
                 tbody.innerHTML = '';
 
-                // Format Investments
-                if (investments) {
-                    investments.forEach(item => {
-                        if (item.status === 'approved (+)') totalApproved += Number(item.amount);
-                        else if (item.status === 'pending') totalPending += Number(item.amount);
-
-                        const formattedDate = item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A';
-                        
-                        let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">pending</span>`;
-                        if (item.status === 'approved (+)') statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">approved (+)</span>`;
-
-                        const tr = document.createElement('tr');
-                        tr.className = "hover:bg-gray-50 transition";
-                        tr.innerHTML = `
-                            <td class="p-2.5 font-mono text-gray-700 whitespace-nowrap">${formattedDate}</td>
-                            <td class="p-2.5 font-semibold text-gray-800">${item.description || 'ইনভেস্টমেন্ট'}</td>
-                            <td class="p-2.5 text-gray-600">${item.from_bank}</td>
-                            <td class="p-2.5 font-bold text-alnawaNavy">${item.to_bank}</td>
-                            <td class="p-2.5 text-center whitespace-nowrap">${statusBadge}</td>
-                            <td class="p-2.5 text-right font-mono font-bold text-gray-800">৳ ${Number(item.amount).toLocaleString()}</td>
-                            <td class="p-2.5 text-right font-bold text-alnawaGreen">Investment (+)</td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
+                if (allTransactions.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500">কোনো ট্রানজেকশন পাওয়া যায়নি।</td></tr>`;
                 }
 
-                // Format Withdrawals
-                if (withdrawals) {
-                    withdrawals.forEach(item => {
-                        totalWithdraw += Number(item.amount);
-                        const formattedDate = item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A';
-                        
-                        const tr = document.createElement('tr');
-                        tr.className = "hover:bg-gray-50 transition bg-blue-50/30";
-                        tr.innerHTML = `
-                            <td class="p-2.5 font-mono text-gray-700 whitespace-nowrap">${formattedDate}</td>
-                            <td class="p-2.5 font-semibold text-gray-800">${item.description || 'উইথড্রল'}</td>
-                            <td class="p-2.5 text-gray-600">${item.withdrawal_bank}</td>
-                            <td class="p-2.5 font-bold text-alnawaNavy">${item.company_account}</td>
-                            <td class="p-2.5 text-center whitespace-nowrap"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">withdraw (-)</span></td>
-                            <td class="p-2.5 text-right font-mono font-bold text-blue-700">- ৳ ${Number(item.amount).toLocaleString()}</td>
-                            <td class="p-2.5 text-right font-bold text-blue-600">Withdrawal (-)</td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
-                }
+                allTransactions.forEach(item => {
+                    let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">pending</span>`;
+                    if (item.status === 'approved (+)') {
+                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">approved (+)</span>`;
+                    } else if (item.status === 'withdraw (-)') {
+                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">withdraw (-)</span>`;
+                    }
+
+                    const isWithdraw = item.status === 'withdraw (-)';
+                    const tr = document.createElement('tr');
+                    tr.className = `hover:bg-gray-50 transition ${isWithdraw ? 'bg-blue-50/30' : ''}`;
+                    tr.innerHTML = `
+                        <td class="p-2.5 font-mono text-gray-700 whitespace-nowrap">${item.date}</td>
+                        <td class="p-2.5 font-semibold text-gray-800">${item.desc}</td>
+                        <td class="p-2.5 text-gray-600">${item.fromBank}</td>
+                        <td class="p-2.5 font-bold text-alnawaNavy">${item.toBank}</td>
+                        <td class="p-2.5 text-center whitespace-nowrap">${statusBadge}</td>
+                        <td class="p-2.5 text-right font-mono font-bold ${isWithdraw ? 'text-blue-700' : 'text-gray-800'}">
+                            ${isWithdraw ? '-' : ''}৳ ${item.amount.toLocaleString()}
+                        </td>
+                        <td class="p-2.5 text-right font-mono font-bold text-alnawaGreen bg-emerald-50/60">
+                            ৳ ${item.cumulative.toLocaleString()}
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
 
                 // Update Summary Cards
                 document.getElementById('reportApproved').innerText = `৳ ${totalApproved.toLocaleString()}`;
