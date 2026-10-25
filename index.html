@@ -283,34 +283,44 @@
                         <i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন (Select Option via Radio Button):
                     </div>
                     
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                        <label onclick="switchSubPage('submission')" class="flex items-center gap-2.5 p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition">
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                        <label onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition">
                             <input type="radio" name="pageOption" id="radioSubmission" checked class="w-4 h-4 text-alnawaOrange accent-orange-500 cursor-pointer">
                             <div class="text-xs">
                                 <div class="font-extrabold text-white flex items-center gap-1">
-                                    <i class="fa-solid fa-file-invoice text-amber-300"></i> ইনভেস্টমেন্ট সাবমিশন ফরম
+                                    <i class="fa-solid fa-file-invoice text-amber-300"></i> ইনভেস্টমেন্ট ফরম
                                 </div>
-                                <div class="text-[10px] text-gray-200">নতুন ইনভেস্ট জমা দিতে ক্লিক করুন</div>
+                                <div class="text-[9px] text-gray-200">নতুন ইনভেস্ট জমা</div>
                             </div>
                         </label>
 
-                        <label onclick="switchSubPage('withdrawal')" class="flex items-center gap-2.5 p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition">
+                        <label onclick="switchSubPage('withdrawal')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition">
                             <input type="radio" name="pageOption" id="radioWithdrawal" class="w-4 h-4 text-alnawaOrange accent-orange-500 cursor-pointer">
                             <div class="text-xs">
                                 <div class="font-extrabold text-white flex items-center gap-1">
-                                    <i class="fa-solid fa-hand-holding-dollar text-blue-300"></i> উইথড্রল ফরম (Withdrawal)
+                                    <i class="fa-solid fa-hand-holding-dollar text-blue-300"></i> উইথড্রল ফরম
                                 </div>
-                                <div class="text-[10px] text-gray-200">অর্থ উত্তোলন আবেদন জমা দিতে ক্লিক করুন</div>
+                                <div class="text-[9px] text-gray-200">অর্থ উত্তোলন আবেদন</div>
                             </div>
                         </label>
 
-                        <label onclick="switchSubPage('summary')" class="flex items-center gap-2.5 p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition">
+                        <label onclick="switchSubPage('summary')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 cursor-pointer transition">
                             <input type="radio" name="pageOption" id="radioSummary" class="w-4 h-4 text-alnawaOrange accent-orange-500 cursor-pointer">
                             <div class="text-xs">
                                 <div class="font-extrabold text-white flex items-center gap-1">
-                                    <i class="fa-solid fa-chart-line text-emerald-300"></i> ট্রানজেকশন সামারি ও রিপোর্ট ছক
+                                    <i class="fa-solid fa-chart-line text-emerald-300"></i> ট্রানজেকশন সামারি
                                 </div>
-                                <div class="text-[10px] text-gray-200">সকল লেনদেন তথ্য দেখতে ক্লিক করুন</div>
+                                <div class="text-[9px] text-gray-200">সকল লেনদেন রিপোর্ট</div>
+                            </div>
+                        </label>
+
+                        <label onclick="switchSubPage('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 border border-amber-300 cursor-pointer transition">
+                            <input type="radio" name="pageOption" id="radioPendingApproval" class="w-4 h-4 text-alnawaOrange accent-orange-500 cursor-pointer">
+                            <div class="text-xs">
+                                <div class="font-extrabold text-amber-300 flex items-center gap-1">
+                                    <i class="fa-solid fa-user-shield text-amber-300"></i> পেন্ডিং এপ্রুভাল (এডমিন)
+                                </div>
+                                <div class="text-[9px] text-gray-200">অনুমোদন বা বাতিল প্যানেল</div>
                             </div>
                         </label>
                     </div>
@@ -335,15 +345,15 @@
                                 <label class="block text-xs font-bold text-gray-700 mb-1">From Bank / প্রেরক ব্যাংক</label>
                                 <select id="fromBank" required class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-medium focus:ring-2 focus:ring-alnawaGreen focus:outline-none bg-white">
                                     <option value="">ব্যাংক নির্বাচন করুন (Select Bank)</option>
-                                    <option value="Agrani Bank PLC (অগ্রণী ব্যাংক পিএলসি)">Agrani Bank PLC (অগ্রণী ব্যাংক পিএলসি)</option>
-                                    <option value="Al-Arafah Islami Bank PLC (আল-আরাফাহ ইসলামী ব্যাংক)">Al-Arafah Islami Bank PLC (আল-আরাফাহ ইসলামী ব্যাংক)</option>
-                                    <option value="Bank Asia PLC (ব্যাংক এশিয়া পিএলসি)">Bank Asia PLC (ব্যাংক এশিয়া পিএলসি)</option>
-                                    <option value="BRAC Bank Ltd (ব্র্যাক ব্যাংক লিঃ)">BRAC Bank Ltd (ব্র্যাক ব্যাংক লিঃ)</option>
-                                    <option value="City Bank Ltd (সিটি ব্যাংক লিঃ)">City Bank Ltd (সিটি ব্যাংক লিঃ)</option>
-                                    <option value="Dutch-Bangla Bank Ltd (ডাচ-বাংলা ব্যাংক লিঃ)">Dutch-Bangla Bank Ltd (ডাচ-বাংলা ব্যাংক লিঃ)</option>
-                                    <option value="Islami Bank Bangladesh Ltd (ইসলামী ব্যাংক বাংলাদেশ লিঃ)">Islami Bank Bangladesh Ltd (ইসলামী ব্যাংক বাংলাদেশ লিঃ)</option>
-                                    <option value="Prime Bank PLC (প্রাইম ব্যাংক পিএলসি)">Prime Bank PLC (প্রাইম ব্যাংক পিএলসি)</option>
-                                    <option value="United Commercial Bank PLC (ইউসিবি)">United Commercial Bank PLC (ইউসিবি)</option>
+                                    <option value="অগ্রণী ব্যাংক পিএলসি">অগ্রণী ব্যাংক পিএলসি</option>
+                                    <option value="আল-আরাফাহ ইসলামী ব্যাংক">আল-আরাফাহ ইসলামী ব্যাংক</option>
+                                    <option value="ব্যাংক এশিয়া পিএলসি">ব্যাংক এশিয়া পিএলসি</option>
+                                    <option value="ব্র্যাক ব্যাংক লিঃ">ব্র্যাক ব্যাংক লিঃ</option>
+                                    <option value="সিটি ব্যাংক লিঃ">সিটি ব্যাংক লিঃ</option>
+                                    <option value="ডাচ-বাংলা ব্যাংক লিঃ">ডাচ-বাংলা ব্যাংক লিঃ</option>
+                                    <option value="ইসলামী ব্যাংক বাংলাদেশ লিঃ">ইসলামী ব্যাংক বাংলাদেশ লিঃ</option>
+                                    <option value="প্রাইম ব্যাংক পিএলসি">প্রাইম ব্যাংক পিএলসি</option>
+                                    <option value="ইউনাইটেড কমার্শিয়াল ব্যাংক পিএলসি">ইউনাইটেড কমার্শিয়াল ব্যাংক পিএলসি</option>
                                 </select>
                             </div>
 
@@ -383,7 +393,7 @@
                             <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-2">
                                 <div class="flex items-center gap-2 text-emerald-900 font-bold text-xs">
                                     <i class="fa-solid fa-spinner fa-spin text-alnawaGreen text-base"></i>
-                                    <span>ইনভেস্টমেন্ট সাবমিশন প্রসেস হচ্ছে... ১০ সেকেন্ড স্ক্রোল টাইম চলছে।</span>
+                                    <span>ইনভেস্টমেন্ট সাবমিশন প্রসেস হচ্ছে... ১০ সেকেন্ড কাউন্টডাউন চলছে।</span>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span id="countdownText" class="font-mono text-base font-extrabold text-alnawaGreen bg-white px-3 py-0.5 rounded border border-emerald-300">10s</span>
@@ -419,15 +429,15 @@
                                 <label class="block text-xs font-bold text-gray-700 mb-1">Withdrawal Bank / যে ব্যাংকে টাকা গ্রহণ করবেন</label>
                                 <select id="withdrawFromBank" required class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none bg-white">
                                     <option value="">ব্যাংক নির্বাচন করুন (Select Bank)</option>
-                                    <option value="Agrani Bank PLC (অগ্রণী ব্যাংক পিএলসি)">Agrani Bank PLC (অগ্রণী ব্যাংক পিএলসি)</option>
-                                    <option value="Al-Arafah Islami Bank PLC (আল-আরাফাহ ইসলামী ব্যাংক)">Al-Arafah Islami Bank PLC (আল-আরাফাহ ইসলামী ব্যাংক)</option>
-                                    <option value="Bank Asia PLC (ব্যাংক এশিয়া পিএলসি)">Bank Asia PLC (ব্যাংক এশিয়া পিএলসি)</option>
-                                    <option value="BRAC Bank Ltd (ব্র্যাক ব্যাংক লিঃ)">BRAC Bank Ltd (ব্র্যাক ব্যাংক লিঃ)</option>
-                                    <option value="City Bank Ltd (সিটি ব্যাংক লিঃ)">City Bank Ltd (সিটি ব্যাংক লিঃ)</option>
-                                    <option value="Dutch-Bangla Bank Ltd (ডাচ-বাংলা ব্যাংক লিঃ)">Dutch-Bangla Bank Ltd (ডাচ-বাংলা ব্যাংক লিঃ)</option>
-                                    <option value="Islami Bank Bangladesh Ltd (ইসলামী ব্যাংক বাংলাদেশ লিঃ)">Islami Bank Bangladesh Ltd (ইসলামী ব্যাংক বাংলাদেশ লিঃ)</option>
-                                    <option value="Prime Bank PLC (প্রাইম ব্যাংক পিএলসি)">Prime Bank PLC (প্রাইম ব্যাংক পিএলসি)</option>
-                                    <option value="United Commercial Bank PLC (ইউসিবি)">United Commercial Bank PLC (ইউসিবি)</option>
+                                    <option value="অগ্রণী ব্যাংক পিএলসি">অগ্রণী ব্যাংক পিএলসি</option>
+                                    <option value="আল-আরাফাহ ইসলামী ব্যাংক">আল-আরাফাহ ইসলামী ব্যাংক</option>
+                                    <option value="ব্যাংক এশিয়া পিএলসি">ব্যাংক এশিয়া পিএলসি</option>
+                                    <option value="ব্র্যাক ব্যাংক লিঃ">ব্র্যাক ব্যাংক লিঃ</option>
+                                    <option value="সিটি ব্যাংক লিঃ">সিটি ব্যাংক লিঃ</option>
+                                    <option value="ডাচ-বাংলা ব্যাংক লিঃ">ডাচ-বাংলা ব্যাংক লিঃ</option>
+                                    <option value="ইসলামী ব্যাংক বাংলাদেশ লিঃ">ইসলামী ব্যাংক বাংলাদেশ লিঃ</option>
+                                    <option value="প্রাইম ব্যাংক পিএলসি">প্রাইম ব্যাংক পিএলসি</option>
+                                    <option value="ইউনাইটেড কমার্শিয়াল ব্যাংক পিএলসি">ইউনাইটেড কমার্শিয়াল ব্যাংক পিএলসি</option>
                                 </select>
                             </div>
 
@@ -466,7 +476,7 @@
                             <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-2">
                                 <div class="flex items-center gap-2 text-blue-900 font-bold text-xs">
                                     <i class="fa-solid fa-spinner fa-spin text-blue-600 text-base"></i>
-                                    <span>উইথড্রল প্রসেস হচ্ছে... ১০ সেকেন্ড স্ক্রোল টাইম চলছে।</span>
+                                    <span>উইথড্রল প্রসেস হচ্ছে... ১০ সেকেন্ড কাউন্টডাউন চলছে।</span>
                                 </div>
                                 <div class="flex items-center gap-3">
                                     <span id="withdrawCountdownText" class="font-mono text-base font-extrabold text-alnawaNavy bg-white px-3 py-0.5 rounded border border-blue-300">10s</span>
@@ -507,7 +517,7 @@
                         </div>
                     </div>
 
-                    <!-- REPORT TABLE -->
+                    <!-- REPORT TABLE (8 Columns Sequence) -->
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border border-gray-200">
                         <div class="flex justify-between items-center mb-3">
                             <h3 class="text-xs sm:text-sm font-bold text-alnawaNavy flex items-center gap-2">
@@ -519,17 +529,17 @@
                         </div>
 
                         <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[700px]">
+                            <table class="w-full text-left text-xs border-collapse min-w-[750px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px] tracking-wider">
-                                        <th class="p-2.5 rounded-tl">Date / তারিখ</th>
-                                        <th class="p-2.5">Description / বিবরণ</th>
-                                        <th class="p-2.5">From Bank / প্রেরক ব্যাংক</th>
-                                        <th class="p-2.5">To Bank / প্রাপক ব্যাংক</th>
-                                        <th class="p-2.5 text-center">Status / স্ট্যাটাস</th>
-                                        <th class="p-2.5 text-right">Amount / পরিমাণ</th>
-                                        <th class="p-2.5 text-center">Type / ধরণ</th>
-                                        <th class="p-2.5 text-right rounded-tr">Cumulative Sum / ক্রমিক যোগফল</th>
+                                        <th class="p-2.5 rounded-tl">1. Date / তারিখ</th>
+                                        <th class="p-2.5">2. Description / বিবরণ</th>
+                                        <th class="p-2.5">3. From Bank / প্রেরক ব্যাংক</th>
+                                        <th class="p-2.5">4. To Bank / প্রাপক ব্যাংক</th>
+                                        <th class="p-2.5 text-center">5. Type / লেনদেন ধরন</th>
+                                        <th class="p-2.5 text-center">6. Status / স্ট্যাটাস</th>
+                                        <th class="p-2.5 text-right">7. Amount / পরিমাণ</th>
+                                        <th class="p-2.5 text-right rounded-tr">8. Cumulative Sum / ক্রমিক যোগফল</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody" class="divide-y divide-gray-200 font-medium text-[11px]">
@@ -539,6 +549,39 @@
                         </div>
                     </div>
 
+                </div>
+
+                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL PANEL -->
+                <div id="subPagePendingApproval" class="hidden bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border border-amber-300 fade-in">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b pb-2 mb-3 gap-2">
+                        <h3 class="text-sm font-bold text-alnawaNavy flex items-center gap-2">
+                            <i class="fa-solid fa-clock-rotate-left text-alnawaOrange text-base"></i> অ্যাডমিন পেন্ডিং ও ক্যানসেল এপ্রুভাল প্যানেল
+                        </h3>
+                        <span class="text-[10px] bg-amber-50 text-amber-900 px-2.5 py-0.5 rounded font-bold border border-amber-300 w-fit">
+                            <i class="fa-solid fa-shield-halved mr-1"></i> Admin Approval System
+                        </span>
+                    </div>
+
+                    <!-- PENDING TRANSACTIONS TABLE -->
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-left text-xs border-collapse min-w-[750px]">
+                            <thead>
+                                <tr class="bg-alnawaNavy text-white uppercase text-[10px] tracking-wider">
+                                    <th class="p-2.5 rounded-tl">তারিখ</th>
+                                    <th class="p-2.5">ইউজার</th>
+                                    <th class="p-2.5">বিবরণ</th>
+                                    <th class="p-2.5">প্রেরক ব্যাংক</th>
+                                    <th class="p-2.5">প্রাপক ব্যাংক</th>
+                                    <th class="p-2.5 text-center">ধরন</th>
+                                    <th class="p-2.5 text-right">পরিমাণ</th>
+                                    <th class="p-2.5 text-center rounded-tr">অ্যাডমিন স্ট্যাটাস আপডেট</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pendingApprovalTableBody" class="divide-y divide-gray-200 font-medium text-[11px]">
+                                <!-- Dynamic Pending Rows from Supabase -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
             </div>
@@ -652,6 +695,7 @@
             document.getElementById('subPageSubmission').classList.add('hidden');
             document.getElementById('subPageWithdrawal').classList.add('hidden');
             document.getElementById('subPageSummary').classList.add('hidden');
+            document.getElementById('subPagePendingApproval').classList.add('hidden');
 
             if (target === 'submission') {
                 document.getElementById('subPageSubmission').classList.remove('hidden');
@@ -663,6 +707,10 @@
                 document.getElementById('subPageSummary').classList.remove('hidden');
                 document.getElementById('radioSummary').checked = true;
                 fetchTransactionsFromSupabase();
+            } else if (target === 'pendingApproval') {
+                document.getElementById('subPagePendingApproval').classList.remove('hidden');
+                document.getElementById('radioPendingApproval').checked = true;
+                fetchPendingApprovalData();
             }
         }
 
@@ -719,26 +767,23 @@
             setInterval(updateTimer, 1000);
         }
 
-        // Fetch Data from Supabase Tables & Calculate Cumulative Sum with Type Column
+        // Fetch Main Transaction Summary with 8 Columns Sequence
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> ডাটা লোড হচ্ছে...</td></tr>`;
 
             try {
-                // Fetch Investments
                 const { data: investments, error: invError } = await supabaseClient
                     .from('investments')
                     .select('*')
                     .order('created_at', { ascending: true });
 
-                // Fetch Withdrawals
                 const { data: withdrawals, error: witError } = await supabaseClient
                     .from('withdrawals')
                     .select('*')
                     .order('created_at', { ascending: true });
 
                 if (invError || witError) {
-                    console.error('Supabase Fetch Error:', invError || witError);
                     tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-red-500">ডাটা লোড করতে সমস্যা হয়েছে!</td></tr>`;
                     return;
                 }
@@ -747,6 +792,10 @@
 
                 if (investments) {
                     investments.forEach(item => {
+                        let typeText = 'ইনভেস্টমেন্ট (+)';
+                        if (item.status === 'cancelled') {
+                            typeText = item.cancel_reason ? `বাতিল: ${item.cancel_reason}` : 'বাতিল (Cancelled)';
+                        }
                         allTransactions.push({
                             date: item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A',
                             timestamp: item.created_at ? new Date(item.created_at).getTime() : 0,
@@ -755,27 +804,30 @@
                             toBank: item.to_bank,
                             status: item.status || 'pending',
                             amount: Number(item.amount),
-                            typeLabel: 'Investment (+)'
+                            typeLabel: typeText
                         });
                     });
                 }
 
                 if (withdrawals) {
                     withdrawals.forEach(item => {
+                        let typeText = 'উত্তোলন (-)';
+                        if (item.status === 'cancelled') {
+                            typeText = item.cancel_reason ? `বাতিল: ${item.cancel_reason}` : 'বাতিল (Cancelled)';
+                        }
                         allTransactions.push({
                             date: item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A',
                             timestamp: item.created_at ? new Date(item.created_at).getTime() : 0,
                             desc: item.description || 'উইথড্রল',
                             fromBank: item.withdrawal_bank,
                             toBank: item.company_account,
-                            status: 'withdraw (-)',
+                            status: item.status || 'pending',
                             amount: Number(item.amount),
-                            typeLabel: 'Withdrawal (-)'
+                            typeLabel: typeText
                         });
                     });
                 }
 
-                // Sort ascending by timestamp to calculate cumulative sum properly
                 allTransactions.sort((a, b) => a.timestamp - b.timestamp);
 
                 let totalApproved = 0;
@@ -796,7 +848,6 @@
                     t.cumulative = runningSum;
                 });
 
-                // Reverse for descending display (Newest first)
                 allTransactions.sort((a, b) => b.timestamp - a.timestamp);
 
                 tbody.innerHTML = '';
@@ -806,11 +857,13 @@
                 }
 
                 allTransactions.forEach(item => {
-                    let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">pending</span>`;
+                    let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">অপেক্ষমান</span>`;
                     if (item.status === 'approved (+)') {
-                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">approved (+)</span>`;
+                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">অনুমোদিত (+)</span>`;
                     } else if (item.status === 'withdraw (-)') {
-                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">withdraw (-)</span>`;
+                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">উত্তোলন (-)</span>`;
+                    } else if (item.status === 'cancelled') {
+                        statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-800 border border-red-300">বাতিল</span>`;
                     }
 
                     const isWithdraw = item.status === 'withdraw (-)';
@@ -821,11 +874,11 @@
                         <td class="p-2.5 font-semibold text-gray-800">${item.desc}</td>
                         <td class="p-2.5 text-gray-600">${item.fromBank}</td>
                         <td class="p-2.5 font-bold text-alnawaNavy">${item.toBank}</td>
+                        <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
                         <td class="p-2.5 text-center whitespace-nowrap">${statusBadge}</td>
                         <td class="p-2.5 text-right font-mono font-bold ${isWithdraw ? 'text-blue-700' : 'text-gray-800'}">
                             ${isWithdraw ? '-' : ''}৳ ${item.amount.toLocaleString()}
                         </td>
-                        <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
                         <td class="p-2.5 text-right font-mono font-bold text-alnawaGreen bg-emerald-50/60">
                             ৳ ${item.cumulative.toLocaleString()}
                         </td>
@@ -833,13 +886,142 @@
                     tbody.appendChild(tr);
                 });
 
-                // Update Summary Cards
                 document.getElementById('reportApproved').innerText = `৳ ${totalApproved.toLocaleString()}`;
                 document.getElementById('reportPending').innerText = `৳ ${totalPending.toLocaleString()}`;
                 document.getElementById('reportWithdraw').innerText = `৳ ${totalWithdraw.toLocaleString()}`;
 
             } catch (err) {
                 console.error('Error fetching data:', err);
+            }
+        }
+
+        // FETCH ADMIN PENDING APPROVAL DATA
+        async function fetchPendingApprovalData() {
+            const tbody = document.getElementById('pendingApprovalTableBody');
+            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> পেন্ডিং ডাটা লোড হচ্ছে...</td></tr>`;
+
+            try {
+                const { data: investments, error: invErr } = await supabaseClient
+                    .from('investments')
+                    .select('*')
+                    .eq('status', 'pending')
+                    .order('created_at', { ascending: false });
+
+                const { data: withdrawals, error: witErr } = await supabaseClient
+                    .from('withdrawals')
+                    .select('*')
+                    .eq('status', 'pending')
+                    .order('created_at', { ascending: false });
+
+                if (invErr || witErr) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-red-500">ডাটা লোড করতে সমস্যা হয়েছে!</td></tr>`;
+                    return;
+                }
+
+                let pendingList = [];
+
+                if (investments) {
+                    investments.forEach(item => {
+                        pendingList.push({
+                            id: item.id,
+                            dbTable: 'investments',
+                            date: item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A',
+                            user: item.user_id || 'User123',
+                            desc: item.description || 'ইনভেস্টমেন্ট',
+                            fromBank: item.from_bank,
+                            toBank: item.to_bank,
+                            amount: Number(item.amount),
+                            status: item.status || 'pending',
+                            typeLabel: 'ইনভেস্টমেন্ট (+)'
+                        });
+                    });
+                }
+
+                if (withdrawals) {
+                    withdrawals.forEach(item => {
+                        pendingList.push({
+                            id: item.id,
+                            dbTable: 'withdrawals',
+                            date: item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A',
+                            user: item.user_id || 'User123',
+                            desc: item.description || 'উইথড্রল',
+                            fromBank: item.withdrawal_bank,
+                            toBank: item.company_account,
+                            amount: Number(item.amount),
+                            status: item.status || 'pending',
+                            typeLabel: 'উত্তোলন (-)'
+                        });
+                    });
+                }
+
+                tbody.innerHTML = '';
+
+                if (pendingList.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-emerald-600 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> বর্তমানে কোনো পেন্ডিং আবেদন নেই!</td></tr>`;
+                    return;
+                }
+
+                pendingList.forEach(item => {
+                    const isWithdraw = item.typeLabel === 'উত্তোলন (-)';
+                    const tr = document.createElement('tr');
+                    tr.className = "hover:bg-amber-50/50 transition border-b";
+
+                    tr.innerHTML = `
+                        <td class="p-2.5 font-mono text-gray-700 whitespace-nowrap">${item.date}</td>
+                        <td class="p-2.5 font-bold text-alnawaNavy">${item.user}</td>
+                        <td class="p-2.5 font-semibold text-gray-800">${item.desc}</td>
+                        <td class="p-2.5 text-gray-600 text-[10px]">${item.fromBank}</td>
+                        <td class="p-2.5 font-bold text-alnawaNavy text-[10px]">${item.toBank}</td>
+                        <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
+                        <td class="p-2.5 text-right font-mono font-bold text-gray-800">৳ ${item.amount.toLocaleString()}</td>
+                        <td class="p-2 text-center whitespace-nowrap">
+                            <div class="flex items-center justify-center gap-1.5">
+                                <select id="statusSelect_${item.dbTable}_${item.id}" class="bg-white border border-gray-300 rounded px-2 py-1 text-xs font-bold focus:ring-2 focus:ring-alnawaGreen">
+                                    <option value="pending" selected>অপেক্ষমান</option>
+                                    <option value="${isWithdraw ? 'withdraw (-)' : 'approved (+)'}">অনুমোদিত</option>
+                                    <option value="cancelled">বাতিল</option>
+                                </select>
+                                <button onclick="updateTransactionStatus('${item.dbTable}', '${item.id}')" class="px-2.5 py-1 bg-alnawaGreen hover:bg-emerald-700 text-white rounded font-bold shadow text-xs transition">
+                                    <i class="fa-solid fa-floppy-disk mr-1"></i> সেভ
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (err) {
+                console.error('Error loading pending approvals:', err);
+            }
+        }
+
+        // UPDATE STATUS FROM ADMIN PANEL
+        async function updateTransactionStatus(dbTable, id) {
+            const selectElem = document.getElementById(`statusSelect_${dbTable}_${id}`);
+            const newStatus = selectElem.value;
+
+            let updateData = { status: newStatus };
+
+            if (newStatus === 'cancelled') {
+                const reason = prompt("ক্যানসেল করার কারণ লিখুন (Cancel Reason):");
+                if (reason !== null && reason.trim() !== '') {
+                    updateData.cancel_reason = reason.trim();
+                } else {
+                    updateData.cancel_reason = 'এডমিন কর্তৃক ক্যানসেল করা হয়েছে';
+                }
+            }
+
+            const { error } = await supabaseClient
+                .from(dbTable)
+                .update(updateData)
+                .eq('id', id);
+
+            if (error) {
+                alert('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে: ' + error.message);
+            } else {
+                alert('স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!');
+                fetchPendingApprovalData();
+                fetchTransactionsFromSupabase();
             }
         }
 
@@ -876,6 +1058,7 @@
             document.getElementById('submissionProgressBox').classList.add('hidden');
             document.getElementById('submitControlArea').classList.remove('hidden');
             document.getElementById('progressBar').classList.remove('animate-progress');
+            alert('ইনভেস্টমেন্ট সাবমিশন বাতিল করা হয়েছে!');
         }
 
         async function completeSubmission() {
@@ -884,7 +1067,6 @@
             const amount = parseFloat(document.getElementById('investAmount').value);
             const desc = document.getElementById('investDesc').value;
 
-            // Insert into Supabase 'investments' table
             const { data, error } = await supabaseClient
                 .from('investments')
                 .insert([
@@ -907,7 +1089,7 @@
                 document.getElementById('investForm').reset();
                 fetchTransactionsFromSupabase();
                 document.getElementById('successModalTitle').innerText = "ইনভেস্টমেন্ট জমা সফল হয়েছে!";
-                document.getElementById('successModalDesc').innerText = "আপনার ইনভেস্টমেন্ট সফলভাবে Supabase ডাটাবেজে সংরক্ষণ করা হয়েছে।";
+                document.getElementById('successModalDesc').innerText = "আপনার ইনভেস্টমেন্ট সফলভাবে Supabase ডাটাবেজে পেন্ডিং হিসেবে সংরক্ষিত হয়েছে। অ্যাডমিন এপ্রুভ করলে মেইন সামারিতে যোগ হবে।";
                 document.getElementById('successModal').classList.remove('hidden');
             }
         }
@@ -928,7 +1110,7 @@
 
             withdrawTimer = setInterval(() => {
                 withdrawRemainingSeconds--;
-                document.getElementById('withdrawCountdownText').innerText =`${withdrawRemainingSeconds}s`;
+                document.getElementById('withdrawCountdownText').innerText = `${withdrawRemainingSeconds}s`;
 
                 if (withdrawRemainingSeconds <= 0) {
                     clearInterval(withdrawTimer);
@@ -945,6 +1127,7 @@
             document.getElementById('withdrawProgressBox').classList.add('hidden');
             document.getElementById('withdrawControlArea').classList.remove('hidden');
             document.getElementById('withdrawProgressBar').classList.remove('animate-progress');
+            alert('উইথড্রল আবেদন বাতিল করা হয়েছে!');
         }
 
         async function completeWithdrawal() {
@@ -953,7 +1136,6 @@
             const amount = parseFloat(document.getElementById('withdrawAmount').value);
             const desc = document.getElementById('withdrawDesc').value;
 
-            // Insert into Supabase 'withdrawals' table
             const { data, error } = await supabaseClient
                 .from('withdrawals')
                 .insert([
@@ -963,7 +1145,7 @@
                         company_account: toBank,
                         amount: amount,
                         description: desc,
-                        status: 'withdraw (-)'
+                        status: 'pending'
                     }
                 ]);
 
@@ -976,7 +1158,7 @@
                 document.getElementById('withdrawalForm').reset();
                 fetchTransactionsFromSupabase();
                 document.getElementById('successModalTitle').innerText = "উইথড্রল আবেদন সফল হয়েছে!";
-                document.getElementById('successModalDesc').innerText = "আপনার উইথড্রল আবেদন সফলভাবে Supabase ডাটাবেজে সংরক্ষিত হয়েছে।";
+                document.getElementById('successModalDesc').innerText = "আপনার উইথড্রল আবেদন সফলভাবে পেন্ডিং হিসেবে সংরক্ষিত হয়েছে। অ্যাডমিন এপ্রুভ করলে মেইন সামারিতে যুক্ত হবে।";
                 document.getElementById('successModal').classList.remove('hidden');
             }
         }
