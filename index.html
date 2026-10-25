@@ -94,7 +94,7 @@
 
     <div class="w-full max-w-5xl bg-white shadow-2xl rounded-none border border-gray-400 flex flex-col min-h-[96vh] relative overflow-hidden">
 
-        <!-- HEADER (Exact Pad Header) -->
+        <!-- HEADER -->
         <header class="bg-white pt-3 px-3 sm:px-5 pb-1 flex-shrink-0 border-b-2 border-alnawaGreen">
             <div class="flex flex-row justify-between items-start gap-2">
                 <div class="flex items-center gap-3">
@@ -137,7 +137,7 @@
             </div>
         </header>
 
-        <!-- MAIN CONTENT (Light Shadow Watermark) -->
+        <!-- MAIN CONTENT -->
         <main class="flex-grow pad-watermark p-3 sm:p-6 flex flex-col justify-start relative">
 
             <!-- PAGE 1: SIGN IN VIEW -->
@@ -154,7 +154,7 @@
                     <p class="text-xs text-gray-500 mb-6">ইনভেস্টর পোর্টালে প্রবেশের তথ্য প্রদান করুন</p>
 
                     <div id="loginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left">
-                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> ভুল ইউজার আইডি বা পাসওয়ার্ড! সঠিক তথ্য দিন।
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> ভুল ইউজার আইডি বা পাসওয়ার্ড! সঠিক তথ্য দিন (User123 / 1234)।
                     </div>
 
                     <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-left">
@@ -433,4 +433,520 @@
 
                             <div>
                                 <label class="block text-xs font-bold text-gray-700 mb-1">Company Account / আল নাওয়া ফান্ড উৎস</label>
-                                <select id="withdraw
+                                <select id="withdrawToBank" required class="w-full border border-gray-300 rounded-lg px-2.5 py-1.5 text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none bg-blue-50 text-alnawaNavy">
+                                    <option value="">ফান্ড অ্যাকাউন্ট নির্বাচন করুন</option>
+                                    <option value="আল নাওয়া ইউসিবি">আল নাওয়া ইউসিবি</option>
+                                    <option value="আল নাওয়া ডিবিবিএল">আল নাওয়া ডিবিবিএল</option>
+                                    <option value="আল নাওয়া আইবিবিএল">আল নাওয়া আইবিবিএল</option>
+                                    <option value="আল নাওয়া ব্র্যাক ব্যাংক">আল নাওয়া ব্র্যাক ব্যাংক</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">Withdraw Amount / উত্তোলনের পরিমাণ (৳)</label>
+                                <input type="number" id="withdrawAmount" min="500" required placeholder="উদাহরণ: 20000"
+                                       class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-xs font-bold focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">Description / উত্তোলনের কারণ বা বিবরণ</label>
+                            <input type="text" id="withdrawDesc" required placeholder="অর্থ উত্তোলনের বিস্তারিত কারণ লিখুন..." 
+                                   class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-xs font-medium focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                        </div>
+
+                        <div id="withdrawControlArea" class="pt-1">
+                            <button type="submit" 
+                                    class="w-full sm:w-auto px-8 py-2.5 bg-gradient-to-r from-blue-700 to-alnawaNavy hover:from-alnawaNavy hover:to-blue-700 text-white font-bold text-xs sm:text-sm rounded-lg shadow-md transition transform active:scale-95 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-hand-holding-dollar"></i> Withdraw Now (উইথড্রল জমা দিন)
+                            </button>
+                        </div>
+
+                        <div id="withdrawProgressBox" class="hidden bg-blue-50 border border-blue-300 rounded-xl p-3.5 transition-all">
+                            <div class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-2">
+                                <div class="flex items-center gap-2 text-blue-900 font-bold text-xs">
+                                    <i class="fa-solid fa-spinner fa-spin text-blue-600 text-base"></i>
+                                    <span>উইথড্রল প্রসেস হচ্ছে... ১০ সেকেন্ড স্ক্রোল টাইম চলছে।</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span id="withdrawCountdownText" class="font-mono text-base font-extrabold text-alnawaNavy bg-white px-3 py-0.5 rounded border border-blue-300">10s</span>
+                                    <button type="button" onclick="cancelWithdrawal()" 
+                                            class="px-3.5 py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs font-bold rounded-md transition shadow">
+                                        <i class="fa-solid fa-xmark mr-1"></i> Cancel (বাতিল)
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                <div id="withdrawProgressBar" class="bg-gradient-to-r from-blue-500 to-alnawaNavy h-full w-0"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- SUB-PAGE 3: TRANSACTION SUMMARY & REPORT TABLE -->
+                <div id="subPageSummary" class="hidden space-y-4 fade-in">
+                    
+                    <!-- SUMMARY CARDS -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div class="bg-white/95 p-3.5 rounded-xl shadow border-l-4 border-emerald-600">
+                            <div class="text-[10px] font-bold text-gray-500 uppercase">Total Approved Investment</div>
+                            <div class="text-xs text-emerald-800 font-bold">মোট অনুমোদিত ইনভেস্টমেন্ট (+)</div>
+                            <div class="text-lg sm:text-xl font-bold text-emerald-700 mt-1 font-mono" id="reportApproved">৳ 0</div>
+                        </div>
+
+                        <div class="bg-white/95 p-3.5 rounded-xl shadow border-l-4 border-amber-500">
+                            <div class="text-[10px] font-bold text-gray-500 uppercase">Total Pending Investment</div>
+                            <div class="text-xs text-amber-800 font-bold">মোট অপেক্ষমান ইনভেস্টমেন্ট</div>
+                            <div class="text-lg sm:text-xl font-bold text-amber-600 mt-1 font-mono" id="reportPending">৳ 0</div>
+                        </div>
+
+                        <div class="bg-white/95 p-3.5 rounded-xl shadow border-l-4 border-blue-600">
+                            <div class="text-[10px] font-bold text-gray-500 uppercase">Total Withdrawal Amount</div>
+                            <div class="text-xs text-blue-800 font-bold">মোট উত্তোলিত অর্থ (-)</div>
+                            <div class="text-lg sm:text-xl font-bold text-blue-700 mt-1 font-mono" id="reportWithdraw">৳ 0</div>
+                        </div>
+                    </div>
+
+                    <!-- REPORT TABLE -->
+                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border border-gray-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="text-xs sm:text-sm font-bold text-alnawaNavy flex items-center gap-2">
+                                <i class="fa-solid fa-list-check text-alnawaGreen"></i> Report Table (ট্রানজেকশন সামারি ছক)
+                            </h3>
+                            <span class="text-[10px] bg-emerald-50 text-emerald-800 px-2.5 py-0.5 rounded font-bold border border-emerald-200">
+                                Supabase Live Data (Descending Order)
+                            </span>
+                        </div>
+
+                        <div class="overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left text-xs border-collapse min-w-[700px]">
+                                <thead>
+                                    <tr class="bg-alnawaNavy text-white uppercase text-[10px] tracking-wider">
+                                        <th class="p-2.5 rounded-tl">Date / তারিখ</th>
+                                        <th class="p-2.5">Description / বিবরণ</th>
+                                        <th class="p-2.5">From Bank / প্রেরক ব্যাংক</th>
+                                        <th class="p-2.5">To Bank / প্রাপক ব্যাংক</th>
+                                        <th class="p-2.5 text-center">Status / স্ট্যাটাস</th>
+                                        <th class="p-2.5 text-right">Amount / পরিমাণ</th>
+                                        <th class="p-2.5 text-right rounded-tr">Type / ধরণ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionTableBody" class="divide-y divide-gray-200 font-medium text-[11px]">
+                                    <!-- Dynamic Supabase Rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="bg-white flex-shrink-0 border-t-2 border-alnawaGreen">
+            <div class="grid grid-cols-1 md:grid-cols-12 h-auto md:h-12 text-white font-sans text-xs">
+                <div class="md:col-span-7 bg-alnawaGreen px-3 py-2 md:py-0 flex items-center poly-footer-left">
+                    <div class="leading-tight">
+                        <div class="font-bold text-[11px] sm:text-xs">১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪১১, বন্দর, নারায়ণগঞ্জ।</div>
+                        <div class="text-[10px] text-emerald-100 font-medium">151, Dokin Lokhonkhola, Lokhonkhola-1411, Bandar, Narayanganj.</div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-5 bg-gradient-to-r from-alnawaNavy to-blue-900 px-4 py-2 md:py-0 flex flex-col justify-center items-start md:items-end font-semibold text-[11px]">
+                    <div>Mobile : 01942-341889, 01911591746, 01818-589423</div>
+                    <div class="text-amber-300">E-mail : alnawacompany@gmail.com</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- MOBILE NUMBER RESET MODAL -->
+    <div id="mobileResetModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl border-2 border-alnawaOrange">
+            <div class="flex justify-between items-center mb-3 pb-2 border-b">
+                <h4 class="text-sm font-bold text-alnawaNavy flex items-center gap-2">
+                    <i class="fa-solid fa-mobile-screen-button text-alnawaOrange"></i> মোবাইল নম্বর দিয়ে পাসওয়ার্ড রিসেট
+                </h4>
+                <button onclick="closeMobileResetModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <form onsubmit="handleMobileResetPassword(event)" class="space-y-3 text-xs text-left">
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">ইউজার আইডি (User ID)</label>
+                    <input type="text" value="User123" readonly disabled class="w-full bg-gray-100 border p-2 rounded font-bold text-gray-700">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">রেজিস্টার্ড মোবাইল নম্বর (Mobile No.)</label>
+                    <input type="tel" id="resetMobileNo" required placeholder="01818-XXXXXX" class="w-full border p-2 rounded focus:ring-2 focus:ring-alnawaGreen">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">নতুন পাসওয়ার্ড (New Password)</label>
+                    <input type="password" id="mobileNewPassInput" required placeholder="নতুন পাসওয়ার্ড দিন..." class="w-full border p-2 rounded focus:ring-2 focus:ring-alnawaGreen">
+                </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1">নতুন পাসওয়ার্ড নিশ্চিত করুন</label>
+                    <input type="password" id="mobileConfirmPassInput" required placeholder="পুনরায় পাসওয়ার্ড দিন..." class="w-full border p-2 rounded focus:ring-2 focus:ring-alnawaGreen">
+                </div>
+                <button type="submit" class="w-full py-2 bg-gradient-to-r from-alnawaOrange to-amber-600 text-white font-bold rounded shadow transition">
+                    পাসওয়ার্ড রিসেট নিশ্চিত করুন (Reset Password)
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- SUCCESS MODAL -->
+    <div id="successModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl border-4 border-emerald-500">
+            <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h4 class="text-lg font-bold text-gray-800 mb-1" id="successModalTitle">সফল হয়েছে!</h4>
+            <p class="text-xs text-gray-600 mb-5" id="successModalDesc">আপনার তথ্য সফলভাবে Supabase ডাটাবেজে সংরক্ষণ করা হয়েছে।</p>
+            <button onclick="closeSuccessModal()" class="w-full py-2 bg-alnawaGreen hover:bg-emerald-700 text-white font-bold rounded-lg transition shadow">
+                ঠিক আছে (OK)
+            </button>
+        </div>
+    </div>
+
+    <!-- SUPABASE & MAIN SYSTEM LOGIC -->
+    <script>
+        // Supabase Configuration
+        const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
+
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentValidPass = "1234";
+        let submitTimer = null;
+        let submitRemainingSeconds = 10;
+        let withdrawTimer = null;
+        let withdrawRemainingSeconds = 10;
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('usernameInput').value.trim();
+            const p = document.getElementById('passwordInput').value.trim();
+
+            if (u === "User123" && p === currentValidPass) {
+                document.getElementById('loginError').classList.add('hidden');
+                document.getElementById('page1').classList.add('hidden');
+                document.getElementById('page2Container').classList.remove('hidden');
+                
+                startValidityTimer();
+                fetchTransactionsFromSupabase();
+                switchSubPage('submission');
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('page2Container').classList.add('hidden');
+            document.getElementById('page1').classList.remove('hidden');
+        }
+
+        function switchSubPage(target) {
+            document.getElementById('subPageSubmission').classList.add('hidden');
+            document.getElementById('subPageWithdrawal').classList.add('hidden');
+            document.getElementById('subPageSummary').classList.add('hidden');
+
+            if (target === 'submission') {
+                document.getElementById('subPageSubmission').classList.remove('hidden');
+                document.getElementById('radioSubmission').checked = true;
+            } else if (target === 'withdrawal') {
+                document.getElementById('subPageWithdrawal').classList.remove('hidden');
+                document.getElementById('radioWithdrawal').checked = true;
+            } else if (target === 'summary') {
+                document.getElementById('subPageSummary').classList.remove('hidden');
+                document.getElementById('radioSummary').checked = true;
+                fetchTransactionsFromSupabase();
+            }
+        }
+
+        function openMobileResetModal() {
+            document.getElementById('mobileResetModal').classList.remove('hidden');
+        }
+        function closeMobileResetModal() {
+            document.getElementById('mobileResetModal').classList.add('hidden');
+        }
+
+        function handleMobileResetPassword(e) {
+            e.preventDefault();
+            const mobile = document.getElementById('resetMobileNo').value.trim();
+            const newPass = document.getElementById('mobileNewPassInput').value.trim();
+            const confirmPass = document.getElementById('mobileConfirmPassInput').value.trim();
+
+            if (mobile.length < 10) {
+                alert('সঠিক মোবাইল নম্বর প্রদান করুন!');
+                return;
+            }
+            if (newPass !== confirmPass) {
+                alert('পাসওয়ার্ড দুটি মিলছে না! পুনরায় চেষ্টা করুন।');
+                return;
+            }
+
+            currentValidPass = newPass;
+            document.getElementById('passwordInput').value = newPass;
+            alert(`পাসওয়ার্ড রিসেট সফল হয়েছে!\nমোবাইল: ${mobile}\nনতুন পাসওয়ার্ড সংরক্ষণ করা হয়েছে।`);
+            closeMobileResetModal();
+        }
+
+        function startValidityTimer() {
+            const targetDate = new Date();
+            targetDate.setDate(targetDate.getDate() + 364);
+            targetDate.setHours(targetDate.getHours() + 23);
+
+            function updateTimer() {
+                const now = new Date();
+                const diff = targetDate - now;
+                if (diff <= 0) return;
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('timerDays').innerText = days;
+                document.getElementById('timerHours').innerText = hours < 10 ? '0' + hours : hours;
+                document.getElementById('timerMinutes').innerText = minutes < 10 ? '0' + minutes : minutes;
+                document.getElementById('timerSeconds').innerText = seconds < 10 ? '0' + seconds : seconds;
+            }
+
+            updateTimer();
+            setInterval(updateTimer, 1000);
+        }
+
+        // Fetch Data from Supabase Tables (Investments & Withdrawals)
+        async function fetchTransactionsFromSupabase() {
+            const tbody = document.getElementById('transactionTableBody');
+            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> ডাটা লোড হচ্ছে...</td></tr>`;
+
+            try {
+                // Fetch Investments
+                const { data: investments, error: invError } = await supabaseClient
+                    .from('investments')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                // Fetch Withdrawals
+                const { data: withdrawals, error: witError } = await supabaseClient
+                    .from('withdrawals')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (invError || witError) {
+                    console.error('Supabase Fetch Error:', invError || witError);
+                    tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-red-500">ডাটা লোড করতে সমস্যা হয়েছে!</td></tr>`;
+                    return;
+                }
+
+                let totalApproved = 0;
+                let totalPending = 0;
+                let totalWithdraw = 0;
+
+                tbody.innerHTML = '';
+
+                // Format Investments
+                if (investments) {
+                    investments.forEach(item => {
+                        if (item.status === 'approved (+)') totalApproved += Number(item.amount);
+                        else if (item.status === 'pending') totalPending += Number(item.amount);
+
+                        const formattedDate = item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A';
+                        
+                        let statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-300">pending</span>`;
+                        if (item.status === 'approved (+)') statusBadge = `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">approved (+)</span>`;
+
+                        const tr = document.createElement('tr');
+                        tr.className = "hover:bg-gray-50 transition";
+                        tr.innerHTML = `
+                            <td class="p-2.5 font-mono text-gray-700 whitespace-nowrap">${formattedDate}</td>
+                            <td class="p-2.5 font-semibold text-gray-800">${item.description || 'ইনভেস্টমেন্ট'}</td>
+                            <td class="p-2.5 text-gray-600">${item.from_bank}</td>
+                            <td class="p-2.5 font-bold text-alnawaNavy">${item.to_bank}</td>
+                            <td class="p-2.5 text-center whitespace-nowrap">${statusBadge}</td>
+                            <td class="p-2.5 text-right font-mono font-bold text-gray-800">৳ ${Number(item.amount).toLocaleString()}</td>
+                            <td class="p-2.5 text-right font-bold text-alnawaGreen">Investment (+)</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                // Format Withdrawals
+                if (withdrawals) {
+                    withdrawals.forEach(item => {
+                        totalWithdraw += Number(item.amount);
+                        const formattedDate = item.created_at ? new Date(item.created_at).toISOString().split('T')[0] : 'N/A';
+                        
+                        const tr = document.createElement('tr');
+                        tr.className = "hover:bg-gray-50 transition bg-blue-50/30";
+                        tr.innerHTML = `
+                            <td class="p-2.5 font-mono text-gray-700 whitespace-nowrap">${formattedDate}</td>
+                            <td class="p-2.5 font-semibold text-gray-800">${item.description || 'উইথড্রল'}</td>
+                            <td class="p-2.5 text-gray-600">${item.withdrawal_bank}</td>
+                            <td class="p-2.5 font-bold text-alnawaNavy">${item.company_account}</td>
+                            <td class="p-2.5 text-center whitespace-nowrap"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-800 border border-blue-300">withdraw (-)</span></td>
+                            <td class="p-2.5 text-right font-mono font-bold text-blue-700">- ৳ ${Number(item.amount).toLocaleString()}</td>
+                            <td class="p-2.5 text-right font-bold text-blue-600">Withdrawal (-)</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+
+                // Update Summary Cards
+                document.getElementById('reportApproved').innerText = `৳ ${totalApproved.toLocaleString()}`;
+                document.getElementById('reportPending').innerText = `৳ ${totalPending.toLocaleString()}`;
+                document.getElementById('reportWithdraw').innerText = `৳ ${totalWithdraw.toLocaleString()}`;
+
+            } catch (err) {
+                console.error('Error fetching data:', err);
+            }
+        }
+
+        // INVESTMENT SUBMISSION TIMER PROCESS
+        function startSubmissionProcess(e) {
+            e.preventDefault();
+            document.getElementById('submitControlArea').classList.add('hidden');
+            document.getElementById('submissionProgressBox').classList.remove('hidden');
+
+            submitRemainingSeconds = 10;
+            document.getElementById('countdownText').innerText = `${submitRemainingSeconds}s`;
+
+            const bar = document.getElementById('progressBar');
+            bar.classList.remove('animate-progress');
+            void bar.offsetWidth;
+            bar.classList.add('animate-progress');
+
+            submitTimer = setInterval(() => {
+                submitRemainingSeconds--;
+                document.getElementById('countdownText').innerText = `${submitRemainingSeconds}s`;
+
+                if (submitRemainingSeconds <= 0) {
+                    clearInterval(submitTimer);
+                    completeSubmission();
+                }
+            }, 1000);
+        }
+
+        function cancelSubmission() {
+            if (submitTimer) {
+                clearInterval(submitTimer);
+                submitTimer = null;
+            }
+            document.getElementById('submissionProgressBox').classList.add('hidden');
+            document.getElementById('submitControlArea').classList.remove('hidden');
+            document.getElementById('progressBar').classList.remove('animate-progress');
+        }
+
+        async function completeSubmission() {
+            const fromBank = document.getElementById('fromBank').value;
+            const toBank = document.getElementById('toBank').value;
+            const amount = parseFloat(document.getElementById('investAmount').value);
+            const desc = document.getElementById('investDesc').value;
+
+            // Insert into Supabase 'investments' table
+            const { data, error } = await supabaseClient
+                .from('investments')
+                .insert([
+                    {
+                        user_id: 'User123',
+                        from_bank: fromBank,
+                        to_bank: toBank,
+                        amount: amount,
+                        description: desc,
+                        status: 'pending'
+                    }
+                ]);
+
+            document.getElementById('submissionProgressBox').classList.add('hidden');
+            document.getElementById('submitControlArea').classList.remove('hidden');
+
+            if (error) {
+                alert('ডাটা সেভ করতে সমস্যা হয়েছে: ' + error.message);
+            } else {
+                document.getElementById('investForm').reset();
+                fetchTransactionsFromSupabase();
+                document.getElementById('successModalTitle').innerText = "ইনভেস্টমেন্ট জমা সফল হয়েছে!";
+                document.getElementById('successModalDesc').innerText = "আপনার ইনভেস্টমেন্ট সফলভাবে Supabase ডাটাবেজে সংরক্ষণ করা হয়েছে।";
+                document.getElementById('successModal').classList.remove('hidden');
+            }
+        }
+
+        // WITHDRAWAL SUBMISSION PROCESS
+        function startWithdrawalProcess(e) {
+            e.preventDefault();
+            document.getElementById('withdrawControlArea').classList.add('hidden');
+            document.getElementById('withdrawProgressBox').classList.remove('hidden');
+
+            withdrawRemainingSeconds = 10;
+            document.getElementById('withdrawCountdownText').innerText = `${withdrawRemainingSeconds}s`;
+
+            const bar = document.getElementById('withdrawProgressBar');
+            bar.classList.remove('animate-progress');
+            void bar.offsetWidth;
+            bar.classList.add('animate-progress');
+
+            withdrawTimer = setInterval(() => {
+                withdrawRemainingSeconds--;
+                document.getElementById('withdrawCountdownText').innerText = `${withdrawRemainingSeconds}s`;
+
+                if (withdrawRemainingSeconds <= 0) {
+                    clearInterval(withdrawTimer);
+                    completeWithdrawal();
+                }
+            }, 1000);
+        }
+
+        function cancelWithdrawal() {
+            if (withdrawTimer) {
+                clearInterval(withdrawTimer);
+                withdrawTimer = null;
+            }
+            document.getElementById('withdrawProgressBox').classList.add('hidden');
+            document.getElementById('withdrawControlArea').classList.remove('hidden');
+            document.getElementById('withdrawProgressBar').classList.remove('animate-progress');
+        }
+
+        async function completeWithdrawal() {
+            const fromBank = document.getElementById('withdrawFromBank').value;
+            const toBank = document.getElementById('withdrawToBank').value;
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const desc = document.getElementById('withdrawDesc').value;
+
+            // Insert into Supabase 'withdrawals' table
+            const { data, error } = await supabaseClient
+                .from('withdrawals')
+                .insert([
+                    {
+                        user_id: 'User123',
+                        withdrawal_bank: fromBank,
+                        company_account: toBank,
+                        amount: amount,
+                        description: desc,
+                        status: 'withdraw (-)'
+                    }
+                ]);
+
+            document.getElementById('withdrawProgressBox').classList.add('hidden');
+            document.getElementById('withdrawControlArea').classList.remove('hidden');
+
+            if (error) {
+                alert('উইথড্রল ডাটা সেভ করতে সমস্যা হয়েছে: ' + error.message);
+            } else {
+                document.getElementById('withdrawalForm').reset();
+                fetchTransactionsFromSupabase();
+                document.getElementById('successModalTitle').innerText = "উইথড্রল আবেদন সফল হয়েছে!";
+                document.getElementById('successModalDesc').innerText = "আপনার উইথড্রল আবেদন সফলভাবে Supabase ডাটাবেজে সংরক্ষিত হয়েছে।";
+                document.getElementById('successModal').classList.remove('hidden');
+            }
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            switchSubPage('summary');
+        }
+    </script>
+</body>
+</html>
