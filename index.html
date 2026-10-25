@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল</title>
+    <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল (alnawa.html)</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -530,6 +528,7 @@
                                         <th class="p-2.5">To Bank / প্রাপক ব্যাংক</th>
                                         <th class="p-2.5 text-center">Status / স্ট্যাটাস</th>
                                         <th class="p-2.5 text-right">Amount / পরিমাণ</th>
+                                        <th class="p-2.5 text-center">Type / ধরণ</th>
                                         <th class="p-2.5 text-right rounded-tr">Cumulative Sum / ক্রমিক যোগফল</th>
                                     </tr>
                                 </thead>
@@ -640,7 +639,6 @@
                 fetchTransactionsFromSupabase();
                 switchSubPage('submission');
             } else {
-                document.getElementById('loginError').classList.add('hidden'); // Fixed fallback display logic
                 document.getElementById('loginError').classList.remove('hidden');
             }
         }
@@ -721,10 +719,10 @@
             setInterval(updateTimer, 1000);
         }
 
-        // Fetch Data from Supabase Tables & Calculate Cumulative Sum based on status
+        // Fetch Data from Supabase Tables & Calculate Cumulative Sum with Type Column
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
-            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> ডাটা লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> ডাটা লোড হচ্ছে...</td></tr>`;
 
             try {
                 // Fetch Investments
@@ -741,7 +739,7 @@
 
                 if (invError || witError) {
                     console.error('Supabase Fetch Error:', invError || witError);
-                    tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-red-500">ডাটা লোড করতে সমস্যা হয়েছে!</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-red-500">ডাটা লোড করতে সমস্যা হয়েছে!</td></tr>`;
                     return;
                 }
 
@@ -757,7 +755,7 @@
                             toBank: item.to_bank,
                             status: item.status || 'pending',
                             amount: Number(item.amount),
-                            type: 'investment'
+                            typeLabel: 'Investment (+)'
                         });
                     });
                 }
@@ -772,12 +770,12 @@
                             toBank: item.company_account,
                             status: 'withdraw (-)',
                             amount: Number(item.amount),
-                            type: 'withdrawal'
+                            typeLabel: 'Withdrawal (-)'
                         });
                     });
                 }
 
-                // Sort ascending by date/timestamp to calculate cumulative sum properly
+                // Sort ascending by timestamp to calculate cumulative sum properly
                 allTransactions.sort((a, b) => a.timestamp - b.timestamp);
 
                 let totalApproved = 0;
@@ -804,7 +802,7 @@
                 tbody.innerHTML = '';
 
                 if (allTransactions.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-gray-500">কোনো ট্রানজেকশন পাওয়া যায়নি।</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500">কোনো ট্রানজেকশন পাওয়া যায়নি।</td></tr>`;
                 }
 
                 allTransactions.forEach(item => {
@@ -827,6 +825,7 @@
                         <td class="p-2.5 text-right font-mono font-bold ${isWithdraw ? 'text-blue-700' : 'text-gray-800'}">
                             ${isWithdraw ? '-' : ''}৳ ${item.amount.toLocaleString()}
                         </td>
+                        <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
                         <td class="p-2.5 text-right font-mono font-bold text-alnawaGreen bg-emerald-50/60">
                             ৳ ${item.cumulative.toLocaleString()}
                         </td>
@@ -929,7 +928,7 @@
 
             withdrawTimer = setInterval(() => {
                 withdrawRemainingSeconds--;
-                document.getElementById('withdrawCountdownText').innerText = `${withdrawRemainingSeconds}s`;
+                document.getElementById('withdrawCountdownText').innerText =`${withdrawRemainingSeconds}s`;
 
                 if (withdrawRemainingSeconds <= 0) {
                     clearInterval(withdrawTimer);
