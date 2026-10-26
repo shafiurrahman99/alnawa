@@ -150,32 +150,32 @@
                     </div>
 
                     <h3 class="text-2xl font-bold text-alnawaNavy mb-1">সাইন ইন (Sign In)</h3>
-                    <p class="text-xs text-gray-500 mb-6">ডাটাবেজ ইনভেস্টর পোর্টালে প্রবেশের তথ্য প্রদান করুন</p>
+                    <p class="text-xs text-gray-500 mb-6">৪ ডিজিটের মার্চড ইউজার আইডি এবং ৫ ক্যারেক্টার পাসওয়ার্ড দিন</p>
 
                     <div id="loginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left">
-                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> ভুল ইউজার আইডি বা পাসওয়ার্ড! সঠিক তথ্য দিন (User1 / 1234)।
+                        <i class="fa-solid fa-triangle-exclamation mr-1"></i> ভুল ইউজার আইডি বা পাসওয়ার্ড! সঠিক তথ্য দিন (যেমন: 1001 / 1234!)।
                     </div>
 
                     <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-left">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">ইউজার আইডি (User ID / Company ID)</label>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">৪ ডিজিটের ইউজার আইডি (Company+User, যেমন: 1001)</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-alnawaGreen">
                                     <i class="fa-solid fa-user"></i>
                                 </span>
-                                <input type="text" id="usernameInput" value="1" required placeholder="ইউজার আইডি দিন"
-                                       class="w-full pl-10 pr-4 py-2.5 text-sm font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-alnawaGreen bg-gray-50">
+                                <input type="text" id="usernameInput" value="1001" required maxlength="4" placeholder="যেমন: 1001"
+                                       class="w-full pl-10 pr-4 py-2.5 text-sm font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-alnawaGreen bg-gray-50 font-mono">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড (Password)</label>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">৫ ক্যারেক্টার পাসওয়ার্ড (৪ সংখ্যা + ১ সিম্বল, যেমন: 1234!)</label>
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-alnawaGreen">
                                     <i class="fa-solid fa-lock"></i>
                                 </span>
-                                <input type="password" id="passwordInput" value="1234" required placeholder="পাসওয়ার্ড দিন"
-                                       class="w-full pl-10 pr-4 py-2.5 text-sm font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-alnawaGreen bg-gray-50">
+                                <input type="password" id="passwordInput" value="1234!" required minlength="5" maxlength="10" placeholder="যেমন: 1234!"
+                                       class="w-full pl-10 pr-4 py-2.5 text-sm font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-alnawaGreen bg-gray-50 font-mono">
                             </div>
                         </div>
 
@@ -314,19 +314,19 @@
                     </div>
                 </div>
 
-                <!-- SUB-PAGE 1: INVEST SUBMISSION FORM -->
+                <!-- SUB-PAGE 1: INVEST SUBMISSION FORM WITH ONE-TIME PASSWORD -->
                 <div id="subPageSubmission" class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border border-gray-200 fade-in">
                     <h3 class="text-sm font-bold text-alnawaNavy mb-3 flex items-center gap-2 border-b pb-2">
-                        <i class="fa-solid fa-file-circle-plus text-alnawaGreen text-base"></i> ইনভেস্টমেন্ট জমা ফরম (Invest Submission Form)
+                        <i class="fa-solid fa-file-circle-plus text-alnawaGreen text-base"></i> ইনভেস্টমেন্ট জমা ফরম (Invest Submission Form & OTP)
                     </h3>
 
                     <form id="investForm" onsubmit="startSubmissionProcess(event)" class="space-y-3">
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                             
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">কোম্পানি ও ইউজার আইডি</label>
-                                <input type="text" id="autoUser" value="Company ID: 1 | User ID: 1" readonly disabled
-                                       class="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-1.5 text-xs font-bold text-gray-700 cursor-not-allowed select-none">
+                                <label class="block text-xs font-bold text-gray-700 mb-1">৪ ডিজিটের মার্চড ইউজার আইডি</label>
+                                <input type="text" id="autoUser" value="1001" readonly disabled
+                                       class="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-1.5 text-xs font-bold text-gray-700 cursor-not-allowed select-none font-mono">
                             </div>
 
                             <div>
@@ -362,10 +362,20 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">লেনদেনের বিবরণ (Item Description)</label>
-                            <input type="text" id="investDesc" required placeholder="ইনভেস্টমেন্টের সংক্ষিপ্ত বিবরণ লিখুন..." 
-                                   class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-xs font-medium focus:ring-2 focus:ring-alnawaGreen focus:outline-none">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-bold text-gray-700 mb-1">লেনদেনের বিবরণ (Item Description)</label>
+                                <input type="text" id="investDesc" required placeholder="ইনভেস্টমেন্টের সংক্ষিপ্ত বিবরণ লিখুন..." 
+                                       class="w-full border border-gray-300 rounded-lg px-3 py-1.5 text-xs font-medium focus:ring-2 focus:ring-alnawaGreen focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-amber-700 mb-1">
+                                    <i class="fa-solid fa-key text-alnawaOrange mr-1"></i> ওয়ান-টাইম পাসওয়ার্ড / পিন (4-Digit OTP - Tell Admin)
+                                </label>
+                                <input type="text" id="investOtp" required maxlength="4" placeholder="৪ ডিজিটের গোপন পিন (যেমন: 7890)" 
+                                       class="w-full border border-amber-400 bg-amber-50/50 rounded-lg px-3 py-1.5 text-xs font-mono font-bold text-amber-900 focus:ring-2 focus:ring-alnawaOrange focus:outline-none">
+                            </div>
                         </div>
 
                         <div id="submitControlArea" class="pt-1">
@@ -407,9 +417,9 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                             
                             <div>
-                                <label class="block text-xs font-bold text-gray-700 mb-1">ইউজার (Auto Generated)</label>
-                                <input type="text" value="Company ID: 1 | User ID: 1" readonly disabled
-                                       class="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-1.5 text-xs font-bold text-gray-700 cursor-not-allowed select-none">
+                                <label class="block text-xs font-bold text-gray-700 mb-1">ইউজার আইডি</label>
+                                <input type="text" value="1001" readonly disabled
+                                       class="w-full bg-gray-100 border border-gray-300 rounded-lg px-3 py-1.5 text-xs font-bold text-gray-700 cursor-not-allowed select-none font-mono">
                             </div>
 
                             <div>
@@ -502,14 +512,14 @@
                         </div>
                     </div>
 
-                    <!-- REPORT TABLE (8 Columns Sequence translated to Bengali) -->
+                    <!-- REPORT TABLE -->
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border border-gray-200">
                         <div class="flex justify-between items-center mb-3">
                             <h3 class="text-xs sm:text-sm font-bold text-alnawaNavy flex items-center gap-2">
                                 <i class="fa-solid fa-list-check text-alnawaGreen"></i> ট্রানজেকশন সামারি ছক (Report Table)
                             </h3>
                             <span class="text-[10px] bg-emerald-50 text-emerald-800 px-2.5 py-0.5 rounded font-bold border border-emerald-200">
-                                Supabase Live Data (TR Sheet Integration)
+                                Supabase Live Data
                             </span>
                         </div>
 
@@ -536,30 +546,28 @@
 
                 </div>
 
-                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL PANEL -->
+                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL PANEL WITH OTP VERIFICATION -->
                 <div id="subPagePendingApproval" class="hidden bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border border-amber-300 fade-in">
                     <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b pb-2 mb-3 gap-2">
                         <h3 class="text-sm font-bold text-alnawaNavy flex items-center gap-2">
-                            <i class="fa-solid fa-clock-rotate-left text-alnawaOrange text-base"></i> অ্যাডমিন পেন্ডিং ও ক্যানসেল এপ্রুভাল প্যানেল
+                            <i class="fa-solid fa-clock-rotate-left text-alnawaOrange text-base"></i> অ্যাডমিন পেন্ডিং ও ওয়ান-টাইম পিন ভেরিফিকেশন প্যানেল
                         </h3>
                         <span class="text-[10px] bg-amber-50 text-amber-900 px-2.5 py-0.5 rounded font-bold border border-amber-300 w-fit">
-                            <i class="fa-solid fa-shield-halved mr-1"></i> Admin Approval System
+                            <i class="fa-solid fa-shield-halved mr-1"></i> OTP & Approval Tracking
                         </span>
                     </div>
 
                     <!-- PENDING TRANSACTIONS TABLE -->
                     <div class="overflow-x-auto custom-scrollbar">
-                        <table class="w-full text-left text-xs border-collapse min-w-[750px]">
+                        <table class="w-full text-left text-xs border-collapse min-w-[850px]">
                             <thead>
                                 <tr class="bg-alnawaNavy text-white uppercase text-[10px] tracking-wider">
                                     <th class="p-2.5 rounded-tl">তারিখ</th>
-                                    <th class="p-2.5">ইউজার আইডি</th>
+                                    <th class="p-2.5">ইউজার আইডি (৪ ডিজিট)</th>
                                     <th class="p-2.5">বিবরণ</th>
-                                    <th class="p-2.5">প্রেরক ব্যাংক</th>
-                                    <th class="p-2.5">প্রাপক ব্যাংক</th>
-                                    <th class="p-2.5 text-center">ধরন</th>
+                                    <th class="p-2.5">ইউজারের দেওয়া গোপন পিন (OTP)</th>
                                     <th class="p-2.5 text-right">পরিমাণ</th>
-                                    <th class="p-2.5 text-center rounded-tr">অ্যাডমিন স্ট্যাটাস আপডেট</th>
+                                    <th class="p-2.5 text-center rounded-tr">অ্যাডমিন স্ট্যাটাস ও পিন ভেরিফিকেশন</th>
                                 </tr>
                             </thead>
                             <tbody id="pendingApprovalTableBody" class="divide-y divide-gray-200 font-medium text-[11px]">
@@ -604,19 +612,19 @@
             <form onsubmit="handleMobileResetPassword(event)" class="space-y-3 text-xs text-left">
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">ইউজার আইডি</label>
-                    <input type="text" id="resetUserIdDisplay" value="1" readonly disabled class="w-full bg-gray-100 border p-2 rounded font-bold text-gray-700">
+                    <input type="text" id="resetUserIdDisplay" value="1001" readonly disabled class="w-full bg-gray-100 border p-2 rounded font-bold text-gray-700 font-mono">
                 </div>
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">রেজিস্টার্ড মোবাইল নম্বর</label>
                     <input type="tel" id="resetMobileNo" required placeholder="01942341889" class="w-full border p-2 rounded focus:ring-2 focus:ring-alnawaGreen">
                 </div>
                 <div>
-                    <label class="block font-bold text-gray-700 mb-1">নতুন পাসওয়ার্ড</label>
-                    <input type="password" id="mobileNewPassInput" required placeholder="নতুন পাসওয়ার্ড দিন..." class="w-full border p-2 rounded focus:ring-2 focus:ring-alnawaGreen">
+                    <label class="block font-bold text-gray-700 mb-1">নতুন পাসওয়ার্ড (৫ ক্যারেক্টার: ৪ সংখ্যা + ১ সিম্বল)</label>
+                    <input type="text" id="mobileNewPassInput" required placeholder="যেমন: 5678#" class="w-full border p-2 rounded focus:ring-2 focus:ring-alnawaGreen font-mono">
                 </div>
                 <div>
                     <label class="block font-bold text-gray-700 mb-1">নতুন পাসওয়ার্ড নিশ্চিত করুন</label>
-                    <input type="password" id="mobileConfirmPassInput" required placeholder="পুনরায় পাসওয়ার্ড দিন..." class="w-full border p-2 rounded focus:ring-2 focus:ring-alnawaGreen">
+                    <input type="text" id="mobileConfirmPassInput" required placeholder="পুনরায় পাসওয়ার্ড দিন..." class="w-full border p-2 rounded focus:ring-2 focus:ring-alnawaGreen font-mono">
                 </div>
                 <button type="submit" class="w-full py-2 bg-gradient-to-r from-alnawaOrange to-amber-600 text-white font-bold rounded shadow transition">
                     পাসওয়ার্ড রিসেট নিশ্চিত করুন
@@ -647,31 +655,49 @@
 
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let currentValidPass = "1234";
+        let currentValidPass = "1234!"; // 5 characters: 4 numbers + 1 symbol
         let loggedInUserId = 1;
         let loggedInCompanyId = 1;
+        let fullMergedUserId = "1001";
         let submitTimer = null;
         let submitRemainingSeconds = 10;
         let withdrawTimer = null;
         let withdrawRemainingSeconds = 10;
+
+        // Helper function to convert Company ID & User ID into 4-digit format (e.g., Company 1, User 1 -> 1001, User 101 -> 1101)
+        function getMergedUserId(compId, userId) {
+            let cStr = String(compId || 1).slice(-1);
+            let uStr = String(userId || 1).padStart(3, '0');
+            return cStr + uStr;
+        }
 
         async function handleLogin(e) {
             e.preventDefault();
             const uInput = document.getElementById('usernameInput').value.trim();
             const p = document.getElementById('passwordInput').value.trim();
 
-            loggedInUserId = parseInt(uInput) || 1;
+            if (uInput.length !== 4) {
+                document.getElementById('loginError').classList.remove('hidden');
+                document.getElementById('loginErrorinnerHTML', `<i class="fa-solid fa-triangle-exclamation mr-1"></i> ইউজার আইডি অবশ্যই ৪ ডিজিটের হতে হবে (যেমন: 1001)!`);
+                return;
+            }
 
-            // Fetch user profile from Supabase 'IND' table to verify existence
+            // Extract Company ID (1st digit) and User ID (last 3 digits)
+            loggedInCompanyId = parseInt(uInput.charAt(0));
+            loggedInUserId = parseInt(uInput.slice(1));
+            fullMergedUserId = uInput;
+
+            // Fetch user profile from Supabase 'IND' table
             const { data: indData, error } = await supabaseClient
                 .from('IND')
                 .select('*')
+                .eq('Company ID', loggedInCompanyId)
                 .eq('User ID', loggedInUserId)
                 .single();
 
             if (error || !indData) {
                 document.getElementById('loginError').classList.remove('hidden');
-                document.getElementById('loginError').innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> এই ইউজার আইডি ডাটাবেজে পাওয়া যায়নি! সঠিক ইউজার আইডি দিন (যেমন: 1, 101, 104)।`;
+                document.getElementById('loginError').innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> এই ৪ ডিজিটের আইডি (${uInput}) ডাটাবেজে পাওয়া যায়নি! সঠিক আইডি দিন।`;
                 return;
             }
 
@@ -680,9 +706,9 @@
                 document.getElementById('page1').classList.add('hidden');
                 document.getElementById('page2Container').classList.remove('hidden');
                 
-                document.getElementById('currentUserDisplay').innerText = indData['Name'] || `User ID: ${loggedInUserId}`;
-                document.getElementById('autoUser').value = `Company ID: ${indData['Company ID']} | User ID: ${indData['User ID']}`;
-                document.getElementById('resetUserIdDisplay').value = indData['User ID'];
+                document.getElementById('currentUserDisplay').innerText = indData['Name'] || `ID: ${fullMergedUserId}`;
+                document.getElementById('autoUser').value = `Merged User ID: ${fullMergedUserId}`;
+                document.getElementById('resetUserIdDisplay').value = fullMergedUserId;
 
                 renderUserProfile(indData);
                 startValidityTimer();
@@ -690,7 +716,7 @@
                 switchSubPage('submission');
             } else {
                 document.getElementById('loginError').classList.remove('hidden');
-                document.getElementById('loginError').innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিন (ডিফল্ট: 1234)।`;
+                document.getElementById('loginError').innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> ভুল পাসওয়ার্ড! পাসওয়ার্ডটি ৫ ক্যারেক্টারের (৪ সংখ্যা + ১ সিম্বল) হতে হবে (ডিফল্ট: 1234!)।`;
             }
         }
 
@@ -757,6 +783,10 @@
                 alert('সঠিক মোবাইল নম্বর প্রদান করুন!');
                 return;
             }
+            if (newPass.length < 5) {
+                alert('পাসওয়ার্ড কমপক্ষে ৫ ক্যারেক্টারের (সংখ্যা ও সিম্বলসহ) হতে হবে!');
+                return;
+            }
             if (newPass !== confirmPass) {
                 alert('পাসওয়ার্ড দুটি মিলছে না! পুনরায় চেষ্টা করুন।');
                 return;
@@ -764,7 +794,7 @@
 
             currentValidPass = newPass;
             document.getElementById('passwordInput').value = newPass;
-            alert(`পাসওয়ার্ড রিসেট সফল হয়েছে!\nইউজার আইডি: ${loggedInUserId}\nনতুন পাসওয়ার্ড সংরক্ষণ করা হয়েছে।`);
+            alert(`পাসওয়ার্ড সফলভাবে আপডেট করা হয়েছে!\nইউজার আইডি: ${fullMergedUserId}\nনতুন পাসওয়ার্ড সংরক্ষণ করা হয়েছে।`);
             closeMobileResetModal();
         }
 
@@ -802,17 +832,20 @@
                 const { data: trData, error: trError } = await supabaseClient
                     .from('TR')
                     .select('*')
+                    .eq('Company ID', loggedInCompanyId)
                     .eq('User ID', loggedInUserId)
                     .order('Transaction Date', { ascending: false });
 
                 const { data: investments, error: invError } = await supabaseClient
                     .from('investments')
                     .select('*')
+                    .eq('company_id', loggedInCompanyId)
                     .eq('user_id', loggedInUserId);
 
                 const { data: withdrawals, error: witError } = await supabaseClient
                     .from('withdrawals')
                     .select('*')
+                    .eq('company_id', loggedInCompanyId)
                     .eq('user_id', loggedInUserId);
 
                 if (trError) {
@@ -937,10 +970,10 @@
             }
         }
 
-        // FETCH ADMIN PENDING APPROVAL DATA
+        // FETCH ADMIN PENDING APPROVAL DATA WITH OTP
         async function fetchPendingApprovalData() {
             const tbody = document.getElementById('pendingApprovalTableBody');
-            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> পেন্ডিং ডাটা লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> পেন্ডিং ও পিন ডাটা লোড হচ্ছে...</td></tr>`;
 
             try {
                 const { data: investments, error: invErr } = await supabaseClient
@@ -957,14 +990,14 @@
 
                 if (investments) {
                     investments.forEach(item => {
+                        let mergedId = getMergedUserId(item.company_id, item.user_id);
                         pendingList.push({
                             id: item.id,
                             dbTable: 'investments',
                             date: item.created_at ? item.created_at.split('T')[0] : '2026-09-01',
-                            user: item.user_id || loggedInUserId,
-                            desc: item.description || 'ইনভেস্টমেন্ট',
-                            fromBank: item.from_bank,
-                            toBank: item.to_bank,
+                            mergedId: mergedId,
+                            desc: item.description + ' (ফ্রম: ' + item.from_bank + ')',
+                            otp: item.otp_pin || '৭৮৯০', // Default mock OTP if not present
                             amount: Number(item.amount),
                             status: item.status || 'pending',
                             typeLabel: 'ইনভেস্টমেন্ট (+)'
@@ -974,14 +1007,14 @@
 
                 if (withdrawals) {
                     withdrawals.forEach(item => {
+                        let mergedId = getMergedUserId(item.company_id, item.user_id);
                         pendingList.push({
                             id: item.id,
                             dbTable: 'withdrawals',
                             date: item.created_at ? item.created_at.split('T')[0] : '2026-09-01',
-                            user: item.user_id || loggedInUserId,
-                            desc: item.description || 'উইথড্রল',
-                            fromBank: item.withdrawal_bank,
-                            toBank: item.company_account,
+                            mergedId: mergedId,
+                            desc: item.description + ' (উত্তোলন: ' + item.withdrawal_bank + ')',
+                            otp: item.otp_pin || '৫৬৭৮',
                             amount: Number(item.amount),
                             status: item.status || 'pending',
                             typeLabel: 'উত্তোলন (-)'
@@ -992,32 +1025,31 @@
                 tbody.innerHTML = '';
 
                 if (pendingList.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-emerald-600 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> বর্তমানে কোনো পেন্ডিং আবেদন নেই!</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-emerald-600 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> বর্তমানে কোনো পেন্ডিং আবেদন নেই!</td></tr>`;
                     return;
                 }
 
                 pendingList.forEach(item => {
-                    const isWithdraw = item.typeLabel === 'উত্তোলন (-)';
                     const tr = document.createElement('tr');
                     tr.className = "hover:bg-amber-50/50 transition border-b";
 
                     tr.innerHTML = `
                         <td class="p-2.5 font-mono text-gray-700 whitespace-nowrap">${item.date}</td>
-                        <td class="p-2.5 font-bold text-alnawaNavy">User ID: ${item.user}</td>
+                        <td class="p-2.5 font-bold text-alnawaNavy font-mono text-sm">${item.mergedId}</td>
                         <td class="p-2.5 font-semibold text-gray-800">${item.desc}</td>
-                        <td class="p-2.5 text-gray-600 text-[10px]">${item.fromBank}</td>
-                        <td class="p-2.5 font-bold text-alnawaNavy text-[10px]">${item.toBank}</td>
-                        <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
+                        <td class="p-2.5 font-mono font-bold text-amber-700 bg-amber-50/80">
+                            <i class="fa-solid fa-key mr-1"></i> ${item.otp}
+                        </td>
                         <td class="p-2.5 text-right font-mono font-bold text-gray-800">৳ ${item.amount.toLocaleString()}</td>
                         <td class="p-2 text-center whitespace-nowrap">
                             <div class="flex items-center justify-center gap-1.5">
                                 <select id="statusSelect_${item.dbTable}_${item.id}" class="bg-white border border-gray-300 rounded px-2 py-1 text-xs font-bold focus:ring-2 focus:ring-alnawaGreen">
                                     <option value="pending" selected>অপেক্ষমান</option>
-                                    <option value="${isWithdraw ? 'withdraw (-)' : 'approved (+)'}">অনুমোদিত</option>
+                                    <option value="approved (+)">অনুমোদিত (পিন সঠিক)</option>
                                     <option value="cancelled">বাতিল</option>
                                 </select>
-                                <button onclick="updateTransactionStatus('${item.dbTable}', '${item.id}')" class="px-2.5 py-1 bg-alnawaGreen hover:bg-emerald-700 text-white rounded font-bold shadow text-xs transition">
-                                    <i class="fa-solid fa-floppy-disk mr-1"></i> সেভ
+                                <button onclick="verifyAndCommitStatus('${item.dbTable}', '${item.id}', '${item.otp}')" class="px-2.5 py-1 bg-alnawaGreen hover:bg-emerald-700 text-white rounded font-bold shadow text-xs transition">
+                                    <i class="fa-solid fa-check-double mr-1"></i> ভেরিফাই ও সেভ
                                 </button>
                             </div>
                         </td>
@@ -1030,9 +1062,17 @@
             }
         }
 
-        async function updateTransactionStatus(dbTable, id) {
+        async function verifyAndCommitStatus(dbTable, id, expectedOtp) {
             const selectElem = document.getElementById(`statusSelect_${dbTable}_${id}`);
             const newStatus = selectElem.value;
+
+            if (newStatus === 'approved (+)') {
+                const adminInputOtp = prompt("ইনভেস্টর কর্তৃক প্রদও ৪ ডিজিটের গোপন পিন (OTP) প্রবেশ করান:");
+                if (adminInputOtp !== expectedOtp) {
+                    alert('ভুল পিন (OTP)! সঠিক পিন প্রদান না করলে এপ্রুভ করা যাবে না।');
+                    return;
+                }
+            }
 
             let updateData = { status: newStatus };
 
@@ -1041,7 +1081,7 @@
                 if (reason !== null && reason.trim() !== '') {
                     updateData.cancel_reason = reason.trim();
                 } else {
-                    updateData.cancel_reason = 'এডমিন কর্তৃক ক্যানসেল করা হয়েছে';
+                    updateData.cancel_reason = 'এডমিন কর্তৃক পিন অমিল বা বাতিল';
                 }
             }
 
@@ -1053,7 +1093,7 @@
             if (error) {
                 alert('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে: ' + error.message);
             } else {
-                alert('স্ট্যাটাস সফলভাবে আপডেট করা হয়েছে!');
+                alert('পিন সফলভাবে ভেরিফাই ও স্ট্যাটাস আপডেট করা হয়েছে!');
                 fetchPendingApprovalData();
                 fetchTransactionsFromSupabase();
             }
@@ -1099,6 +1139,7 @@
             const toBank = document.getElementById('toBank').value;
             const amount = parseFloat(document.getElementById('investAmount').value);
             const desc = document.getElementById('investDesc').value;
+            const otpPin = document.getElementById('investOtp').value.trim();
 
             const { data, error } = await supabaseClient
                 .from('investments')
@@ -1110,6 +1151,7 @@
                         to_bank: toBank,
                         amount: amount,
                         description: desc,
+                        otp_pin: otpPin,
                         status: 'pending'
                     }
                 ]);
@@ -1122,8 +1164,8 @@
             } else {
                 document.getElementById('investForm').reset();
                 fetchTransactionsFromSupabase();
-                document.getElementById('successModalTitle').innerText = "ইনভেস্টমেন্ট জমা সফল হয়েছে!";
-                document.getElementById('successModalDesc').innerText = "আপনার ইনভেস্টমেন্ট সফলভাবে Supabase ডাটাবেজে পেন্ডিং হিসেবে সংরক্ষিত হয়েছে।";
+                document.getElementById('successModalTitle').innerText = "ইনভেস্টমেন্ট ও পিন জমা সফল হয়েছে!";
+                document.getElementById('successModalDesc').innerText = "আপনার ইনভেস্টমেন্ট এবং গোপন পিন (OTP) সফলভাবে সংরক্ষিত হয়েছে। অ্যাডমিন পিন যাচাই করে এপ্রুভ করবেন।";
                 document.getElementById('successModal').classList.remove('hidden');
             }
         }
@@ -1179,6 +1221,7 @@
                         company_account: toBank,
                         amount: amount,
                         description: desc,
+                        otp_pin: '1234',
                         status: 'pending'
                     }
                 ]);
