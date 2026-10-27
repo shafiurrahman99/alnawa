@@ -651,7 +651,7 @@
                 company_id: loggedInCompanyId, user_id: loggedInUserId,
                 withdrawal_bank: document.getElementById('withdrawFromBank').value,
                 company_account: document.getElementById('withdrawToBank').value,
-                amount: parseFloat(document.getElementById('withdrawAmount').value),
+                amount: parseFloat(document.getElementById('withdrawAmount500') || document.getElementById('withdrawAmount').value),
                 description: document.getElementById('withdrawDesc').value,
                 otp_pin: '1234', status: 'pending'
             }]);
