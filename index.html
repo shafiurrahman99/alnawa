@@ -172,7 +172,7 @@
                         </label>
                         <label onclick="switchSubPage('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
                             <input type="radio" name="pageOption" id="radioPendingApproval" class="accent-orange-500">
-                            <div class="text-xs font-extrabold text-amber-300">পেন্ডিং ও SQL রান বক্স (এডমিন)</div>
+                            <div class="text-xs font-extrabold text-amber-300">পেন্ডিং ও ডিলিট প্যানেল (এডমিন)</div>
                         </label>
                     </div>
                 </div>
@@ -260,37 +260,42 @@
                     </div>
                 </div>
 
-                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & WEB SQL RUNNER BOX WITH LIVE 20 IDS -->
+                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & CLICK-TO-DELETE SQL BOX -->
                 <div id="subPagePendingApproval" class="hidden space-y-4 fade-in">
                     
-                    <!-- WEB-BASED SQL RUNNER BOX -->
+                    <!-- WEB-BASED SQL RUNNER BOX WITH AUTO-SELECT DELETE -->
                     <div class="bg-gray-900 text-white rounded-xl p-4 shadow border border-amber-500">
                         <h4 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-terminal"></i> সরাসরি ওয়েবসাইট থেকে SQL কুয়েরি রান বক্স (SQL Runner)
+                            <i class="fa-solid fa-terminal"></i> সরাসরি ডিলিট কুয়েরি বক্স (নিচের তালিকায় ক্লিক করুন)
                         </h4>
-                        <p class="text-[11px] text-gray-300 mb-2">নিচের টেবিল থেকে **ID** দেখে এখানে কমান্ড লিখুন (যেমন: <code>DELETE FROM investments WHERE id = 5;</code>)</p>
+                        <p class="text-[11px] text-gray-300 mb-2">নিচের টেবিল থেকে যেকোনো এন্ট্রিতে ক্লিক করলেই এখানে ডিলিট কমান্ড চলে আসবে:</p>
                         
                         <div class="flex flex-col gap-2">
-                            <textarea id="customSqlInput" rows="2" placeholder='DELETE FROM "TR" WHERE id = 10;' 
-                                      class="w-full bg-black/80 border border-gray-700 rounded p-2 text-xs font-mono text-emerald-400 focus:outline-none focus:ring-1 focus:ring-amber-400"></textarea>
+                            <textarea id="customSqlInput" rows="2" placeholder='নিচের তালিকায় ক্লিক করলে কুয়েরি এখানে চলে আসবে...' 
+                                      class="w-full bg-black/90 border border-gray-700 rounded p-2 text-xs font-mono text-emerald-400 focus:outline-none focus:ring-1 focus:ring-amber-400"></textarea>
                             
                             <div class="flex justify-between items-center">
                                 <span id="sqlRunStatus" class="text-[10px] text-amber-300"></span>
-                                <button onclick="runWebSqlCommand()" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-600 text-black font-bold text-xs rounded shadow transition flex items-center gap-1.5">
-                                    <i class="fa-solid fa-play"></i> কুয়েরি রান করুন (Run SQL)
-                                </button>
+                                <div class="flex gap-2">
+                                    <button onclick="clearSqlBox()" class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white font-bold text-xs rounded transition">
+                                        ক্যান্সেল
+                                    </button>
+                                    <button onclick="runWebSqlCommand()" class="px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded shadow transition flex items-center gap-1.5">
+                                        <i class="fa-solid fa-trash"></i> ডিলিট কুয়েরি রান করুন
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- LIVE LATEST 20 RECORDS VIEWER FOR ID FINDING -->
+                    <!-- LIVE LATEST 20 RECORDS (CLICKABLE FOR AUTO DELETE QUERY) -->
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-blue-300">
                         <div class="flex justify-between items-center mb-2 border-b pb-2">
                             <h4 class="text-xs font-bold text-alnawaNavy flex items-center gap-2">
-                                <i class="fa-solid fa-database text-blue-600"></i> ডাটাবেজের সর্বশেষ ২০টি এন্ট্রি ও আইডি (Latest 20 Records & IDs)
+                                <i class="fa-solid fa-database text-blue-600"></i> ডাটাবেজের সর্বশেষ ২০টি এন্ট্রি (ক্লিক করলেই ডিলিট কুয়েরি তৈরি হবে)
                             </h4>
-                            <span class="text-[10px] bg-blue-50 text-alnawaNavy px-2 py-0.5 rounded font-bold border border-blue-200">
-                                লাইভ আইডি লিস্ট
+                            <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold border border-amber-300 animate-pulse">
+                                সারিতে ক্লিক করুন
                             </span>
                         </div>
                         <div class="overflow-x-auto custom-scrollbar max-h-60">
@@ -305,7 +310,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="latestRecordsTableBody" class="divide-y divide-gray-200 text-[11px] font-medium">
-                                    <!-- Dynamic Latest 20 Records -->
+                                    <!-- Dynamic Clickable Rows -->
                                 </tbody>
                             </table>
                         </div>
@@ -451,7 +456,7 @@
             closeMobileResetModal();
         }
 
-        // Fetch Latest 20 Records across tables for Admin ID tracking
+        // Fetch Latest 20 Records and make them clickable for auto-delete query
         async function fetchLatestRecordsForAdmin() {
             const tbody = document.getElementById('latestRecordsTableBody');
             tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">সর্বশেষ ডাটা লোড হচ্ছে...</td></tr>`;
@@ -475,8 +480,12 @@
                 }
 
                 combined.slice(0, 20).forEach(item => {
+                    // Table name formatting for SQL query (TR requires double quotes)
+                    const tableNameForSql = item.table === 'TR' ? '"TR"' : item.table;
+                    const deleteQueryString = `DELETE FROM ${tableNameForSql} WHERE id = ${item.id};`;
+
                     tbody.innerHTML += `
-                        <tr class="hover:bg-blue-50/50">
+                        <tr onclick="selectRecordForDelete('${deleteQueryString}')" class="hover:bg-amber-100 cursor-pointer transition border-b">
                             <td class="p-2 font-bold text-alnawaNavy">${item.table}</td>
                             <td class="p-2 font-mono font-extrabold text-amber-700 bg-amber-50">ID: ${item.id}</td>
                             <td class="p-2 font-mono">${item.date}</td>
@@ -491,17 +500,29 @@
             }
         }
 
-        // Direct Web-Based SQL Runner Function
+        // Automatically fill textarea when a row is clicked
+        function selectRecordForDelete(queryText) {
+            document.getElementById('customSqlInput').value = queryText;
+            document.getElementById('sqlRunStatus').innerText = "ডিলিট কুয়েরি তৈরি হয়েছে। এখন 'ডিলিট কুয়েরি রান করুন' বাটনে ক্লিক করুন।";
+        }
+
+        // Clear SQL Box (Cancel Button)
+        function clearSqlBox() {
+            document.getElementById('customSqlInput').value = '';
+            document.getElementById('sqlRunStatus').innerText = "বাতিল করা হয়েছে।";
+        }
+
+        // Direct Web-Based SQL Runner Function with 10-Second safety confirmation
         async function runWebSqlCommand() {
             const sqlText = document.getElementById('customSqlInput').value.trim();
             const statusSpan = document.getElementById('sqlRunStatus');
 
             if (!sqlText) {
-                alert('দয়া করে কোনো কুয়েরি বা SQL কমান্ড লিখুন!');
+                alert('দয়া করে প্রথমে নিচের তালিকা থেকে কোনো একটি এন্ট্রিতে ক্লিক করুন!');
                 return;
             }
 
-            if (!confirm("সতর্কতা: আপনি কি নিশ্চিত যে এই SQL কমান্ডটি ডাটাবেজে রান করতে চান?")) return;
+            if (!confirm("⚠️ চরম সতর্কতা: আপনি কি নিশ্চিতভাবে এই রেকর্ডটি ডাটাবেজ থেকে স্থায়ীভাবে ডিলিট করতে চান?")) return;
 
             statusSpan.innerText = "প্রসেসিং হচ্ছে...";
 
@@ -512,8 +533,8 @@
                     statusSpan.innerText = "এরর: " + error.message;
                     alert("কুয়েরি রান করতে সমস্যা হয়েছে: " + error.message);
                 } else {
-                    statusSpan.innerText = "কুয়েরি সফলভাবে এক্সিকিউট করা হয়েছে!";
-                    alert("সফলভাবে কুয়েরি রান হয়েছে!");
+                    statusSpan.innerText = "সফলভাবে ডিলিট সম্পন্ন হয়েছে!";
+                    alert("রেকর্ড সফলভাবে মুছে ফেলা হয়েছে!");
                     document.getElementById('customSqlInput').value = '';
                     fetchTransactionsFromSupabase();
                     fetchPendingApprovalData();
