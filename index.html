@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল</title>
+    <title>মেসার্স আল নাওয়া কোম্পানী - মাস্টার ইউজার পোর্টাল</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -125,7 +125,7 @@
                                 <span class="font-extrabold text-alnawaNavy text-base" id="currentUserDisplay">ইউজার</span>
                                 <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border" id="statusBadgeText">সফল</span>
                             </div>
-                            <p class="text-[11px] text-gray-500" id="userSubTitleRole">আল নাওয়া কোম্পানী রেজিস্টার্ড ইনভেস্টর</p>
+                            <p class="text-[11px] text-gray-500" id="userSubTitleRole">আল নাওয়া কোম্পানী মাস্টার সামারি ইনভেস্টর</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
@@ -134,9 +134,10 @@
                     </div>
                 </div>
 
-                <!-- PERSONAL INFO & VALIDITY TIMER (Only for Users) -->
+                <!-- PERSONAL INFO FROM MASTER USER SUMMARY & VALIDITY TIMER -->
                 <div id="userProfileAndTimerCard" class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="md:col-span-2 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow border flex flex-col justify-center">
+                        <div class="text-xs font-bold text-alnawaNavy mb-2"><i class="fa-solid fa-id-card"></i> মাস্টার ইউজার সামারি (ব্যক্তিগত তথ্য)</div>
                         <div class="overflow-x-auto custom-scrollbar">
                             <table class="w-full text-left text-xs border border-gray-200 rounded-lg">
                                 <tbody class="divide-y divide-gray-200" id="userProfileTableBody"></tbody>
@@ -170,7 +171,7 @@
                         </label>
                     </div>
 
-                    <!-- ADMIN NAV (Radio Buttons for Admin Features) -->
+                    <!-- ADMIN NAV -->
                     <div class="hidden grid grid-cols-1 sm:grid-cols-5 gap-2" id="adminNavContainer">
                         <label onclick="switchAdminTab('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
                             <input type="radio" name="adminPageOption" id="adminRadioPending" checked class="accent-orange-500">
@@ -295,10 +296,10 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 1: PENDING APPROVAL -->
+                <!-- ADMIN TABS -->
                 <div id="adminTabPending" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-amber-300">
-                        <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Pending Approval & Status Panel (Investments & Withdrawals)</h3>
+                        <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Pending Approval & Status Panel</h3>
                         <div class="overflow-x-auto custom-scrollbar">
                             <table class="w-full text-left text-xs border-collapse min-w-[850px]">
                                 <thead>
@@ -312,7 +313,6 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 2: ADMIN CONTROL PANEL -->
                 <div id="adminTabControl" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-red-300">
                         <h3 class="text-sm font-bold text-red-600 mb-3 border-b pb-2">👑 Admin Control Panel (User Management)</h3>
@@ -333,7 +333,6 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 3: RAW DATABASE (READ-ONLY) -->
                 <div id="adminTabRawDb" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-emerald-500">
                         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -363,7 +362,6 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 4: ADMIN INVESTMENT FORM -->
                 <div id="adminTabInvestment" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-indigo-300">
                         <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Admin Investment Entry (For Any User)</h3>
@@ -400,7 +398,6 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 5: ADMIN WITHDRAWAL FORM & SQL EDITOR -->
                 <div id="adminTabWithdrawal" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-blue-300 mb-4">
                         <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Admin Withdrawal Entry (For Any User)</h3>
@@ -433,7 +430,6 @@
                         </form>
                     </div>
 
-                    <!-- SQL GENERAL EDITOR & DELETE BOX -->
                     <div class="bg-gray-900 text-white rounded-xl p-4 shadow border border-amber-500 space-y-4">
                         <h4 class="text-xs font-bold text-amber-400 flex items-center gap-2">
                             <i class="fa-solid fa-terminal"></i> SQL General Query Editor & Delete Box (Single click on any table row below)
@@ -487,7 +483,7 @@
         <footer class="bg-white flex-shrink-0 border-t-2 border-alnawaGreen">
             <div class="grid grid-cols-1 md:grid-cols-12 h-auto md:h-12 text-white font-sans text-xs">
                 <div class="md:col-span-7 bg-alnawaGreen px-3 py-2 flex items-center">
-                    <div>১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪১১, বন্দর, নারায়ণগঞ্জ।</div>
+                    <div>১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪_{\|১, বন্দর, নারায়ণগঞ্জ।</div>
                 </div>
                 <div class="md:col-span-5 bg-gradient-to-r from-alnawaNavy to-blue-900 px-4 py-2 flex flex-col justify-center items-end">
                     <div>মোবাইল : 01942-341889</div>
@@ -496,7 +492,7 @@
         </footer>
     </div>
 
-    <!-- PASSWORD RESET MODAL WITH CLOSE (X) BUTTON -->
+    <!-- PASSWORD RESET MODAL -->
     <div id="mobileResetModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeMobileResetModal()">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
             <button onclick="closeMobileResetModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -573,21 +569,31 @@
         });
 
         async function loadAllUserDropdowns() {
-            const { data } = await supabaseClient.from('IND').select('*');
-            if (data) {
-                const invSel = document.getElementById('adminSelectUserForInv');
-                const witSel = document.getElementById('adminSelectUserForWit');
-                if (invSel) invSel.innerHTML = '';
-                if (witSel) witSel.innerHTML = '';
-                data.forEach(u => {
-                    const compId = u['Company ID'] || 1;
-                    const uId = u['User ID'] || 1;
-                    const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
-                    const opt = `<option value="${mergedId}">${mergedId} - ${u['Name'] || u['নাম'] || 'User'}</option>`;
-                    if (invSel) invSel.innerHTML += opt;
-                    if (witSel) witSel.innerHTML += opt;
-                });
+            // master_user_summary বা IND টেবিল থেকে ইউজার লোড করা
+            const { data } = await supabaseClient.from('master_user_summary').select('*');
+            if (data && data.length > 0) {
+                populateDropdowns(data);
+            } else {
+                // ফলব্যাক হিসেবে IND টেবিল থেকে চেক করা
+                const { data: indData } = await supabaseClient.from('IND').select('*');
+                if (indData) populateDropdowns(indData);
             }
+        }
+
+        function populateDropdowns(dataList) {
+            const invSel = document.getElementById('adminSelectUserForInv');
+            const witSel = document.getElementById('adminSelectUserForWit');
+            if (invSel) invSel.innerHTML = '';
+            if (witSel) witSel.innerHTML = '';
+            dataList.forEach(u => {
+                const compId = u['company_id'] || u['Company ID'] || 1;
+                const uId = u['user_id'] || u['User ID'] || 1;
+                const mergedId = u['master_id'] || `${compId}${String(uId).padStart(3, '0')}`;
+                const userName = u['user_name'] || u['Name'] || u['নাম'] || 'User';
+                const opt = `<option value="${mergedId}">${mergedId} - ${userName}</option>`;
+                if (invSel) invSel.innerHTML += opt;
+                if (witSel) witSel.innerHTML += opt;
+            });
         }
 
         async function handleLogin(e) {
@@ -626,11 +632,15 @@
             }
             fullMergedUserId = uInput;
 
-            const { data: indData } = await supabaseClient.from('IND').select('*').eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId).maybeSingle();
-            let userRecord = indData;
-            if (!userRecord) {
-                const { data: altData } = await supabaseClient.from('IND').select('*').eq('User ID', uInput).maybeSingle();
-                userRecord = altData;
+            // প্রথমে master_user_summary টেবিল থেকে ব্যক্তিগত তথ্য ফেচ করা
+            let userRecord = null;
+            const { data: summaryData } = await supabaseClient.from('master_user_summary').select('*').eq('master_id', fullMergedUserId).maybeSingle();
+            if (summaryData) {
+                userRecord = summaryData;
+            } else {
+                // ফলব্যাক হিসেবে IND টেবিল থেকে ডেটা নেওয়া
+                const { data: indData } = await supabaseClient.from('IND').select('*').eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId).maybeSingle();
+                userRecord = indData || await supabaseClient.from('IND').select('*').eq('master_id', fullMergedUserId).maybeSingle().then(res => res.data);
             }
 
             if (userRecord) {
@@ -646,8 +656,8 @@
                     
                     document.getElementById('page1').classList.add('hidden');
                     document.getElementById('page2Container').classList.remove('hidden');
-                    document.getElementById('currentUserDisplay').innerText = userRecord['Name'] || userRecord['নাম'] || `আইডি: ${fullMergedUserId}`;
-                    document.getElementById('userSubTitleRole').innerText = "আল নাওয়া কোম্পানী রেজিস্টার্ড ইনভেস্টর";
+                    document.getElementById('currentUserDisplay').innerText = userRecord['user_name'] || userRecord['Name'] || userRecord['নাম'] || `আইডি: ${fullMergedUserId}`;
+                    document.getElementById('userSubTitleRole').innerText = "আল নাওয়া কোম্পানী মাস্টার সামারি ইনভেস্টর";
                     document.getElementById('autoUser').value = fullMergedUserId;
                     document.getElementById('withdrawUserDisplay').value = fullMergedUserId;
                     document.getElementById('resetUserIdDisplay').value = fullMergedUserId;
@@ -658,7 +668,7 @@
                     showLoginError("ভুল পাসওয়ার্ড! নতুন পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
                 }
             } else {
-                showLoginError(`ইউজার আইডি (${fullMergedUserId}) পাওয়া যায়নি!`);
+                showLoginError(`ইউজার আইডি (${fullMergedUserId}) মাস্টার সামারি টেবিলে পাওয়া যায়নি!`);
             }
         }
 
@@ -671,16 +681,16 @@
         function renderUserProfile(data) {
             document.getElementById('userProfileTableBody').innerHTML = `
                 <tr class="bg-emerald-50/50">
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">জাতীয় পরিচয়পত্র তথ্য</td>
-                    <td class="p-2 font-mono font-bold text-gray-800">${data['জাতীয় পরিচয়পত্র (NID)'] || data['NID'] || 'N/A'}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">মোবাইল নাম্বার</td>
-                    <td class="p-2 font-mono font-bold">${data['মোবাইল নাম্বার '] || data['mobile'] || 'N/A'}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">মাস্টার আইডি / নাম</td>
+                    <td class="p-2 font-mono font-bold text-gray-800">${data['master_id'] || fullMergedUserId} - ${data['user_name'] || data['Name'] || data['নাম'] || 'N/A'}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">কোম্পানি ও ইউজার আইডি</td>
+                    <td class="p-2 font-mono font-bold">${data['company_id'] || data['Company ID'] || 1} / ${data['user_id'] || data['User ID'] || 1}</td>
                 </tr>
                 <tr class="bg-white">
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">নমিনী</td>
-                    <td class="p-2 font-bold text-gray-800">${data['নমিনী'] || data['nominee'] || 'সংরক্ষিত নেই'}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">নমিনীর মোবাইল নাম্বার</td>
-                    <td class="p-2 font-mono font-bold text-gray-700">${data['নমিনীর মোবাইল নাম্বার'] || data['nominee_mobile'] || 'সংরক্ষিত নেই'}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">মোট ইনভেস্টমেন্ট (সামারি)</td>
+                    <td class="p-2 font-bold text-emerald-700 font-mono">৳ ${(Number(data['total_investment']) || 0).toLocaleString()}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">মোট উইথড্রল (সামারি)</td>
+                    <td class="p-2 font-bold text-blue-700 font-mono">৳ ${(Number(data['total_withdrawal']) || 0).toLocaleString()}</td>
                 </tr>
             `;
             startValidityCountdown(data['validity_date'] || data['Validity Date'] || '2027-12-31');
@@ -744,8 +754,8 @@
 
             if (newPass !== confirmPass) { alert('নতুন পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড এক নয়!'); return; }
             
-            const registeredMobile = currentUserData['মোবাইল নাম্বার '] || currentUserData['mobile'];
-            if (mobileInput !== registeredMobile) { alert('মোবাইল নম্বরটি সঠিক নয়!'); return; }
+            const registeredMobile = currentUserData['মোবাইল নাম্বার '] || currentUserData['mobile'] || currentUserData['phone'];
+            if (mobileInput !== registeredMobile && registeredMobile) { alert('মোবাইল নম্বরটি সঠিক নয়!'); return; }
 
             const { error } = await supabaseClient.from('IND').update({ password: newPass }).eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId);
             if (error) { alert('পাসওয়ার্ড আপডেট করতে সমস্যা হয়েছে: ' + error.message); return; }
@@ -758,15 +768,15 @@
         async function fetchAdminControlPanel() {
             const tbody = document.getElementById('adminControlTableBody');
             tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">Loading...</td></tr>`;
-            const { data } = await supabaseClient.from('IND').select('*');
+            const { data } = await supabaseClient.from('master_user_summary').select('*');
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">No users found</td></tr>`; return; }
             data.forEach(u => {
-                const formattedId = u['Company ID'] ? `${u['Company ID']}${String(u['User ID']).padStart(3, '0')}` : u['User ID'];
+                const formattedId = u['master_id'] || (u['Company ID'] ? `${u['Company ID']}${String(u['User ID']).padStart(3, '0')}` : u['User ID']);
                 tbody.innerHTML += `
                     <tr>
                         <td class="p-2 font-mono font-bold">${formattedId}</td>
-                        <td class="p-2 font-mono">${u['মোবাইল নাম্বার '] || ''}</td>
+                        <td class="p-2 font-mono">${u['user_name'] || u['Name'] || ''}</td>
                         <td class="p-2 font-mono">${u.password || '1234#'}</td>
                         <td class="p-2"><label><input type="checkbox" checked> Investment</label> <label><input type="checkbox" checked> Withdrawal</label></td>
                         <td class="p-2"><button onclick="alert('Saved!')" class="bg-alnawaGreen text-white px-2.5 py-1 rounded">Save</button></td>
@@ -777,43 +787,30 @@
 
         async function fetchRawDatabaseTable() {
             const tbody = document.getElementById('rawDatabaseTableBody');
-            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">Loading Raw Database...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">Loading Raw Database from master_user_summary...</td></tr>`;
             try {
-                const { data: indData } = await supabaseClient.from('IND').select('*');
-                const { data: invData } = await supabaseClient.from('investments').select('*');
-                const { data: witData } = await supabaseClient.from('withdrawals').select('*');
-
+                const { data: summaryData } = await supabaseClient.from('master_user_summary').select('*');
                 tbody.innerHTML = '';
-                if (!indData || indData.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">No records in IND table</td></tr>`;
+                if (!summaryData || summaryData.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">No records in master_user_summary table</td></tr>`;
                     return;
                 }
 
-                indData.forEach(user => {
-                    const compId = user['Company ID'] || 1;
-                    const uId = user['User ID'] || 1;
-                    const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
-                    const mobile = user['মোবাইল নাম্বার '] || user['mobile'] || 'N/A';
-                    const passHist = user['password'] || '1234#';
-
-                    const userInvs = invData ? invData.filter(i => (i['User ID'] === mergedId || i.user_id == uId)) : [];
-                    const userWits = witData ? witData.filter(w => (w['User ID'] === mergedId || w.user_id == uId)) : [];
-
-                    const totalInvAmt = userInvs.reduce((sum, i) => sum + (Number(i.amount) || 0), 0);
-                    const invBanks = [...new Set(userInvs.map(i => i.from_bank).filter(Boolean))].join(', ') || '-';
-
-                    const totalWitAmt = userWits.reduce((sum, w) => sum + (Number(w.amount) || 0), 0);
-                    const witBanks = [...new Set(userWits.map(w => w.withdrawal_bank).filter(Boolean))].join(', ') || '-';
+                summaryData.forEach(user => {
+                    const mergedId = user['master_id'] || '1001';
+                    const userName = user['user_name'] || user['Name'] || 'User';
+                    const totalInv = Number(user['total_investment']) || 0;
+                    const totalWit = Number(user['total_withdrawal']) || 0;
 
                     tbody.innerHTML += `
                         <tr class="hover:bg-emerald-50">
                             <td class="p-2 font-bold text-alnawaNavy">${mergedId}</td>
-                            <td class="p-2">${mobile}</td>
-                            <td class="p-2 text-gray-600">${passHist}</td>
-                            <td class="p-2 text-right font-bold text-emerald-700">৳ ${totalInvAmt.toLocaleString()}</td>
-                            <td class="p-2">${invBanks}</td>
-                            <td class="p-2 text-right font-bold text-blue-700">৳ ${totalWitAmt.toLocaleString()}</td>
-                            <td class="p-2">${witBanks}</td>
+                            <td class="p-2">${userName}</td>
+                            <td class="p-2 text-gray-600">Active Summary</td>
+                            <td class="p-2 text-right font-bold text-emerald-700">৳ ${totalInv.toLocaleString()}</td>
+                            <td class="p-2">Investments + TR</td>
+                            <td class="p-2 text-right font-bold text-blue-700">৳ ${totalWit.toLocaleString()}</td>
+                            <td class="p-2">Withdrawals</td>
                         </tr>
                     `;
                 });
@@ -885,7 +882,6 @@
             } catch (err) { alert("Error: " + err.message); }
         }
 
-        // SUMMARY REPORT INCLUDING WITHDRAWALS
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
@@ -982,7 +978,6 @@
             fetchAllRecordsForAdmin();
         }
 
-        // INVESTMENT 10 SECONDS COUNTDOWN PROCESS
         function startInvestmentCountdown(e) {
             e.preventDefault();
             document.getElementById('investSubmitArea').classList.add('hidden');
@@ -1032,7 +1027,6 @@
             document.getElementById('successModal').classList.remove('hidden');
         }
 
-        // WITHDRAWAL 10 SECONDS COUNTDOWN PROCESS
         function startWithdrawalCountdown(e) {
             e.preventDefault();
             document.getElementById('withdrawSubmitArea').classList.add('hidden');
@@ -1082,7 +1076,6 @@
             document.getElementById('successModal').classList.remove('hidden');
         }
 
-        // ADMIN DIRECT SUBMISSIONS
         async function adminSubmitInvestment(e) {
             e.preventDefault();
             const targetUser = document.getElementById('adminSelectUserForInv').value;
