@@ -154,13 +154,13 @@
                 <div class="bg-gradient-to-r from-emerald-800 via-alnawaNavy to-emerald-900 rounded-xl p-3 shadow-lg text-white">
                     <div class="text-xs font-bold text-amber-300 mb-2" id="navBarTitleText"><i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:</div>
                     
-                    <!-- USER NAV (EXACTLY 4 Radio Buttons) -->
+                    <!-- USER NAV (Dynamic visibility based on permissions) -->
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-2" id="userNavContainer">
-                        <label onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer hover:bg-white/20 transition">
+                        <label id="navSubmissionLabel" onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer hover:bg-white/20 transition">
                             <input type="radio" name="pageOption" id="radioSubmission" checked class="accent-orange-500">
                             <div class="text-xs font-extrabold">ইনভেস্টমেন্ট ফরম</div>
                         </label>
-                        <label onclick="switchSubPage('withdrawal')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer hover:bg-white/20 transition">
+                        <label id="navWithdrawalLabel" onclick="switchSubPage('withdrawal')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer hover:bg-white/20 transition">
                             <input type="radio" name="pageOption" id="radioWithdrawal" class="accent-orange-500">
                             <div class="text-xs font-extrabold">উইথড্রল ফরম</div>
                         </label>
@@ -174,7 +174,7 @@
                         </label>
                     </div>
 
-                    <!-- ADMIN NAV -->
+                    <!-- ADMIN NAV (Strictly for Admin Only) -->
                     <div class="hidden grid grid-cols-1 sm:grid-cols-5 gap-2" id="adminNavContainer">
                         <label onclick="switchAdminTab('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer hover:bg-white/20 transition">
                             <input type="radio" name="adminPageOption" id="adminRadioPending" checked class="accent-orange-500">
@@ -349,10 +349,10 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 2: USER MANAGEMENT -->
+                <!-- ADMIN TAB 2: USER MANAGEMENT (Permission Checkboxes) -->
                 <div id="adminTabControl" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-red-300">
-                        <h3 class="text-sm font-bold text-red-600 mb-3 border-b pb-2">👑 Admin Control Panel (User Management)</h3>
+                        <h3 class="text-sm font-bold text-red-600 mb-3 border-b pb-2">👑 Admin Control Panel (User Management & Permissions)</h3>
                         <div class="overflow-x-auto custom-scrollbar">
                             <table class="w-full text-left text-xs border-collapse">
                                 <thead class="bg-gray-100 uppercase text-[10px]">
@@ -360,7 +360,7 @@
                                         <th class="p-2">User ID</th>
                                         <th class="p-2">Mobile Number</th>
                                         <th class="p-2">Latest Password</th>
-                                        <th class="p-2">Permissions</th>
+                                        <th class="p-2">Permissions (Investment / Withdrawal)</th>
                                         <th class="p-2">Action</th>
                                     </tr>
                                 </thead>
@@ -400,7 +400,7 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 4: MASTER USER SUMMARY REPORT -->
+                <!-- ADMIN TAB 4: MASTER USER SUMMARY REPORT (Sorted ASCENDING by সদস্য নং) -->
                 <div id="adminTabMasterSummary" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-indigo-300">
                         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -465,6 +465,9 @@
                 <i class="fa-solid fa-toolbox text-amber-500"></i> Admin Modal Tools Window
             </h4>
             <div class="space-y-3">
+                <button onclick="closeAdminModalTools(); openAdminInvestmentModal();" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-green-700 hover:from-emerald-700 hover:to-green-800 text-white font-bold rounded-xl shadow flex items-center justify-center gap-2 text-xs">
+                    <i class="fa-solid fa-file-circle-plus"></i> Open Admin Investment Form Modal
+                </button>
                 <button onclick="closeAdminModalTools(); openAdminWithdrawalModal();" class="w-full py-3 bg-gradient-to-r from-blue-700 to-indigo-800 hover:from-blue-800 hover:to-indigo-900 text-white font-bold rounded-xl shadow flex items-center justify-center gap-2 text-xs">
                     <i class="fa-solid fa-hand-holding-dollar"></i> Open Admin Withdrawal Form Modal
                 </button>
@@ -475,10 +478,57 @@
         </div>
     </div>
 
-    <!-- MODAL POP-UP 2: ADMIN WITHDRAWAL FORM -->
+    <!-- MODAL POP-UP 2A: ADMIN INVESTMENT SUBMISSION FORM (Full-screen Modal with Close Button & User ID Dropdown) -->
+    <div id="adminInvestmentModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 max-w-xl w-full shadow-2xl relative border-2 border-emerald-600 max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminInvestmentModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2 flex items-center gap-2">
+                <i class="fa-solid fa-file-circle-plus text-alnawaGreen"></i> এডমিন ইনভেস্টমেন্ট সাবমিশন ফর্ম (Admin Investment Entry)
+            </h3>
+            <form id="adminInvestmentForm" onsubmit="adminSubmitInvestment(event)" class="space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] text-gray-500 mb-1">Select User ID</label>
+                        <select id="adminSelectUserForInv" required class="border p-2 rounded text-xs bg-white w-full font-mono font-bold"></select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-gray-500 mb-1">প্রেরক ব্যাংক (From Bank)</label>
+                        <select id="adminInvFromBank" required class="border p-2 rounded text-xs bg-white w-full"></select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-[10px] text-gray-500 mb-1">গ্রহণকারী ব্যাংক (Company Bank)</label>
+                        <select id="adminInvToBank" required class="border p-2 rounded text-xs bg-emerald-50 w-full">
+                            <option value="আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক">আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক</option>
+                            <option value="আলনাওয়া ডিবিবিএল">আলনাওয়া ডিবিবিএল</option>
+                            <option value="আলনাওয়া ব্রাক ব্যাংক">আলনাওয়া ব্রাক ব্যাংক</option>
+                            <option value="আলনাওয়া আইবিবিএল">আলনাওয়া আইবিবিএল</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-gray-500 mb-1">ইনভেস্টমেন্ট পরিমাণ (৳)</label>
+                        <input type="number" id="adminInvAmount" min="1000" required placeholder="Amount" class="border p-2 rounded text-xs font-bold w-full">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input type="text" id="adminInvDesc" required placeholder="বিবরণ / কারণ..." class="border p-2 rounded text-xs w-full">
+                    <input type="text" id="adminInvOtp" required placeholder="OTP Pin (যেমন: 1234)" class="border p-2 rounded text-xs font-mono font-bold w-full bg-amber-50">
+                </div>
+                <div class="flex justify-end gap-2 pt-2">
+                    <button type="button" onclick="closeAdminInvestmentModal()" class="px-4 py-2 bg-gray-200 text-gray-700 font-bold rounded text-xs">বাতিল</button>
+                    <button type="submit" class="px-6 py-2 bg-alnawaGreen hover:bg-emerald-700 text-white font-bold rounded text-xs shadow">ইনভেস্টমেন্ট সাবমিট করুন</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL POP-UP 2B: ADMIN WITHDRAWAL FORM -->
     <div id="adminWithdrawalModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-xl w-full shadow-2xl relative border-2 border-blue-500 max-h-[90vh] overflow-y-auto">
-            <button onclick="closeAdminWithdrawalModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
+            <button onclick="closeAdminWithdrawalModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 transition">
                 <i class="fa-solid fa-xmark"></i>
             </button>
             <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2 flex items-center gap-2">
@@ -519,7 +569,7 @@
         </div>
     </div>
 
-    <!-- MODAL POP-UP 3: SQL DELETE QUERY MODAL WINDOW & SINGLE CLICK FEATURE (Fixed & Verified) -->
+    <!-- MODAL POP-UP 3: SQL DELETE QUERY MODAL WINDOW & SINGLE CLICK FEATURE -->
     <div id="sqlDeleteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-3xl w-full shadow-2xl relative border-2 border-red-500 max-h-[90vh] flex flex-col">
             <button onclick="closeSqlDeleteModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -633,7 +683,7 @@
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
-            const selects = ['fromBank', 'withdrawFromBank', 'adminWitFromBank'];
+            const selects = ['fromBank', 'withdrawFromBank', 'adminInvFromBank', 'adminWitFromBank'];
             selects.forEach(selId => {
                 const el = document.getElementById(selId);
                 if (el) {
@@ -648,13 +698,17 @@
         async function loadAllUserDropdowns() {
             const { data } = await supabaseClient.from('master_user_summary').select('*');
             const witSel = document.getElementById('adminSelectUserForWit');
+            const invSel = document.getElementById('adminSelectUserForInv');
             if (witSel) witSel.innerHTML = '';
+            if (invSel) invSel.innerHTML = '';
 
             if (data && data.length > 0) {
                 data.forEach(u => {
                     const mId = u.master_id || u['User ID'] || '1001';
                     const name = u.name || u['নাম'] || 'User';
-                    if (witSel) witSel.innerHTML += `<option value="${mId}">${mId} - ${name}</option>`;
+                    const opt = `<option value="${mId}">${mId} - ${name}</option>`;
+                    if (witSel) witSel.innerHTML += opt;
+                    if (invSel) invSel.innerHTML += opt;
                 });
             } else {
                 const { data: fallbackData } = await supabaseClient.from('IND').select('*');
@@ -663,7 +717,9 @@
                         const compId = u['Company ID'] || 1;
                         const uId = u['User ID'] || 1;
                         const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
-                        if (witSel) witSel.innerHTML += `<option value="${mergedId}">${mergedId} - ${u['Name'] || 'User'}</option>`;
+                        const opt = `<option value="${mergedId}">${mergedId} - ${u['Name'] || 'User'}</option>`;
+                        if (witSel) witSel.innerHTML += opt;
+                        if (invSel) invSel.innerHTML += opt;
                     });
                 }
             }
@@ -734,6 +790,7 @@
                     document.getElementById('resetUserIdDisplay').value = fullMergedUserId;
 
                     await renderUserProfile(userRecord);
+                    await checkUserPermissionsAndApplyVisibility(fullMergedUserId);
                     switchSubPage('submission');
                 } else {
                     showLoginError("ভুল পাসওয়ার্ড! নতুন পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
@@ -741,6 +798,19 @@
             } else {
                 showLoginError(`ইউজার আইডি (${fullMergedUserId}) পাওয়া যায়নি!`);
             }
+        }
+
+        // Dynamic Permission Check: Hide/Show Investment & Withdrawal forms based on Admin Control Checkboxes
+        async function checkUserPermissionsAndApplyVisibility(userId) {
+            const { data } = await supabaseClient.from('user_permissions').select('*').eq('user_id', userId).maybeSingle();
+            const invLabel = document.getElementById('navSubmissionLabel');
+            const witLabel = document.getElementById('navWithdrawalLabel');
+
+            let canInvest = data ? data.can_invest : true;
+            let canWithdraw = data ? data.can_withdraw : true;
+
+            if (invLabel) invLabel.style.display = canInvest ? 'flex' : 'none';
+            if (witLabel) witLabel.style.display = canWithdraw ? 'flex' : 'none';
         }
 
         function showLoginError(msg) {
@@ -840,8 +910,12 @@
             else if (target === 'adminMasterSummary') { document.getElementById('adminTabMasterSummary').classList.remove('hidden'); fetchAdminMasterSummaryReport(); }
         }
 
+        // Modal Popups Handlers
         function openAdminModalTools() { document.getElementById('adminModalTools').classList.remove('hidden'); }
         function closeAdminModalTools() { document.getElementById('adminModalTools').classList.add('hidden'); }
+
+        function openAdminInvestmentModal() { document.getElementById('adminInvestmentModal').classList.remove('hidden'); loadAllUserDropdowns(); }
+        function closeAdminInvestmentModal() { document.getElementById('adminInvestmentModal').classList.add('hidden'); }
 
         function openAdminWithdrawalModal() { document.getElementById('adminWithdrawalModal').classList.remove('hidden'); loadAllUserDropdowns(); }
         function closeAdminWithdrawalModal() { document.getElementById('adminWithdrawalModal').classList.add('hidden'); }
@@ -873,24 +947,52 @@
             handleLogout();
         }
 
+        // Admin Control Panel with dynamic permission checkboxes
         async function fetchAdminControlPanel() {
             const tbody = document.getElementById('adminControlTableBody');
             tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">Loading...</td></tr>`;
             const { data } = await supabaseClient.from('IND').select('*');
+            const { data: permData } = await supabaseClient.from('user_permissions').select('*');
+            
             tbody.innerHTML = '';
             if (!data || data.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">No users found</td></tr>`; return; }
+            
             data.forEach(u => {
-                const formattedId = u['Company ID'] ? `${u['Company ID']}${String(u['User ID']).padStart(3, '0')}` : u['User ID'];
+                const compId = u['Company ID'] || 1;
+                const uId = u['User ID'] || 1;
+                const formattedId = `${compId}${String(uId).padStart(3, '0')}`;
+                
+                const userPerm = permData ? permData.find(p => p.user_id === formattedId) : null;
+                const invChecked = userPerm ? userPerm.can_invest : true;
+                const witChecked = userPerm ? userPerm.can_withdraw : true;
+
                 tbody.innerHTML += `
                     <tr>
                         <td class="p-2 font-mono font-bold">${formattedId}</td>
                         <td class="p-2 font-mono">${u['মোবাইল নাম্বার '] || ''}</td>
                         <td class="p-2 font-mono">${u.password || '1234#'}</td>
-                        <td class="p-2"><label><input type="checkbox" checked> Investment</label> <label><input type="checkbox" checked> Withdrawal</label></td>
-                        <td class="p-2"><button onclick="alert('Saved!')" class="bg-alnawaGreen text-white px-2.5 py-1 rounded hover:bg-emerald-700">Save</button></td>
+                        <td class="p-2 space-x-2">
+                            <label><input type="checkbox" id="inv_perm_${formattedId}" ${invChecked ? 'checked' : ''}> Investment</label> 
+                            <label><input type="checkbox" id="wit_perm_${formattedId}" ${witChecked ? 'checked' : ''}> Withdrawal</label>
+                        </td>
+                        <td class="p-2"><button onclick="saveUserPermissions('${formattedId}')" class="bg-alnawaGreen text-white px-2.5 py-1 rounded hover:bg-emerald-700">Save</button></td>
                     </tr>
                 `;
             });
+        }
+
+        async function saveUserPermissions(userId) {
+            const canInvest = document.getElementById(`inv_perm_${userId}`).checked;
+            const canWithdraw = document.getElementById(`wit_perm_${userId}`).checked;
+
+            const { error } = await supabaseClient.from('user_permissions').upsert({
+                user_id: userId,
+                can_invest: canInvest,
+                can_withdraw: canWithdraw
+            }, { onConflict: 'user_id' });
+
+            if (error) { alert('Permission save error: ' + error.message); return; }
+            alert('User permissions updated successfully!');
         }
 
         async function fetchRawDatabaseTable() {
@@ -940,6 +1042,7 @@
             }
         }
 
+        // Master User Summary Report strictly sorted ASCENDING by সদস্য নং
         async function fetchAdminMasterSummaryReport() {
             const tbody = document.getElementById('adminMasterSummaryTableBody');
             tbody.innerHTML = `<tr><td colspan="13" class="p-4 text-center">Loading Master Summary Data...</td></tr>`;
@@ -993,7 +1096,6 @@
             });
         }
 
-        // FIXED & VERIFIED: Fetching records with correct table & ID for single-click auto-populate
         async function fetchAllRecordsForAdminModal() {
             const tbody = document.getElementById('latestRecordsTableBodyModal');
             if(!tbody) return;
@@ -1025,7 +1127,6 @@
             } catch (err) { tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-red-500">Data load error.</td></tr>`; }
         }
 
-        // FIXED & VERIFIED: Single-click auto-populate exact SQL command with proper parameters
         function selectRecordForDelete(tableName, recordId) {
             const queryText = `DELETE FROM "${tableName}" WHERE id = ${recordId};`;
             document.getElementById('customSqlInput').value = queryText;
@@ -1285,6 +1386,33 @@
             document.getElementById('withdrawProgressBox').classList.add('hidden');
             document.getElementById('withdrawSubmitArea').classList.remove('hidden');
             document.getElementById('successModal').classList.remove('hidden');
+        }
+
+        // Admin Investment Modal Submission
+        async function adminSubmitInvestment(e) {
+            e.preventDefault();
+            const targetUser = document.getElementById('adminSelectUserForInv').value;
+            let compId = 1, uId = 1;
+            if (targetUser.length >= 4) {
+                compId = parseInt(targetUser.charAt(0)) || 1;
+                uId = parseInt(targetUser.slice(-3)) || 1;
+            }
+
+            await supabaseClient.from('investments').insert([{
+                'User ID': targetUser,
+                company_id: compId,
+                user_id: uId,
+                from_bank: document.getElementById('adminInvFromBank').value,
+                to_bank: document.getElementById('adminInvToBank').value,
+                amount: parseFloat(document.getElementById('adminInvAmount').value),
+                description: document.getElementById('adminInvDesc').value,
+                otp_pin: document.getElementById('adminInvOtp').value.trim(),
+                status: 'pending'
+            }]);
+            document.getElementById('adminInvestmentForm').reset();
+            alert('Admin investment submitted successfully!');
+            closeAdminInvestmentModal();
+            fetchPendingApprovalData();
         }
 
         async function adminSubmitWithdrawal(e) {
