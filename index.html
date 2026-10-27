@@ -259,7 +259,7 @@
                     </div>
                 </div>
 
-                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & WEB SQL RUNNER BOX -->
+                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & WEB SQL RUNNER BOX WITH LIVE 20 IDS -->
                 <div id="subPagePendingApproval" class="hidden space-y-4 fade-in">
                     
                     <!-- WEB-BASED SQL RUNNER BOX -->
@@ -267,7 +267,7 @@
                         <h4 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
                             <i class="fa-solid fa-terminal"></i> সরাসরি ওয়েবসাইট থেকে SQL কুয়েরি রান বক্স (SQL Runner)
                         </h4>
-                        <p class="text-[11px] text-gray-300 mb-2">এখানে সরাসরি SQL কমান্ড লিখে রান করতে পারেন (যেমন: <code>DELETE FROM investments WHERE id = 5;</code>)</p>
+                        <p class="text-[11px] text-gray-300 mb-2">নিচের টেবিল থেকে **ID** দেখে এখানে কমান্ড লিখুন (যেমন: <code>DELETE FROM investments WHERE id = 5;</code>)</p>
                         
                         <div class="flex flex-col gap-2">
                             <textarea id="customSqlInput" rows="2" placeholder='DELETE FROM "TR" WHERE id = 10;' 
@@ -279,6 +279,34 @@
                                     <i class="fa-solid fa-play"></i> কুয়েরি রান করুন (Run SQL)
                                 </button>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- LIVE LATEST 20 RECORDS VIEWER FOR ID FINDING -->
+                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-blue-300">
+                        <div class="flex justify-between items-center mb-2 border-b pb-2">
+                            <h4 class="text-xs font-bold text-alnawaNavy flex items-center gap-2">
+                                <i class="fa-solid fa-database text-blue-600"></i> ডাটাবেজের সর্বশেষ ২০টি এন্ট্রি (Latest 20 Records & IDs)
+                            </h4>
+                            <span class="text-[10px] bg-blue-50 text-alnawaNavy px-2 py-0.5 rounded font-bold border border-blue-200">
+                                লাইভ আইডি লিস্ট
+                            </span>
+                        </div>
+                        <div class="overflow-x-auto custom-scrollbar max-h-60">
+                            <table class="w-full text-left text-xs border-collapse min-w-[700px]">
+                                <thead class="sticky top-0 bg-alnawaNavy text-white">
+                                    <tr class="text-[10px] uppercase">
+                                        <th class="p-2">টেবিল</th>
+                                        <th class="p-2 font-mono text-amber-300">ID</th>
+                                        <th class="p-2">তারিখ</th>
+                                        <th class="p-2">বিবরণ</th>
+                                        <th class="p-2 text-right">পরিমাণ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="latestRecordsTableBody" class="divide-y divide-gray-200 text-[11px] font-medium">
+                                    <!-- Dynamic Latest 20 Records -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
@@ -306,7 +334,7 @@
         <footer class="bg-white flex-shrink-0 border-t-2 border-alnawaGreen">
             <div class="grid grid-cols-1 md:grid-cols-12 h-auto md:h-12 text-white font-sans text-xs">
                 <div class="md:col-span-7 bg-alnawaGreen px-3 py-2 flex items-center">
-                    <div>১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪টিআই, বন্দর, নারায়ণগঞ্জ।</div>
+                    <div>১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪১১, বন্দর, নারায়ণগঞ্জ।</div>
                 </div>
                 <div class="md:col-span-5 bg-gradient-to-r from-alnawaNavy to-blue-900 px-4 py-2 flex flex-col justify-center items-end">
                     <div>মোবাইল : 01942-341889</div>
@@ -402,7 +430,11 @@
             if (target === 'submission') document.getElementById('subPageSubmission').classList.remove('hidden');
             else if (target === 'withdrawal') document.getElementById('subPageWithdrawal').classList.remove('hidden');
             else if (target === 'summary') { document.getElementById('subPageSummary').classList.remove('hidden'); fetchTransactionsFromSupabase(); }
-            else if (target === 'pendingApproval') { document.getElementById('subPagePendingApproval').classList.remove('hidden'); fetchPendingApprovalData(); }
+            else if (target === 'pendingApproval') { 
+                document.getElementById('subPagePendingApproval').classList.remove('hidden'); 
+                fetchPendingApprovalData(); 
+                fetchLatestRecordsForAdmin(); 
+            }
         }
 
         function openMobileResetModal() { document.getElementById('mobileResetModal').classList.remove('hidden'); }
@@ -416,6 +448,46 @@
             document.getElementById('passwordInput').value = newPass;
             alert('পাসওয়ার্ড আপডেট হয়েছে!');
             closeMobileResetModal();
+        }
+
+        // Fetch Latest 20 Records across tables for Admin ID tracking
+        async function fetchLatestRecordsForAdmin() {
+            const tbody = document.getElementById('latestRecordsTableBody');
+            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">সর্বশেষ ডাটা লোড হচ্ছে...</td></tr>`;
+
+            try {
+                const { data: trData } = await supabaseClient.from('TR').select('*').order('id', { ascending: false }).limit(10);
+                const { data: investments } = await supabaseClient.from('investments').select('*').order('id', { ascending: false }).limit(10);
+                const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').order('id', { ascending: false }).limit(10);
+
+                let combined = [];
+                if (trData) trData.forEach(i => combined.push({ table: 'TR', id: i.id, date: String(i['Transaction Date'] || '').split('T')[0], desc: i['Item Description'] || 'TR Data', amount: Number(i['Amount']) || 0 }));
+                if (investments) investments.forEach(i => combined.push({ table: 'investments', id: i.id, date: String(i.created_at || '').split('T')[0], desc: i.description || 'Investment', amount: Number(i.amount) || 0 }));
+                if (withdrawals) withdrawals.forEach(i => combined.push({ table: 'withdrawals', id: i.id, date: String(i.created_at || '').split('T')[0], desc: i.description || 'Withdrawal', amount: Number(i.amount) || 0 }));
+
+                combined.sort((a, b) => b.id - a.id);
+                tbody.innerHTML = '';
+
+                if (combined.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">কোনো রেকর্ড পাওয়া যায়নি।</td></tr>`;
+                    return;
+                }
+
+                combined.slice(0, 20).forEach(item => {
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-blue-50/50">
+                            <td class="p-2 font-bold text-alnawaNavy">${item.table}</td>
+                            <td class="p-2 font-mono font-extrabold text-amber-700 bg-amber-50">ID: ${item.id}</td>
+                            <td class="p-2 font-mono">${item.date}</td>
+                            <td class="p-2">${item.desc}</td>
+                            <td class="p-2 text-right font-mono font-bold">৳ ${item.amount.toLocaleString()}</td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                console.error("Error fetching latest records:", err);
+                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-red-500">ডাটা লোড করতে সমস্যা হয়েছে।</td></tr>`;
+            }
         }
 
         // Direct Web-Based SQL Runner Function
@@ -444,6 +516,7 @@
                     document.getElementById('customSqlInput').value = '';
                     fetchTransactionsFromSupabase();
                     fetchPendingApprovalData();
+                    fetchLatestRecordsForAdmin();
                 }
             } catch (err) {
                 console.error("SQL Error:", err);
@@ -456,7 +529,7 @@
             const queryTable = tableName === 'TR' ? '"TR"' : tableName;
             const { error } = await supabaseClient.from(queryTable).delete().eq('id', id);
             if (error) alert("সমস্যা: " + error.message);
-            else { alert("মুছে ফেলা হয়েছে!"); fetchTransactionsFromSupabase(); }
+            else { alert("মুছে ফেলা হয়েছে!"); fetchTransactionsFromSupabase(); fetchLatestRecordsForAdmin(); }
         }
 
         async function fetchTransactionsFromSupabase() {
