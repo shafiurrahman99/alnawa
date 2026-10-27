@@ -524,7 +524,7 @@
                         </div>
 
                         <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[750px]">
+                            <table class="w-full text-left text-xs border-collapse min-w-[850px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px] tracking-wider">
                                         <th class="p-2.5 rounded-tl">তারিখ (Transaction Date)</th>
@@ -534,7 +534,8 @@
                                         <th class="p-2.5 text-center">লেনদেন ধরন (Type)</th>
                                         <th class="p-2.5 text-center">স্ট্যাটাস (Status)</th>
                                         <th class="p-2.5 text-right">পরিমাণ (Amount)</th>
-                                        <th class="p-2.5 text-right rounded-tr">ক্রমিক যোগফল (Cumulative Sum)</th>
+                                        <th class="p-2.5 text-right">ক্রমিক যোগফল (Cumulative Sum)</th>
+                                        <th class="p-2.5 text-center rounded-tr">অ্যাকশন (Action)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody" class="divide-y divide-gray-200 font-medium text-[11px]">
@@ -664,7 +665,7 @@
         let withdrawTimer = null;
         let withdrawRemainingSeconds = 10;
 
-        // Helper function to convert Company ID & User ID into 4-digit format (e.g., Company 1, User 1 -> 1001, User 101 -> 1101)
+        // Helper function to convert Company ID & User ID into 4-digit format
         function getMergedUserId(compId, userId) {
             let cStr = String(compId || 1).slice(-1);
             let uStr = String(userId || 1).padStart(3, '0');
@@ -678,7 +679,7 @@
 
             if (uInput.length !== 4) {
                 document.getElementById('loginError').classList.remove('hidden');
-                document.getElementById('loginErrorinnerHTML', `<i class="fa-solid fa-triangle-exclamation mr-1"></i> ইউজার আইডি অবশ্যই ৪ ডিজিটের হতে হবে (যেমন: 1001)!`);
+                document.getElementById('loginError').innerHTML = `<i class="fa-solid fa-triangle-exclamation mr-1"></i> ইউজার আইডি অবশ্যই ৪ ডিজিটের হতে হবে (যেমন: 1001)!`;
                 return;
             }
 
@@ -823,10 +824,33 @@
             setInterval(updateTimer, 1000);
         }
 
+        // DELETE TRANSACTION FUNCTION (DIRECT FROM WEBSITE)
+        async function deleteTransaction(tableName, id) {
+            const isConfirmed = confirm("আপনি কি নিশ্চিত যে এই লেনদেনটি ডাটাবেজ থেকে স্থায়ীভাবে মুছে ফেলতে চান?");
+            if (!isConfirmed) return;
+
+            try {
+                const { error } = await supabaseClient
+                    .from(tableName)
+                    .delete()
+                    .eq('id', id);
+
+                if (error) {
+                    alert("ডিলিট করতে সমস্যা হয়েছে: " + error.message);
+                } else {
+                    alert("লেনদেনটি সফলভাবে মুছে ফেলা হয়েছে!");
+                    fetchTransactionsFromSupabase(); // Reload transaction summary
+                }
+            } catch (err) {
+                console.error("Error deleting transaction:", err);
+                alert("একটি অপ্রত্যাশিত এরর ঘটেছে!");
+            }
+        }
+
         // Fetch Transactions from 'TR' Sheet and merge with user inputs
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
-            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> ডাটাবেজ থেকে লেনদেন লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-gray-500"><i class="fa-solid fa-spinner fa-spin mr-2"></i> ডাটাবেজ থেকে লেনদেন লোড হচ্ছে...</td></tr>`;
 
             try {
                 const { data: trData, error: trError } = await supabaseClient
@@ -849,7 +873,7 @@
                     .eq('user_id', loggedInUserId);
 
                 if (trError) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-red-500">লেনদেন ডাটা লোড করতে সমস্যা হয়েছে!</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-red-500">লেনদেন ডাটা লোড করতে সমস্যা হয়েছে!</td></tr>`;
                     return;
                 }
 
@@ -859,6 +883,8 @@
                     trData.forEach(item => {
                         let dateStr = item['Transaction Date'] ? String(item['Transaction Date']).split('T')[0] : '2026-09-01';
                         allTransactions.push({
+                            id: item.id || null,
+                            tableName: 'TR',
                             date: dateStr,
                             timestamp: new Date(dateStr).getTime() || 0,
                             desc: item['Item Description'] || 'কোম্পানি ট্রানজেকশন',
@@ -875,6 +901,8 @@
                     investments.forEach(item => {
                         let dateStr = item.created_at ? item.created_at.split('T')[0] : '2026-09-01';
                         allTransactions.push({
+                            id: item.id,
+                            tableName: 'investments',
                             date: dateStr,
                             timestamp: new Date(dateStr).getTime() || 0,
                             desc: item.description || 'নতুন ইনভেস্টমেন্ট',
@@ -891,6 +919,8 @@
                     withdrawals.forEach(item => {
                         let dateStr = item.created_at ? item.created_at.split('T')[0] : '2026-09-01';
                         allTransactions.push({
+                            id: item.id,
+                            tableName: 'withdrawals',
                             date: dateStr,
                             timestamp: new Date(dateStr).getTime() || 0,
                             desc: item.description || 'উইথড্রল আবেদন',
@@ -928,7 +958,7 @@
                 tbody.innerHTML = '';
 
                 if (allTransactions.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-gray-500">কোনো ট্রানজেকশন পাওয়া যায়নি।</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-gray-500">কোনো ট্রানজেকশন পাওয়া যায়নি।</td></tr>`;
                 }
 
                 allTransactions.forEach(item => {
@@ -956,6 +986,13 @@
                         </td>
                         <td class="p-2.5 text-right font-mono font-bold text-alnawaGreen bg-emerald-50/60">
                             ৳ ${item.cumulative.toLocaleString()}
+                        </td>
+                        <td class="p-2.5 text-center whitespace-nowrap">
+                            ${item.id ? `
+                                <button onclick="deleteTransaction('${item.tableName}', ${item.id})" class="px-2 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-[10px] font-bold shadow transition flex items-center gap-1 mx-auto">
+                                    <i class="fa-solid fa-trash-can"></i> ডিলিট
+                                </button>
+                            ` : '<span class="text-gray-400 text-[10px]">-</span>'}
                         </td>
                     `;
                     tbody.appendChild(tr);
@@ -997,7 +1034,7 @@
                             date: item.created_at ? item.created_at.split('T')[0] : '2026-09-01',
                             mergedId: mergedId,
                             desc: item.description + ' (ফ্রম: ' + item.from_bank + ')',
-                            otp: item.otp_pin || '৭৮৯০', // Default mock OTP if not present
+                            otp: item.otp_pin || '৭৮৯০',
                             amount: Number(item.amount),
                             status: item.status || 'pending',
                             typeLabel: 'ইনভেস্টমেন্ট (+)'
