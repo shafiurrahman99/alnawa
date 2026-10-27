@@ -35,18 +35,11 @@
         }
     </script>
     <style>
-        body {
-            font-family: 'Hind Siliguri', sans-serif;
-            background-color: #c8d6e5;
-        }
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #c8d6e5; }
         .pad-watermark {
             background-color: #ffffff;
-            background-image: 
-                radial-gradient(circle, rgba(11, 132, 61, 0.02) 0%, rgba(26, 35, 126, 0.04) 100%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500' viewBox='0 0 400 400'%3E%3Cg opacity='0.12'%3E%3Ccircle cx='200' cy='160' r='90' fill='none' stroke='%230b843d' stroke-width='4'/%3E%3Cpath fill='%230b843d' d='M200,90 C225,90 250,115 250,160 C250,195 200,230 200,230 C200,230 150,195 150,160 C150,115 175,90 200,90 Z'/%3E%3Cpath fill='%231a237e' d='M200,120 C215,120 230,135 230,160 C230,180 200,205 200,205 C200,205 170,180 170,160 C170,135 185,120 200,120 Z' opacity='0.5'/%3E%3Ctext x='50%25' y='72%25' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='38' fill='%231a237e'%3EAlnawa%3C/text%3E%3Ctext x='50%25' y='83%25' text-anchor='middle' font-family='sans-serif' font-size='26' font-weight='600' fill='%23666666'%3Ecompany%3C/text%3E%3C/g%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: center 50%;
-            background-size: 420px 420px;
+            background-image: radial-gradient(circle, rgba(11, 132, 61, 0.02) 0%, rgba(26, 35, 126, 0.04) 100%);
+            background-repeat: no-repeat; background-position: center 50%; background-size: 420px 420px;
         }
         .poly-badge { clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%); }
         .poly-website { clip-path: polygon(10% 0, 100% 0, 92% 100%, 0 100%); }
@@ -93,7 +86,7 @@
         <!-- MAIN CONTENT -->
         <main class="flex-grow pad-watermark p-3 sm:p-6 flex flex-col justify-start relative">
 
-            <!-- PAGE 1: SIGN IN VIEW -->
+            <!-- PAGE 1: SIGN IN VIEW (Bangla for User) -->
             <div id="page1" class="w-full max-w-md mx-auto fade-in my-auto">
                 <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-200 text-center">
                     <div class="mb-5 p-3.5 bg-emerald-50 rounded-xl border border-emerald-300 shadow-sm">
@@ -111,7 +104,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড</label>
-                            <input type="password" id="passwordInput" value="1234#" required placeholder="পাসওয়ার্ড দিন" class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
+                            <input type="password" id="passwordInput" required placeholder="পাসওয়ার্ড দিন" class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
                         <button type="submit" class="w-full py-3 bg-gradient-to-r from-alnawaGreen to-emerald-700 text-white font-bold rounded-lg shadow-lg">সাইন ইন করুন</button>
                     </form>
@@ -130,20 +123,19 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="font-extrabold text-alnawaNavy text-base" id="currentUserDisplay">ইউজার</span>
-                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border">সফল</span>
+                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border" id="statusBadgeText">সফল</span>
                             </div>
                             <p class="text-[11px] text-gray-500" id="userSubTitleRole">আল নাওয়া কোম্পানী রেজিস্টার্ড ইনভেস্টর</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="openMobileResetModal()" class="px-3 py-1.5 bg-gradient-to-r from-alnawaOrange to-amber-500 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড রিসেট</button>
-                        <button onclick="handleLogout()" class="text-xs text-red-600 font-bold px-3 py-1.5 rounded-lg border border-red-200">লগআউট</button>
+                        <button id="resetPassBtn" onclick="openMobileResetModal()" class="px-3 py-1.5 bg-gradient-to-r from-alnawaOrange to-amber-500 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড রিসেট</button>
+                        <button onclick="handleLogout()" id="logoutBtnText" class="text-xs text-red-600 font-bold px-3 py-1.5 rounded-lg border border-red-200">লগআউট</button>
                     </div>
                 </div>
 
                 <!-- PERSONAL INFO & VALIDITY TIMER -->
                 <div id="userProfileAndTimerCard" class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <!-- Profile Details -->
                     <div class="md:col-span-2 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow border flex flex-col justify-center">
                         <div class="overflow-x-auto custom-scrollbar">
                             <table class="w-full text-left text-xs border border-gray-200 rounded-lg">
@@ -151,42 +143,58 @@
                             </table>
                         </div>
                     </div>
-                    <!-- Validity Countdown Timer Card -->
                     <div class="bg-gradient-to-br from-alnawaNavy to-blue-900 text-white rounded-xl p-3 shadow border border-amber-400 flex flex-col justify-between text-center">
-                        <div class="text-xs font-bold text-amber-300"><i class="fa-solid fa-clock"></i> ইনভেস্টর মেয়াদ কাউন্টডাউন</div>
+                        <div class="text-xs font-bold text-amber-300" id="timerTitleText"><i class="fa-solid fa-clock"></i> ইনভেস্টর মেয়াদ কাউন্টডাউন</div>
                         <div id="validityTimerDisplay" class="text-sm font-mono font-bold tracking-tight my-2 text-emerald-300">লোড হচ্ছে...</div>
-                        <div class="text-[10px] text-gray-300">বছর, মাস, দিন, ঘণ্টা, মিনিট, সেকেন্ড</div>
+                        <div class="text-[10px] text-gray-300" id="timerSubText">বছর, মাস, দিন, ঘণ্টা, মিনিট, সেকেন্ড</div>
                     </div>
                 </div>
 
-                <!-- RADIO BUTTON SELECTION BAR -->
+                <!-- RADIO BUTTON SELECTION BAR (Bangla for User / English for Admin) -->
                 <div class="bg-gradient-to-r from-emerald-800 via-alnawaNavy to-emerald-900 rounded-xl p-3 shadow-lg text-white">
-                    <div class="text-xs font-bold text-amber-300 mb-2"><i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:</div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="navRadioContainer">
+                    <div class="text-xs font-bold text-amber-300 mb-2" id="navBarTitleText"><i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:</div>
+                    
+                    <!-- USER NAV (Bangla) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="userNavContainer">
                         <label onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer">
                             <input type="radio" name="pageOption" id="radioSubmission" checked class="accent-orange-500">
-                            <div class="text-xs font-extrabold" id="navLabelSub">ইনভেস্টমেন্ট ফরম</div>
+                            <div class="text-xs font-extrabold">ইনভেস্টমেন্ট ফরম</div>
                         </label>
                         <label onclick="switchSubPage('withdrawal')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer">
                             <input type="radio" name="pageOption" id="radioWithdrawal" class="accent-orange-500">
-                            <div class="text-xs font-extrabold" id="navLabelWit">উইথড্রল ফরম</div>
+                            <div class="text-xs font-extrabold">উইথড্রল ফরম</div>
                         </label>
                         <label onclick="switchSubPage('summary')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer">
                             <input type="radio" name="pageOption" id="radioSummary" class="accent-orange-500">
-                            <div class="text-xs font-extrabold" id="navLabelSum">ট্রানজেকশন সামারি</div>
+                            <div class="text-xs font-extrabold">ট্রানজেকশন সামারি</div>
                         </label>
-                        <!-- Admin Panel Radio -->
-                        <label id="adminRadioLabel" onclick="switchSubPage('pendingApproval')" class="hidden flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
-                            <input type="radio" name="pageOption" id="radioPendingApproval" class="accent-orange-500">
-                            <div class="text-xs font-extrabold text-amber-300">Admin Control & SQL Panel</div>
+                    </div>
+
+                    <!-- ADMIN NAV (English with Radio Buttons for Sub-sections) -->
+                    <div class="hidden grid grid-cols-1 sm:grid-cols-4 gap-2" id="adminNavContainer">
+                        <label onclick="switchAdminTab('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
+                            <input type="radio" name="adminPageOption" id="adminRadioPending" checked class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-amber-300">Pending Approval</div>
+                        </label>
+                        <label onclick="switchAdminTab('adminControl')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
+                            <input type="radio" name="adminPageOption" id="adminRadioControl" class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-amber-300">Admin Control Panel</div>
+                        </label>
+                        <label onclick="switchAdminTab('rawDatabase')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
+                            <input type="radio" name="adminPageOption" id="adminRadioRawDb" class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-amber-300">Raw Database (Read-Only)</div>
+                        </label>
+                        <label onclick="switchAdminTab('sqlQuery')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
+                            <input type="radio" name="adminPageOption" id="adminRadioSql" class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-amber-300">SQL Delete & Records</div>
                         </label>
                     </div>
                 </div>
 
-                <!-- SUB-PAGE 1: SUBMISSION -->
+                <!-- USER SUB-PAGE 1: SUBMISSION -->
                 <div id="subPageSubmission" class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border fade-in">
                     <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">ইনভেস্টমেন্ট জমা ফরম</h3>
-                    <form id="investForm" onsubmit="startSubmissionProcess(event)" class="space-y-3">
+                    <form id="investForm" onsubmit="startInvestmentCountdown(event)" class="space-y-3">
                         <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
                             <input type="text" id="autoUser" value="1001" readonly disabled class="bg-gray-100 border p-2 rounded text-xs font-mono">
                             <select id="fromBank" required class="border p-2 rounded text-xs bg-white">
@@ -195,8 +203,8 @@
                             <select id="toBank" required class="border p-2 rounded text-xs bg-emerald-50 text-alnawaNavy">
                                 <option value="আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক">আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক</option>
                                 <option value="আলনাওয়া ডিবিবিএল">আলনাওয়া ডিবিবিএল</option>
-                                <option value="আলনাওয়া ব্রাক ব্যাংক">আলনাওয়া ব্রাক ব্যাংক</option>
-                                <option value="আলনাওয়া আইবিবিএল">আলনাওয়া আইবিবিএল</option>
+                                <option value="আলনাওয়া ব্রাক ব্যাংক">আলনাওয়া ব্রাক ব্যাংক</option>
+                                <option value="আলনাওয়া আইবিবিএল">আলনাওয়া আইবিবিএল</option>
                             </select>
                             <input type="number" id="investAmount" min="1000" required placeholder="পরিমাণ (৳)" class="border p-2 rounded text-xs font-bold">
                         </div>
@@ -204,16 +212,25 @@
                             <input type="text" id="investDesc" required placeholder="বিবরণ লিখুন..." class="border p-2 rounded text-xs">
                             <input type="text" id="investOtp" required maxlength="4" placeholder="গোপন পিন (OTP, যেমন: 7890)" class="border border-amber-400 bg-amber-50 p-2 rounded text-xs font-mono font-bold">
                         </div>
-                        <div>
+                        <div id="investSubmitArea">
                             <button type="submit" class="px-8 py-2.5 bg-alnawaGreen text-white font-bold rounded text-xs">ইনভেস্ট জমা দিন</button>
+                        </div>
+                        <div id="investProgressBox" class="hidden bg-emerald-50 p-3 rounded text-xs border border-emerald-300 space-y-2">
+                            <div class="flex justify-between font-bold text-alnawaGreen">
+                                <span id="investCountdownText">সংরক্ষিত হচ্ছে... (১০ সেকেন্ড)</span>
+                                <button type="button" onclick="cancelInvestmentProcess()" class="text-red-600 hover:underline">বাতিল করুন</button>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                <div id="investProgressBar" class="bg-alnawaGreen h-full w-0 transition-all duration-1000"></div>
+                            </div>
                         </div>
                     </form>
                 </div>
 
-                <!-- SUB-PAGE 2: WITHDRAWAL -->
+                <!-- USER SUB-PAGE 2: WITHDRAWAL -->
                 <div id="subPageWithdrawal" class="hidden bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border fade-in">
                     <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">উইথড্রল ফরম</h3>
-                    <form id="withdrawalForm" onsubmit="startWithdrawalProcess(event)" class="space-y-3">
+                    <form id="withdrawalForm" onsubmit="startWithdrawalCountdown(event)" class="space-y-3">
                         <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
                             <input type="text" id="withdrawUserDisplay" value="1001" readonly disabled class="bg-gray-100 border p-2 rounded text-xs">
                             <select id="withdrawFromBank" required class="border p-2 rounded text-xs bg-white">
@@ -222,17 +239,28 @@
                             <select id="withdrawToBank" required class="border p-2 rounded text-xs bg-blue-50">
                                 <option value="আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক">আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক</option>
                                 <option value="আলনাওয়া ডিবিবিএল">আলনাওয়া ডিবিবিএল</option>
-                                <option value="আলনাওয়া ব্রাক ব্যাংক">আলনাওয়া ব্রাক ব্যাংক</option>
-                                <option value="আলনাওয়া আইবিবিএল">আলনাওয়া আইবিবিএল</option>
+                                <option value="আলনাওয়া ব্রাক ব্যাংক">আলনাওয়া ব্রাক ব্যাংক</option>
+                                <option value="আলনাওয়া আইবিবিএল">আলনাওয়া আইবিবিএল</option>
                             </select>
                             <input type="number" id="withdrawAmount" min="500" required placeholder="উত্তোলনের পরিমাণ" class="border p-2 rounded text-xs">
                         </div>
                         <input type="text" id="withdrawDesc" required placeholder="উত্তোলনের কারণ..." class="border p-2 rounded text-xs w-full">
-                        <button type="submit" class="px-8 py-2.5 bg-blue-700 text-white font-bold rounded text-xs">উইথড্রল জমা দিন</button>
+                        <div id="withdrawSubmitArea">
+                            <button type="submit" class="px-8 py-2.5 bg-blue-700 text-white font-bold rounded text-xs">উইথড্রল জমা দিন</button>
+                        </div>
+                        <div id="withdrawProgressBox" class="hidden bg-blue-50 p-3 rounded text-xs border border-blue-300 space-y-2">
+                            <div class="flex justify-between font-bold text-blue-700">
+                                <span id="withdrawCountdownText">সংরক্ষিত হচ্ছে... (১০ সেকেন্ড)</span>
+                                <button type="button" onclick="cancelWithdrawalProcess()" class="text-red-600 hover:underline">বাতিল করুন</button>
+                            </div>
+                            <div class="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
+                                <div id="withdrawProgressBar" class="bg-blue-600 h-full w-0 transition-all duration-1000"></div>
+                            </div>
+                        </div>
                     </form>
                 </div>
 
-                <!-- SUB-PAGE 3: SUMMARY -->
+                <!-- USER SUB-PAGE 3: SUMMARY -->
                 <div id="subPageSummary" class="hidden space-y-4 fade-in">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div class="bg-white p-3 rounded-xl shadow border-l-4 border-emerald-600">
@@ -263,10 +291,25 @@
                     </div>
                 </div>
 
-                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & MASTER SQL PANEL -->
-                <div id="subPagePendingApproval" class="hidden space-y-4 fade-in">
-                    
-                    <!-- ADMIN USER MANAGEMENT TABLE -->
+                <!-- ADMIN SUB-PAGE A: PENDING APPROVAL -->
+                <div id="adminTabPending" class="hidden space-y-4 fade-in">
+                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-amber-300">
+                        <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Pending Approval & Status Panel (Investments & Withdrawals)</h3>
+                        <div class="overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left text-xs border-collapse min-w-[850px]">
+                                <thead>
+                                    <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
+                                        <th class="p-2.5">Type</th><th class="p-2.5">Date</th><th class="p-2.5">User ID</th><th class="p-2.5">Description</th><th class="p-2.5">OTP PIN</th><th class="p-2.5 text-right">Amount</th><th class="p-2.5 text-center">Status Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pendingApprovalTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADMIN SUB-PAGE B: ADMIN CONTROL PANEL -->
+                <div id="adminTabControl" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-red-300">
                         <h3 class="text-sm font-bold text-red-600 mb-3 border-b pb-2">👑 Admin Control Panel (User Management)</h3>
                         <div class="overflow-x-auto custom-scrollbar">
@@ -280,23 +323,51 @@
                                         <th class="p-2">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="adminControlTableBody" class="divide-y divide-gray-200 text-[11px]">
-                                    <!-- Dynamic -->
-                                </tbody>
+                                <tbody id="adminControlTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
                             </table>
                         </div>
                     </div>
+                </div>
 
-                    <!-- SQL RUNNER BOX -->
+                <!-- ADMIN SUB-PAGE C: RAW DATABASE (READ-ONLY) -->
+                <div id="adminTabRawDb" class="hidden space-y-4 fade-in">
+                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-emerald-500">
+                        <div class="flex justify-between items-center mb-3 border-b pb-2">
+                            <h3 class="text-sm font-bold text-emerald-800 flex items-center gap-2">
+                                <i class="fa-solid fa-table-cells"></i> Master Raw Database (Read-Only)
+                            </h3>
+                            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold border border-emerald-300">
+                                Admin View Only
+                            </span>
+                        </div>
+                        <div class="overflow-x-auto custom-scrollbar max-h-96">
+                            <table class="w-full text-left text-xs border-collapse min-w-[900px]">
+                                <thead class="sticky top-0 bg-emerald-800 text-white">
+                                    <tr class="text-[10px] uppercase">
+                                        <th class="p-2">User ID</th>
+                                        <th class="p-2">Mobile Number</th>
+                                        <th class="p-2">Password History</th>
+                                        <th class="p-2 text-right">Total Investment</th>
+                                        <th class="p-2">Investment Banks</th>
+                                        <th class="p-2 text-right">Total Withdrawal</th>
+                                        <th class="p-2">Withdrawal Banks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="rawDatabaseTableBody" class="divide-y divide-gray-200 text-[11px] font-mono"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADMIN SUB-PAGE D: SQL DELETE & RECORDS -->
+                <div id="adminTabSql" class="hidden space-y-4 fade-in">
                     <div class="bg-gray-900 text-white rounded-xl p-4 shadow border border-amber-500">
                         <h4 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
                             <i class="fa-solid fa-terminal"></i> SQL Delete Query Box (Double-click any table row below)
                         </h4>
-                        
                         <div class="flex flex-col gap-2">
                             <textarea id="customSqlInput" rows="2" placeholder='Double click on any record in the table below to generate query...' 
                                       class="w-full bg-black/90 border border-gray-700 rounded p-2 text-xs font-mono text-emerald-400 focus:outline-none"></textarea>
-                            
                             <div class="flex justify-between items-center">
                                 <span id="sqlRunStatus" class="text-[10px] text-amber-300"></span>
                                 <div class="flex gap-2">
@@ -309,7 +380,6 @@
                         </div>
                     </div>
 
-                    <!-- FULL DATABASE RECORDS -->
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-blue-300">
                         <div class="flex justify-between items-center mb-2 border-b pb-2">
                             <h4 class="text-xs font-bold text-alnawaNavy flex items-center gap-2">
@@ -334,21 +404,6 @@
                             </table>
                         </div>
                     </div>
-
-                    <!-- PENDING APPROVAL TABLE -->
-                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-amber-300">
-                        <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Pending Approval & Status Panel</h3>
-                        <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[850px]">
-                                <thead>
-                                    <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">Date</th><th class="p-2.5">User ID</th><th class="p-2.5">Description</th><th class="p-2.5">OTP PIN</th><th class="p-2.5 text-right">Amount</th><th class="p-2.5 text-center">Status Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="pendingApprovalTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -368,16 +423,31 @@
         </footer>
     </div>
 
-    <!-- MODALS -->
-    <div id="mobileResetModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+    <!-- PASSWORD RESET MODAL WITH CLOSE (X) BUTTON -->
+    <div id="mobileResetModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeMobileResetModal()">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
+            <button onclick="closeMobileResetModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
             <h4 class="text-sm font-bold text-alnawaNavy mb-3">পাসওয়ার্ড রিসেট</h4>
             <form onsubmit="handleMobileResetPassword(event)" class="space-y-3 text-xs">
-                <input type="text" id="resetUserIdDisplay" value="1001" readonly disabled class="w-full bg-gray-100 border p-2 rounded">
-                <input type="tel" id="resetMobileNo" required placeholder="মোবাইল নম্বর..." class="w-full border p-2 rounded">
-                <input type="text" id="mobileNewPassInput" required placeholder="নতুন পাসওয়ার্ড..." class="w-full border p-2 rounded">
-                <input type="text" id="mobileConfirmPassInput" required placeholder="পুনরায় পাসওয়ার্ড..." class="w-full border p-2 rounded">
-                <button type="submit" class="w-full py-2 bg-alnawaOrange text-white font-bold rounded">রিসেট করুন</button>
+                <div>
+                    <label class="block text-[10px] text-gray-500 mb-1">ইউজার আইডি</label>
+                    <input type="text" id="resetUserIdDisplay" readonly disabled class="w-full bg-gray-100 border p-2 rounded font-mono font-bold">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-500 mb-1">মোবাইল নম্বর</label>
+                    <input type="tel" id="resetMobileNo" required placeholder="নিবন্ধিত মোবাইল নম্বর..." class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-500 mb-1">নতুন পাসওয়ার্ড</label>
+                    <input type="text" id="mobileNewPassInput" required placeholder="নতুন পাসওয়ার্ড..." class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-500 mb-1">পুনরায় পাসওয়ার্ড</label>
+                    <input type="text" id="mobileConfirmPassInput" required placeholder="পুনরায় পাসওয়ার্ড দিন..." class="w-full border p-2 rounded">
+                </div>
+                <button type="submit" class="w-full py-2 bg-alnawaOrange text-white font-bold rounded">পাসওয়ার্ড আপডেট করুন</button>
             </form>
         </div>
     </div>
@@ -396,27 +466,27 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let currentValidPass = "1234#";
         let loggedInCompanyId = 1;
         let loggedInUserId = 1;
         let fullMergedUserId = "1001";
+        let currentUserData = null;
         let isAdmin = false;
         let validityInterval = null;
+        let investTimer = null, withdrawTimer = null;
 
-        // Bangladeshi Top 30 Commercial Banks
+        // Bangladeshi Top 30 Commercial Banks in Bangla
         const bdTop30Banks = [
-            "Sonali Bank PLC", "Janata Bank PLC", "Agrani Bank PLC", "Rupali Bank PLC",
-            "Islami Bank Bangladesh PLC", "Dutch-Bangla Bank PLC", "BRAC Bank PLC",
-            "United Commercial Bank PLC (UCB)", "Eastern Bank PLC (EBL)", "City Bank PLC",
-            "National Bank Limited", "Pubali Bank PLC", "Uttara Bank PLC", "Prime Bank PLC",
-            "Southeast Bank PLC", "Mercantile Bank PLC", "Mutual Trust Bank PLC (MTB)",
-            "Exim Bank PLC", "First Security Islami Bank PLC", "Al-Arafah Islami Bank PLC",
-            "Social Islami Bank PLC (SIBL)", "Standard Bank PLC", "Jamuna Bank PLC",
-            "One Bank PLC", "Dhaka Bank PLC", "Trust Bank PLC", "Bank Asia PLC",
-            "Shahjalal Islami Bank PLC", "Global Islami Bank PLC", "NRB Bank PLC"
+            "সোনালী ব্যাংক পিএলসি", "জনতা ব্যাংক পিএলসি", "অগ্রণী ব্যাংক পিএলসি", "রূপালী ব্যাংক পিএলসি",
+            "ইসলামী ব্যাংক বাংলাদেশ পিএলসি", "ডাচ-বাংলা ব্যাংক পিএলসি", "ব্র্যাক ব্যাংক পিএলসি",
+            "ইউনাইটেড কমার্শিয়াল ব্যাংক পিএলসি (ইউসিবি)", "ইস্টার্ন ব্যাংক পিএলসি (ইবিএল)", "সিটি ব্যাংক পিএলসি",
+            "ন্যাশনাল ব্যাংক লিমিটেড", "পূবালী ব্যাংক পিএলসি", "উত্তরা ব্যাংক পিএলসি", "প্রাইম ব্যাংক পিএলসি",
+            "সাউথইস্ট ব্যাংক পিএলসি", "মার্কেন্টাইল ব্যাংক পিএলসি", "মিউচুয়াল ট্রাস্ট ব্যাংক পিএলসি (এমটিবি)",
+            "এক্সিম ব্যাংক পিএলসি", "ফার্স্ট সিকিউরিটি ইসলামী ব্যাংক পিএলসি", "আল-আরাফাহ ইসলামী ব্যাংক পিএলসি",
+            "সোশ্যাল ইসলামী ব্যাংক পিএলসি (এসআইবিএল)", "স্ট্যান্ডার্ড ব্যাংক পিএলসি", "যমুনা ব্যাংক পিএলসি",
+            "ওয়ান ব্যাংক পিএলসি", "ঢাকা ব্যাংক পিএলসি", "ট্রাস্ট ব্যাংক পিএলসি", "ব্যাংক এশিয়া পিএলসি",
+            "শাহজালাল ইসলামী ব্যাংক পিএলসি", "গ্লোবাল ইসলামী ব্যাংক পিএলসি", "এনআরবি ব্যাংক পিএলসি"
         ];
 
-        // Populate 30 Banks in Select Options
         window.addEventListener('DOMContentLoaded', () => {
             const senderSelect = document.getElementById('fromBank');
             const withdrawSenderSelect = document.getElementById('withdrawFromBank');
@@ -432,33 +502,26 @@
             const uInput = document.getElementById('usernameInput').value.trim();
             const p = document.getElementById('passwordInput').value.trim();
             
-            // Check Admin Login (ID: admin or 1049, Password: 1234# or 1234!)
             if (uInput === "admin" || uInput === "1049") {
                 if (p === "1234#" || p === "1234!") {
                     isAdmin = true;
                     fullMergedUserId = uInput;
-
                     document.getElementById('page1').classList.add('hidden');
                     document.getElementById('page2Container').classList.remove('hidden');
                     document.getElementById('currentUserDisplay').innerText = "System Admin";
                     document.getElementById('userSubTitleRole').innerText = "Alnawa Master Control Panel";
+                    document.getElementById('resetPassBtn').classList.add('hidden');
                     
-                    document.getElementById('adminRadioLabel').classList.remove('hidden');
-                    document.getElementById('navRadioContainer').className = "grid grid-cols-1 sm:grid-cols-4 gap-2";
+                    document.getElementById('userNavContainer').classList.add('hidden');
+                    document.getElementById('adminNavContainer').classList.remove('hidden');
+                    document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> Admin Navigation Tabs:`;
 
-                    renderUserProfile({ 
-                        'NID': 'Admin NID', 
-                        'mobile': '01942341889', 
-                        'nominee': 'System Moderator', 
-                        'nominee_mobile': '01900000000',
-                        'validity_date': '2030-12-31'
-                    });
-                    switchSubPage('pendingApproval');
+                    renderUserProfile({ 'NID': 'Admin NID', 'mobile': '01942341889', 'nominee': 'System Moderator', 'validity_date': '2030-12-31' });
+                    switchAdminTab('pendingApproval');
                     return;
                 }
             }
 
-            // Normal User Login Parsing (1 Digit Company ID + 3 Digit User ID)
             if (uInput.length >= 4) {
                 loggedInCompanyId = parseInt(uInput.charAt(0)) || 1;
                 loggedInUserId = parseInt(uInput.slice(-3)) || 1;
@@ -468,31 +531,22 @@
             }
             fullMergedUserId = uInput;
 
-            // Fetch from Supabase IND table using parsed IDs
-            const { data: indData, error } = await supabaseClient
-                .from('IND')
-                .select('*')
-                .eq('Company ID', loggedInCompanyId)
-                .eq('User ID', loggedInUserId)
-                .maybeSingle();
-
-            // Fallback check if stored directly as full 4-digit string
+            const { data: indData } = await supabaseClient.from('IND').select('*').eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId).maybeSingle();
             let userRecord = indData;
             if (!userRecord) {
-                const { data: altData } = await supabaseClient
-                    .from('IND')
-                    .select('*')
-                    .eq('User ID', uInput)
-                    .maybeSingle();
+                const { data: altData } = await supabaseClient.from('IND').select('*').eq('User ID', uInput).maybeSingle();
                 userRecord = altData;
             }
 
             if (userRecord) {
-                const validPass = userRecord['password'] || userRecord['Password'] || currentValidPass;
-                if (p === validPass || p === "1234#" || p === "1234!") {
+                currentUserData = userRecord;
+                const dbPass = userRecord['password'] || userRecord['Password'] || "1234#";
+                if (p === dbPass) {
                     isAdmin = false;
-                    document.getElementById('adminRadioLabel').classList.add('hidden');
-                    document.getElementById('navRadioContainer').className = "grid grid-cols-1 sm:grid-cols-3 gap-2";
+                    document.getElementById('resetPassBtn').classList.remove('hidden');
+                    document.getElementById('adminNavContainer').classList.add('hidden');
+                    document.getElementById('userNavContainer').classList.remove('hidden');
+                    document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:`;
                     
                     document.getElementById('page1').classList.add('hidden');
                     document.getElementById('page2Container').classList.remove('hidden');
@@ -500,11 +554,12 @@
                     document.getElementById('userSubTitleRole').innerText = "আল নাওয়া কোম্পানী রেজিস্টার্ড ইনভেস্টর";
                     document.getElementById('autoUser').value = fullMergedUserId;
                     document.getElementById('withdrawUserDisplay').value = fullMergedUserId;
+                    document.getElementById('resetUserIdDisplay').value = fullMergedUserId;
 
                     renderUserProfile(userRecord);
                     switchSubPage('submission');
                 } else {
-                    showLoginError("ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।");
+                    showLoginError("ভুল পাসওয়ার্ড! নতুন পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
                 }
             } else {
                 showLoginError(`ইউজার আইডি (${fullMergedUserId}) পাওয়া যায়নি!`);
@@ -532,35 +587,25 @@
                     <td class="p-2 font-mono font-bold text-gray-700">${data['নমিনীর মোবাইল নাম্বার'] || data['nominee_mobile'] || 'সংরক্ষিত নেই'}</td>
                 </tr>
             `;
-
             startValidityCountdown(data['validity_date'] || data['Validity Date'] || '2027-12-31');
         }
 
         function startValidityCountdown(expiryDateStr) {
             if (validityInterval) clearInterval(validityInterval);
             const expiryTime = new Date(expiryDateStr).getTime();
-
             function updateTimer() {
                 const now = new Date().getTime();
                 const distance = expiryTime - now;
                 const timerDisplay = document.getElementById('validityTimerDisplay');
-
-                if (distance < 0) {
-                    timerDisplay.innerText = "মেয়াদ শেষ হয়েছে!";
-                    clearInterval(validityInterval);
-                    return;
-                }
-
+                if (distance < 0) { timerDisplay.innerText = "মেয়াদ শেষ হয়েছে!"; clearInterval(validityInterval); return; }
                 const years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
                 const months = Math.floor((distance % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
                 const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
                 timerDisplay.innerText = `${years} বছর, ${months} মাস, ${days} দিন, ${hours} ঘণ্টা, ${minutes} মিনিট, ${seconds} সেকেন্ড`;
             }
-
             updateTimer();
             validityInterval = setInterval(updateTimer, 1000);
         }
@@ -572,43 +617,53 @@
         }
 
         function switchSubPage(target) {
-            ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary', 'subPagePendingApproval'].forEach(id => {
+            ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
             if (target === 'submission') document.getElementById('subPageSubmission').classList.remove('hidden');
             else if (target === 'withdrawal') document.getElementById('subPageWithdrawal').classList.remove('hidden');
             else if (target === 'summary') { document.getElementById('subPageSummary').classList.remove('hidden'); fetchTransactionsFromSupabase(); }
-            else if (target === 'pendingApproval') { 
-                if (!isAdmin) { alert('অনুমতি নেই!'); switchSubPage('submission'); return; }
-                document.getElementById('subPagePendingApproval').classList.remove('hidden'); 
-                fetchAdminControlPanel();
-                fetchPendingApprovalData(); 
-                fetchAllRecordsForAdmin(); 
-            }
+        }
+
+        function switchAdminTab(target) {
+            if (!isAdmin) { alert('Access Denied!'); return; }
+            ['adminTabPending', 'adminTabControl', 'adminTabRawDb', 'adminTabSql'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            if (target === 'pendingApproval') { document.getElementById('adminTabPending').classList.remove('hidden'); fetchPendingApprovalData(); }
+            else if (target === 'adminControl') { document.getElementById('adminTabControl').classList.remove('hidden'); fetchAdminControlPanel(); }
+            else if (target === 'rawDatabase') { document.getElementById('adminTabRawDb').classList.remove('hidden'); fetchRawDatabaseTable(); }
+            else if (target === 'sqlQuery') { document.getElementById('adminTabSql').classList.remove('hidden'); fetchAllRecordsForAdmin(); }
         }
 
         function openMobileResetModal() { document.getElementById('mobileResetModal').classList.remove('hidden'); }
         function closeMobileResetModal() { document.getElementById('mobileResetModal').classList.add('hidden'); }
 
-        function handleMobileResetPassword(e) {
+        async function handleMobileResetPassword(e) {
             e.preventDefault();
+            const mobileInput = document.getElementById('resetMobileNo').value.trim();
             const newPass = document.getElementById('mobileNewPassInput').value.trim();
-            if (newPass !== document.getElementById('mobileConfirmPassInput').value.trim()) { alert('পাসওয়ার্ড মিলেনি!'); return; }
-            currentValidPass = newPass;
-            document.getElementById('passwordInput').value = newPass;
-            alert('পাসওয়ার্ড সফলভাবে রিসেট হয়েছে!');
+            const confirmPass = document.getElementById('mobileConfirmPassInput').value.trim();
+
+            if (newPass !== confirmPass) { alert('নতুন পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড এক নয়!'); return; }
+            
+            const registeredMobile = currentUserData['মোবাইল নাম্বার '] || currentUserData['mobile'];
+            if (mobileInput !== registeredMobile) { alert('মোবাইল নম্বরটি সঠিক নয়!'); return; }
+
+            const { error } = await supabaseClient.from('IND').update({ password: newPass }).eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId);
+            if (error) { alert('পাসওয়ার্ড আপডেট করতে সমস্যা হয়েছে: ' + error.message); return; }
+
+            alert('পাসওয়ার্ড সফলভাবে পরিবর্তন করা হয়েছে! এখন নতুন পাসওয়ার্ড দিয়ে লগইন করুন।');
             closeMobileResetModal();
+            handleLogout();
         }
 
         async function fetchAdminControlPanel() {
             const tbody = document.getElementById('adminControlTableBody');
-            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">লোডিং...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">Loading...</td></tr>`;
             const { data } = await supabaseClient.from('IND').select('*');
             tbody.innerHTML = '';
-            if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">কোনো ইউজার নেই</td></tr>`;
-                return;
-            }
+            if (!data || data.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">No users found</td></tr>`; return; }
             data.forEach(u => {
                 const formattedId = u['Company ID'] ? `${u['Company ID']}${String(u['User ID']).padStart(3, '0')}` : u['User ID'];
                 tbody.innerHTML += `
@@ -623,25 +678,69 @@
             });
         }
 
+        // RAW DATABASE (READ-ONLY) FOR ADMIN
+        async function fetchRawDatabaseTable() {
+            const tbody = document.getElementById('rawDatabaseTableBody');
+            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">Loading Raw Database...</td></tr>`;
+            try {
+                const { data: indData } = await supabaseClient.from('IND').select('*');
+                const { data: invData } = await supabaseClient.from('investments').select('*');
+                const { data: witData } = await supabaseClient.from('withdrawals').select('*');
+
+                tbody.innerHTML = '';
+                if (!indData || indData.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">No records in IND table</td></tr>`;
+                    return;
+                }
+
+                indData.forEach(user => {
+                    const compId = user['Company ID'] || 1;
+                    const uId = user['User ID'] || 1;
+                    const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
+                    const mobile = user['মোবাইল নাম্বার '] || user['mobile'] || 'N/A';
+                    const passHist = user['password'] || '1234#';
+
+                    // Filter investments & withdrawals for this user
+                    const userInvs = invData ? invData.filter(i => (i['User ID'] === mergedId || i.user_id == uId)) : [];
+                    const userWits = witData ? witData.filter(w => (w['User ID'] === mergedId || w.user_id == uId)) : [];
+
+                    const totalInvAmt = userInvs.reduce((sum, i) => sum + (Number(i.amount) || 0), 0);
+                    const invBanks = [...new Set(userInvs.map(i => i.from_bank).filter(Boolean))].join(', ') || '-';
+
+                    const totalWitAmt = userWits.reduce((sum, w) => sum + (Number(w.amount) || 0), 0);
+                    const witBanks = [...new Set(userWits.map(w => w.withdrawal_bank).filter(Boolean))].join(', ') || '-';
+
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-emerald-50">
+                            <td class="p-2 font-bold text-alnawaNavy">${mergedId}</td>
+                            <td class="p-2">${mobile}</td>
+                            <td class="p-2 text-gray-600">${passHist}</td>
+                            <td class="p-2 text-right font-bold text-emerald-700">৳ ${totalInvAmt.toLocaleString()}</td>
+                            <td class="p-2">${invBanks}</td>
+                            <td class="p-2 text-right font-bold text-blue-700">৳ ${totalWitAmt.toLocaleString()}</td>
+                            <td class="p-2">${witBanks}</td>
+                        </tr>
+                    `;
+                });
+            } catch (err) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-red-500">Error loading raw database.</td></tr>`;
+            }
+        }
+
         async function fetchAllRecordsForAdmin() {
             const tbody = document.getElementById('latestRecordsTableBody');
-            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">লোড হচ্ছে...</td></tr>`;
-
+            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">Loading...</td></tr>`;
             try {
                 const { data: investments } = await supabaseClient.from('investments').select('*').order('id', { ascending: false });
                 const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').order('id', { ascending: false });
 
                 let combined = [];
-                if (investments) investments.forEach(i => combined.push({ table: 'investments', id: i.id, userId: i['User ID'] || i.user_id || fullMergedUserId, date: String(i.created_at || '').split('T')[0], desc: i.description || 'Investment', amount: Number(i.amount) || 0 }));
-                if (withdrawals) withdrawals.forEach(i => combined.push({ table: 'withdrawals', id: i.id, userId: i['User ID'] || i.user_id || fullMergedUserId, date: String(i.created_at || '').split('T')[0], desc: i.description || 'Withdrawal', amount: Number(i.amount) || 0 }));
+                if (investments) investments.forEach(i => combined.push({ table: 'investments', id: i.id, userId: i['User ID'] || i.user_id || '1001', date: String(i.created_at || '').split('T')[0], desc: i.description || 'Investment', amount: Number(i.amount) || 0 }));
+                if (withdrawals) withdrawals.forEach(i => combined.push({ table: 'withdrawals', id: i.id, userId: i['User ID'] || i.user_id || '1001', date: String(i.created_at || '').split('T')[0], desc: i.description || 'Withdrawal', amount: Number(i.amount) || 0 }));
 
                 combined.sort((a, b) => b.id - a.id);
                 tbody.innerHTML = '';
-
-                if (combined.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">কোনো রেকর্ড নেই।</td></tr>`;
-                    return;
-                }
+                if (combined.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">No records found.</td></tr>`; return; }
 
                 combined.forEach(item => {
                     const deleteQueryString = `DELETE FROM "${item.table}" WHERE id = ${item.id};`;
@@ -655,9 +754,7 @@
                         </tr>
                     `;
                 });
-            } catch (err) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-red-500">ডাটা লোড করতে ত্রুটি হয়েছে।</td></tr>`;
-            }
+            } catch (err) { tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-red-500">Data load error.</td></tr>`; }
         }
 
         function selectRecordForDelete(queryText) {
@@ -672,17 +769,14 @@
 
         async function runWebSqlCommand() {
             const sqlText = document.getElementById('customSqlInput').value.trim();
-            if (!sqlText) { alert('দয়া করে নিচের টেবিলে ডাবল ক্লিক করে কুয়েরি আনুন!'); return; }
-            if (!confirm("⚠️ নিশ্চিতভাবে এই কুয়েরি রান করতে চান?")) return;
-
+            if (!sqlText) { alert('Please double-click on any table row first!'); return; }
+            if (!confirm("⚠️ Are you sure you want to execute this delete query?")) return;
             try {
-                alert("কুয়েরি সফলভাবে এক্সিকিউট করা হয়েছে!");
+                alert("Query executed successfully!");
                 resetSqlBox();
                 fetchAllRecordsForAdmin();
                 fetchPendingApprovalData();
-            } catch (err) {
-                alert("এরর: " + err.message);
-            }
+            } catch (err) { alert("Error: " + err.message); }
         }
 
         async function fetchTransactionsFromSupabase() {
@@ -697,21 +791,16 @@
             if (withdrawals) withdrawals.forEach(i => allTransactions.push({ date: String(i.created_at).split('T')[0], fromBank: i.withdrawal_bank, toBank: i.company_account, status: i.status || 'pending', amount: Number(i.amount), type: 'wit' }));
 
             let runningSum = 0, totalApp = 0, totalPend = 0, totalWit = 0;
-
             allTransactions.forEach(t => {
                 if (t.status === 'approved (+)' || t.status === 'approved') {
                     if (t.type === 'inv') { totalApp += t.amount; runningSum += t.amount; }
                     else { totalWit += t.amount; runningSum -= t.amount; }
-                } else if (t.status === 'pending') {
-                    totalPend += t.amount;
-                }
+                } else if (t.status === 'pending') { totalPend += t.amount; }
                 t.cumulative = (t.status === 'approved (+)' || t.status === 'approved') ? runningSum : '-';
             });
 
             tbody.innerHTML = '';
-            if (allTransactions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`;
-            }
+            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; }
 
             allTransactions.forEach(item => {
                 tbody.innerHTML += `
@@ -738,17 +827,18 @@
             
             tbody.innerHTML = '';
             let list = [];
-            if (inv) inv.forEach(i => list.push({ id: i.id, dbTable: 'investments', date: String(i.created_at).split('T')[0], userId: i['User ID'] || i.user_id || '1001', desc: i.description || 'Investment', otp: i.otp_pin || '1234#', amount: Number(i.amount) }));
-            if (wit) wit.forEach(i => list.push({ id: i.id, dbTable: 'withdrawals', date: String(i.created_at).split('T')[0], userId: i['User ID'] || i.user_id || '1001', desc: i.description || 'Withdrawal', otp: i.otp_pin || '1234#', amount: Number(i.amount) }));
+            if (inv) inv.forEach(i => list.push({ id: i.id, dbTable: 'investments', typeLabel: 'Investment', date: String(i.created_at).split('T')[0], userId: i['User ID'] || '1001', desc: i.description || 'Investment', otp: i.otp_pin || '1234#', amount: Number(i.amount) }));
+            if (wit) wit.forEach(i => list.push({ id: i.id, dbTable: 'withdrawals', typeLabel: 'Withdrawal', date: String(i.created_at).split('T')[0], userId: i['User ID'] || '1001', desc: i.description || 'Withdrawal', otp: i.otp_pin || '1234#', amount: Number(i.amount) }));
 
             if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-emerald-600 font-bold">কোনো পেন্ডিং আবেদন নেই!</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-emerald-600 font-bold">No pending approvals!</td></tr>`;
                 return;
             }
 
             list.forEach(item => {
                 tbody.innerHTML += `
                     <tr>
+                        <td class="p-2.5 font-bold text-alnawaNavy">${item.typeLabel}</td>
                         <td class="p-2.5 font-mono">${item.date}</td>
                         <td class="p-2.5 font-bold font-mono">${item.userId}</td>
                         <td class="p-2.5">${item.desc}</td>
@@ -769,15 +859,46 @@
 
         async function commitStatus(dbTable, id, expectedOtp) {
             const status = document.getElementById(`sel_${dbTable}_${id}`).value;
-            if (status === 'approved (+)' && prompt("গোপন পিন (OTP) দিন:") !== expectedOtp) { alert('ভুল পিন!'); return; }
+            if (status === 'approved (+)' && prompt("Enter Secret PIN (OTP):") !== expectedOtp) { alert('Wrong PIN!'); return; }
             await supabaseClient.from(dbTable).update({ status }).eq('id', id);
-            alert('স্ট্যাটাস আপডেট সফল!');
+            alert('Status updated successfully!');
             fetchPendingApprovalData();
             fetchAllRecordsForAdmin();
         }
 
-        async function startSubmissionProcess(e) { 
-            e.preventDefault(); 
+        // INVESTMENT 10 SECONDS COUNTDOWN PROCESS
+        function startInvestmentCountdown(e) {
+            e.preventDefault();
+            document.getElementById('investSubmitArea').classList.add('hidden');
+            document.getElementById('investProgressBox').classList.remove('hidden');
+            
+            let timeLeft = 10;
+            const bar = document.getElementById('investProgressBar');
+            const text = document.getElementById('investCountdownText');
+            bar.style.width = '0%';
+
+            investTimer = setInterval(() => {
+                timeLeft--;
+                let percent = ((10 - timeLeft) / 10) * 100;
+                bar.style.width = percent + '%';
+                text.innerText = `সংরক্ষিত হচ্ছে... (${timeLeft} সেকেন্ড বাকি)`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(investTimer);
+                    completeInvestmentSubmission();
+                }
+            }, 1000);
+        }
+
+        function cancelInvestmentProcess() {
+            if (investTimer) clearInterval(investTimer);
+            document.getElementById('investProgressBox').classList.add('hidden');
+            document.getElementById('investSubmitArea').classList.remove('hidden');
+            document.getElementById('investProgressBar').style.width = '0%';
+            alert('ইনভেস্টমেন্ট প্রসেস বাতিল করা হয়েছে।');
+        }
+
+        async function completeInvestmentSubmission() {
             await supabaseClient.from('investments').insert([{
                 'User ID': fullMergedUserId,
                 company_id: loggedInCompanyId,
@@ -790,11 +911,44 @@
                 status: 'pending'
             }]);
             document.getElementById('investForm').reset();
+            document.getElementById('investProgressBox').classList.add('hidden');
+            document.getElementById('investSubmitArea').classList.remove('hidden');
             document.getElementById('successModal').classList.remove('hidden');
         }
 
-        async function startWithdrawalProcess(e) { 
-            e.preventDefault(); 
+        // WITHDRAWAL 10 SECONDS COUNTDOWN PROCESS
+        function startWithdrawalCountdown(e) {
+            e.preventDefault();
+            document.getElementById('withdrawSubmitArea').classList.add('hidden');
+            document.getElementById('withdrawProgressBox').classList.remove('hidden');
+            
+            let timeLeft = 10;
+            const bar = document.getElementById('withdrawProgressBar');
+            const text = document.getElementById('withdrawCountdownText');
+            bar.style.width = '0%';
+
+            withdrawTimer = setInterval(() => {
+                timeLeft--;
+                let percent = ((10 - timeLeft) / 10) * 100;
+                bar.style.width = percent + '%';
+                text.innerText = `সংরক্ষিত হচ্ছে... (${timeLeft} সেকেন্ড বাকি)`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(withdrawTimer);
+                    completeWithdrawalSubmission();
+                }
+            }, 1000);
+        }
+
+        function cancelWithdrawalProcess() {
+            if (withdrawTimer) clearInterval(withdrawTimer);
+            document.getElementById('withdrawProgressBox').classList.add('hidden');
+            document.getElementById('withdrawSubmitArea').classList.remove('hidden');
+            document.getElementById('withdrawProgressBar').style.width = '0%';
+            alert('উইথড্রল প্রসেস বাতিল করা হয়েছে।');
+        }
+
+        async function completeWithdrawalSubmission() {
             await supabaseClient.from('withdrawals').insert([{
                 'User ID': fullMergedUserId,
                 company_id: loggedInCompanyId,
@@ -807,6 +961,8 @@
                 status: 'pending'
             }]);
             document.getElementById('withdrawalForm').reset();
+            document.getElementById('withdrawProgressBox').classList.add('hidden');
+            document.getElementById('withdrawSubmitArea').classList.remove('hidden');
             document.getElementById('successModal').classList.remove('hidden');
         }
 
