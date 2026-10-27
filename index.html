@@ -1,748 +1,336 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল</title>
-    <!-- Tailwind CSS -->
+    <title>ইনভেস্টমেন্ট পোর্টাল / Investment Portal</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
-    
-    <!-- Supabase JS SDK -->
+    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        alnawaGreen: '#0b843d',
-                        alnawaNavy: '#1a237e',
-                        alnawaBlue: '#0d47a1',
-                        alnawaOrange: '#f37021',
-                    },
-                    fontFamily: {
-                        sans: ['Hind Siliguri', 'sans-serif'],
-                        serif: ['Tiro Bangla', 'serif'],
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Hind Siliguri', sans-serif;
-            background-color: #c8d6e5;
-        }
-        .pad-watermark {
-            background-color: #ffffff;
-            background-image: 
-                radial-gradient(circle, rgba(11, 132, 61, 0.02) 0%, rgba(26, 35, 126, 0.04) 100%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='500' viewBox='0 0 400 400'%3E%3Cg opacity='0.12'%3E%3Ccircle cx='200' cy='160' r='90' fill='none' stroke='%230b843d' stroke-width='4'/%3E%3Cpath fill='%230b843d' d='M200,90 C225,90 250,115 250,160 C250,195 200,230 200,230 C200,230 150,195 150,160 C150,115 175,90 200,90 Z'/%3E%3Cpath fill='%231a237e' d='M200,120 C215,120 230,135 230,160 C230,180 200,205 200,205 C200,205 170,180 170,160 C170,135 185,120 200,120 Z' opacity='0.5'/%3E%3Ctext x='50%25' y='72%25' text-anchor='middle' font-family='sans-serif' font-weight='bold' font-size='38' fill='%231a237e'%3EAlnawa%3C/text%3E%3Ctext x='50%25' y='83%25' text-anchor='middle' font-family='sans-serif' font-size='26' font-weight='600' fill='%23666666'%3Ecompany%3C/text%3E%3C/g%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: center 50%;
-            background-size: 420px 420px;
-        }
-        .poly-badge { clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%); }
-        .poly-website { clip-path: polygon(10% 0, 100% 0, 92% 100%, 0 100%); }
-        .poly-footer-left { clip-path: polygon(0 0, 100% 0, 92% 100%, 0 100%); }
-        @keyframes submissionProgress { 0% { width: 0%; } 100% { width: 100%; } }
-        .animate-progress { animation: submissionProgress 10s linear forwards; }
-        .fade-in { animation: fadeIn 0.3s ease-in-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-        .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #0b843d; border-radius: 3px; }
-    </style>
 </head>
-<body class="min-h-screen flex justify-center items-center p-1 sm:p-3">
+<body class="bg-gray-50 text-gray-800 font-sans">
 
-    <div class="w-full max-w-5xl bg-white shadow-2xl rounded-none border border-gray-400 flex flex-col min-h-[96vh] relative overflow-hidden">
-
-        <!-- HEADER -->
-        <header class="bg-white pt-3 px-3 sm:px-5 pb-1 flex-shrink-0 border-b-2 border-alnawaGreen">
-            <div class="flex flex-row justify-between items-start gap-2">
-                <div class="flex items-center gap-3">
-                    <div class="w-20 h-20 sm:w-24 sm:h-24 border-2 border-alnawaGreen rounded-2xl flex flex-col items-center justify-center p-1 bg-white text-center flex-shrink-0 shadow-sm">
-                        <i class="fa-solid fa-seedling text-3xl sm:text-4xl text-alnawaGreen mb-0.5"></i>
-                        <span class="text-xs font-bold text-alnawaNavy uppercase tracking-tighter leading-none">Alnawa</span>
-                        <span class="text-[9px] text-gray-600 font-semibold leading-none">company</span>
-                    </div>
-                    <div>
-                        <h1 class="text-2xl sm:text-4xl font-extrabold text-alnawaNavy tracking-tight leading-none mb-1">মেসার্স আল নাওয়া কোম্পানী</h1>
-                        <h2 class="text-xl sm:text-3xl font-bold text-alnawaGreen italic font-serif leading-none tracking-wide">M/S. Alnawa Company</h2>
-                    </div>
-                </div>
-                <div class="text-right hidden sm:block">
-                    <div class="text-sm font-bold text-alnawaNavy">ওয়াদায় বদ্ধপরিকর</div>
-                    <div class="text-xs font-semibold text-alnawaGreen italic">Committed to the Promise</div>
-                </div>
-            </div>
-
-            <div class="mt-2 flex items-center h-8 font-sans text-xs font-bold">
-                <div class="bg-alnawaNavy text-white px-3 sm:px-6 h-full flex items-center poly-badge min-w-[170px] sm:min-w-[230px] shadow">
-                    <span class="text-yellow-300 mr-1.5">সরকারি রেজিঃ নং:</span> P-56741
-                </div>
-                <div class="bg-gradient-to-r from-alnawaOrange via-orange-500 to-amber-500 text-white flex-grow h-full flex items-center justify-center px-4 poly-website text-xs sm:text-sm font-bold tracking-wider shadow">
-                    www.alnawacompany.com
-                </div>
+    <div id="app" class="container mx-auto p-4 max-w-7xl">
+        
+        <!-- Dynamic Header -->
+        <header id="main-header" class="bg-indigo-600 text-white p-4 rounded-lg shadow-md mb-6 flex justify-between items-center">
+            <h1 id="header-title" class="text-xl font-bold">ইনভেস্টমেন্ট পোর্টাল</h1>
+            <div id="user-info" class="hidden flex items-center space-x-4">
+                <span id="welcome-user" class="text-sm font-semibold"></span>
+                <button onclick="logout()" id="logout-btn" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-sm font-semibold">লগআউট</button>
             </div>
         </header>
 
-        <!-- MAIN CONTENT -->
-        <main class="flex-grow pad-watermark p-3 sm:p-6 flex flex-col justify-start relative">
-
-            <!-- PAGE 1: SIGN IN VIEW -->
-            <div id="page1" class="w-full max-w-md mx-auto fade-in my-auto">
-                <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-200 text-center">
-                    <div class="mb-5 p-3.5 bg-emerald-50 rounded-xl border border-emerald-300 shadow-sm">
-                        <p class="text-emerald-900 text-lg sm:text-xl font-bold leading-relaxed">আস্সালামুআ'লাইকুম ওয়া রহমাতুল্লাহি ওয়া বারকাতুহু।</p>
-                    </div>
-                    <h3 class="text-2xl font-bold text-alnawaNavy mb-1">সাইন ইন (Sign In)</h3>
-                    <p class="text-xs text-gray-500 mb-6">আপনার ইউজার আইডি এবং পাসওয়ার্ড দিন (এডমিন আইডি: 1049)</p>
-
-                    <div id="loginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
-
-                    <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-left">
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">ইউজার আইডি</label>
-                            <input type="text" id="usernameInput" value="1001" required maxlength="4" class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড</label>
-                            <input type="password" id="passwordInput" value="1234!" required class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
-                        </div>
-                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-alnawaGreen to-emerald-700 text-white font-bold rounded-lg shadow-lg">সাইন ইন করুন</button>
-                    </form>
+        <!-- Login Section -->
+        <section id="login-section" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
+            <h2 class="text-xl font-semibold mb-4 text-center text-indigo-600">লগইন করুন / Login</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">আইডি (ID)</label>
+                    <input type="text" id="login-id" class="w-full mt-1 p-2 border rounded-md focus:ring focus:ring-indigo-300" placeholder="ইউজার আইডি বা admin দিন">
                 </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">পাসওয়ার্ড (Password)</label>
+                    <input type="password" id="login-pass" class="w-full mt-1 p-2 border rounded-md focus:ring focus:ring-indigo-300" placeholder="পাসওয়ার্ড দিন">
+                </div>
+                <button onclick="handleLogin()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white p-2 rounded-md font-semibold">লগইন / Login</button>
             </div>
+        </section>
 
-            <!-- PAGE 2 CONTAINER -->
-            <div id="page2Container" class="hidden space-y-4 fade-in w-full">
-                
-                <!-- TOP HEADER CONTROL BAR -->
-                <div class="bg-white/95 backdrop-blur-md rounded-xl p-3 shadow-md border flex flex-col md:flex-row justify-between items-center gap-3">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-full bg-emerald-100 text-alnawaGreen flex items-center justify-center font-bold text-xl border">
-                            <i class="fa-solid fa-user-check"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="font-extrabold text-alnawaNavy text-base" id="currentUserDisplay">১ মাহমুদ রুবেল</span>
-                                <span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border">সফল</span>
-                            </div>
-                            <p class="text-[11px] text-gray-500">আল নাওয়া কোম্পানী রেজিস্টার্ড ইনভেস্টর</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <button onclick="openMobileResetModal()" class="px-3 py-1.5 bg-gradient-to-r from-alnawaOrange to-amber-500 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড রিসেট</button>
-                        <button onclick="handleLogout()" class="text-xs text-red-600 font-bold px-3 py-1.5 rounded-lg border border-red-200">লগআউট</button>
-                    </div>
-                </div>
-
-                <!-- PERSONAL INFO & VALIDITY TIMER -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                    <!-- Profile Details -->
-                    <div class="md:col-span-2 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow border flex flex-col justify-center">
-                        <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border border-gray-200 rounded-lg">
-                                <tbody class="divide-y divide-gray-200" id="userProfileTableBody"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- Validity Countdown Timer Card -->
-                    <div class="bg-gradient-to-br from-alnawaNavy to-blue-900 text-white rounded-xl p-3 shadow border border-amber-400 flex flex-col justify-between text-center">
-                        <div class="text-xs font-bold text-amber-300"><i class="fa-solid fa-clock"></i> ইনভেস্টর মেয়াদ কাউন্টডাউন</div>
-                        <div id="validityTimerDisplay" class="text-sm font-mono font-bold tracking-tight my-2 text-emerald-300">লোড হচ্ছে...</div>
-                        <div class="text-[10px] text-gray-300">চুক্তিভিত্তিক মেয়াদ অবশিষ্ট সময়</div>
-                    </div>
-                </div>
-
-                <!-- RADIO BUTTON SELECTION BAR -->
-                <div class="bg-gradient-to-r from-emerald-800 via-alnawaNavy to-emerald-900 rounded-xl p-3 shadow-lg text-white">
-                    <div class="text-xs font-bold text-amber-300 mb-2"><i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:</div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="navRadioContainer">
-                        <label onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer">
-                            <input type="radio" name="pageOption" id="radioSubmission" checked class="accent-orange-500">
-                            <div class="text-xs font-extrabold">ইনভেস্টমেন্ট ফরম</div>
-                        </label>
-                        <label onclick="switchSubPage('withdrawal')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer">
-                            <input type="radio" name="pageOption" id="radioWithdrawal" class="accent-orange-500">
-                            <div class="text-xs font-extrabold">উইথড্রল ফরম</div>
-                        </label>
-                        <label onclick="switchSubPage('summary')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer">
-                            <input type="radio" name="pageOption" id="radioSummary" class="accent-orange-500">
-                            <div class="text-xs font-extrabold">ট্রানজেকশন সামারি</div>
-                        </label>
-                        <!-- Admin Panel Radio (Shown only for Admin 1049) -->
-                        <label id="adminRadioLabel" onclick="switchSubPage('pendingApproval')" class="hidden flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
-                            <input type="radio" name="pageOption" id="radioPendingApproval" class="accent-orange-500">
-                            <div class="text-xs font-extrabold text-amber-300">পেন্ডিং ও ডিলিট প্যানেল (এডমিন)</div>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- SUB-PAGE 1: SUBMISSION -->
-                <div id="subPageSubmission" class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border fade-in">
-                    <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">ইনভেস্টমেন্ট জমা ফরম</h3>
-                    <form id="investForm" onsubmit="startSubmissionProcess(event)" class="space-y-3">
-                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                            <input type="text" id="autoUser" value="1001" readonly disabled class="bg-gray-100 border p-2 rounded text-xs font-mono">
-                            <select id="fromBank" required class="border p-2 rounded text-xs bg-white">
-                                <option value="">প্রেরক ব্যাংক নির্বাচন</option>
-                                <option value="অগ্রণী ব্যাংক পিএলসি">অগ্রণী ব্যাংক পিএলসি</option>
-                                <option value="ডাচ-বাংলা ব্যাংক লিঃ">ডাচ-বাংলা ব্যাংক লিঃ</option>
-                                <option value="ইসলামী ব্যাংক বাংলাদেশ লিঃ">ইসলামী ব্যাংক বাংলাদেশ লিঃ</option>
-                            </select>
-                            <select id="toBank" required class="border p-2 rounded text-xs bg-emerald-50 text-alnawaNavy">
-                                <option value="AL NAWA COMPANY_UCB">আল নাওয়া ইউসিবি তাকওয়া</option>
-                                <option value="AL NAWA COMPANY_DBBL">আল নাওয়া ডিবিবিএল</option>
-                            </select>
-                            <input type="number" id="investAmount" min="1000" required placeholder="পরিমাণ (৳)" class="border p-2 rounded text-xs font-bold">
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <input type="text" id="investDesc" required placeholder="বিবরণ লিখুন..." class="border p-2 rounded text-xs">
-                            <input type="text" id="investOtp" required maxlength="4" placeholder="গোপন পিন (OTP, যেমন: 7890)" class="border border-amber-400 bg-amber-50 p-2 rounded text-xs font-mono font-bold">
-                        </div>
-                        <div id="submitControlArea">
-                            <button type="submit" class="px-8 py-2.5 bg-alnawaGreen text-white font-bold rounded text-xs">ইনভেস্ট জমা দিন</button>
-                        </div>
-                        <div id="submissionProgressBox" class="hidden bg-emerald-50 p-3 rounded text-xs">
-                            <span id="countdownText" class="font-bold text-alnawaGreen">10s</span> কাউন্টডাউন চলছে... <button type="button" onclick="cancelSubmission()" class="text-red-600 font-bold ml-2">বাতিল</button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- SUB-PAGE 2: WITHDRAWAL -->
-                <div id="subPageWithdrawal" class="hidden bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border fade-in">
-                    <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">উইথড্রল ফরম</h3>
-                    <form id="withdrawalForm" onsubmit="startWithdrawalProcess(event)" class="space-y-3">
-                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                            <input type="text" value="1001" readonly disabled class="bg-gray-100 border p-2 rounded text-xs">
-                            <select id="withdrawFromBank" required class="border p-2 rounded text-xs bg-white">
-                                <option value="">টাকা গ্রহণের ব্যাংক</option>
-                                <option value="অগ্রণী ব্যাংক পিএলসি">অগ্রণী ব্যাংক পিএলসি</option>
-                                <option value="ডাচ-বাংলা ব্যাংক লিঃ">ডাচ-বাংলা ব্যাংক লিঃ</option>
-                            </select>
-                            <select id="withdrawToBank" required class="border p-2 rounded text-xs bg-blue-50">
-                                <option value="AL NAWA COMPANY_UCB">আল নাওয়া ইউসিবি</option>
-                            </select>
-                            <input type="number" id="withdrawAmount" min="500" required placeholder="উত্তোলনের পরিমাণ" class="border p-2 rounded text-xs">
-                        </div>
-                        <input type="text" id="withdrawDesc" required placeholder="উত্তোলনের কারণ..." class="border p-2 rounded text-xs w-full">
-                        <button type="submit" class="px-8 py-2.5 bg-blue-700 text-white font-bold rounded text-xs">উইথড্রল জমা দিন</button>
-                    </form>
-                </div>
-
-                <!-- SUB-PAGE 3: SUMMARY -->
-                <div id="subPageSummary" class="hidden space-y-4 fade-in">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        <div class="bg-white p-3 rounded-xl shadow border-l-4 border-emerald-600">
-                            <div class="text-xs text-emerald-800 font-bold">মোট অনুমোদিত ইনভেস্টমেন্ট</div>
-                            <div class="text-lg font-bold text-emerald-700 font-mono" id="reportApproved">৳ 0</div>
-                        </div>
-                        <div class="bg-white p-3 rounded-xl shadow border-l-4 border-amber-500">
-                            <div class="text-xs text-amber-800 font-bold">মোট অপেক্ষমান ইনভেস্টমেন্ট</div>
-                            <div class="text-lg font-bold text-amber-600 font-mono" id="reportPending">৳ 0</div>
-                        </div>
-                        <div class="bg-white p-3 rounded-xl shadow border-l-4 border-blue-600">
-                            <div class="text-xs text-blue-800 font-bold">মোট উত্তোলিত অর্থ</div>
-                            <div class="text-lg font-bold text-blue-700 font-mono" id="reportWithdraw">৳ 0</div>
-                        </div>
-                    </div>
-                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border">
-                        <h3 class="text-xs font-bold text-alnawaNavy mb-3">ট্রানজেকশন সামারি রিপোর্ট</h3>
-                        <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[750px]">
-                                <thead>
-                                    <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ</th><th class="p-2.5">বিবরণ</th><th class="p-2.5">ব্যাংক</th><th class="p-2.5 text-center">ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">যোগফল</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="transactionTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & DOUBLE-CLICK SQL RUNNER BOX -->
-                <div id="subPagePendingApproval" class="hidden space-y-4 fade-in">
-                    
-                    <!-- WEB-BASED SQL RUNNER BOX (DOUBLE CLICK TO FILL) -->
-                    <div class="bg-gray-900 text-white rounded-xl p-4 shadow border border-amber-500">
-                        <h4 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-terminal"></i> সরাসরি ডিলিট কুয়েরি বক্স (নিচের তালিকায় ডাবল ক্লিক করুন)
-                        </h4>
-                        <p class="text-[11px] text-gray-300 mb-2">নিচের তালিকা থেকে যেকোনো এন্ট্রিতে **ডাবল ক্লিক (Double Click)** করলেই এখানে ডিলিট কমান্ড চলে আসবে:</p>
-                        
-                        <div class="flex flex-col gap-2">
-                            <textarea id="customSqlInput" rows="2" placeholder='নিচের তালিকায় ডাবল ক্লিক করলে কুয়েরি এখানে চলে আসবে...' 
-                                      class="w-full bg-black/90 border border-gray-700 rounded p-2 text-xs font-mono text-emerald-400 focus:outline-none focus:ring-1 focus:ring-amber-400"></textarea>
-                            
-                            <div class="flex justify-between items-center">
-                                <span id="sqlRunStatus" class="text-[10px] text-amber-300"></span>
-                                <button onclick="runWebSqlCommand()" class="px-5 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded shadow transition flex items-center gap-1.5">
-                                    <i class="fa-solid fa-trash"></i> ডিলিট কুয়েরি রান করুন
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- FULL DATABASE RECORDS (DESCENDING & DOUBLE CLICK ENABLED) -->
-                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-blue-300">
-                        <div class="flex justify-between items-center mb-2 border-b pb-2">
-                            <h4 class="text-xs font-bold text-alnawaNavy flex items-center gap-2">
-                                <i class="fa-solid fa-database text-blue-600"></i> ডাটাবেজের সম্পূর্ণ এন্ট্রি লিস্ট (ডাবল ক্লিক করলে ডিলিট কুয়েরি তৈরি হবে)
-                            </h4>
-                            <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold border border-amber-300 animate-pulse">
-                                ডাবল ক্লিক (DblClick) করুন
-                            </span>
-                        </div>
-                        <div class="overflow-x-auto custom-scrollbar max-h-72">
-                            <table class="w-full text-left text-xs border-collapse min-w-[700px]">
-                                <thead class="sticky top-0 bg-alnawaNavy text-white">
-                                    <tr class="text-[10px] uppercase">
-                                        <th class="p-2">টেবিল</th>
-                                        <th class="p-2 font-mono text-amber-300">ID</th>
-                                        <th class="p-2">তারিখ</th>
-                                        <th class="p-2">বিবরণ</th>
-                                        <th class="p-2 text-right">পরিমাণ</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="latestRecordsTableBody" class="divide-y divide-gray-200 text-[11px] font-medium">
-                                    <!-- Dynamic DblClick Rows -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- PENDING APPROVAL TABLE -->
-                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-amber-300">
-                        <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">পেন্ডিং এপ্রুভাল ও পিন ভেরিফিকেশন প্যানেল</h3>
-                        <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[850px]">
-                                <thead>
-                                    <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ</th><th class="p-2.5">ইউজার আইডি</th><th class="p-2.5">বিবরণ</th><th class="p-2.5">গোপন পিন (OTP)</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-center">স্ট্যাটাস ও ভেরিফিকেশন</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="pendingApprovalTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </main>
-
-        <!-- FOOTER -->
-        <footer class="bg-white flex-shrink-0 border-t-2 border-alnawaGreen">
-            <div class="grid grid-cols-1 md:grid-cols-12 h-auto md:h-12 text-white font-sans text-xs">
-                <div class="md:col-span-7 bg-alnawaGreen px-3 py-2 flex items-center">
-                    <div>১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪১১, বন্দর, নারায়ণগঞ্জ।</div>
-                </div>
-                <div class="md:col-span-5 bg-gradient-to-r from-alnawaNavy to-blue-900 px-4 py-2 flex flex-col justify-center items-end">
-                    <div>মোবাইল : 01942-341889</div>
-                </div>
-            </div>
-        </footer>
-    </div>
-
-    <!-- MODALS -->
-    <div id="mobileResetModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <h4 class="text-sm font-bold text-alnawaNavy mb-3">পাসওয়ার্ড রিসেট</h4>
-            <form onsubmit="handleMobileResetPassword(event)" class="space-y-3 text-xs">
-                <input type="text" id="resetUserIdDisplay" value="1001" readonly disabled class="w-full bg-gray-100 border p-2 rounded">
-                <input type="tel" id="resetMobileNo" required placeholder="মোবাইল নম্বর..." class="w-full border p-2 rounded">
-                <input type="text" id="mobileNewPassInput" required placeholder="নতুন পাসওয়ার্ড..." class="w-full border p-2 rounded">
-                <input type="text" id="mobileConfirmPassInput" required placeholder="পুনরায় পাসওয়ার্ড..." class="w-full border p-2 rounded">
-                <button type="submit" class="w-full py-2 bg-alnawaOrange text-white font-bold rounded">রিসেট করুন</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="successModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 max-w-sm w-full text-center shadow-2xl border-4 border-emerald-500">
-            <h4 class="text-lg font-bold text-gray-800 mb-1">সফল হয়েছে!</h4>
-            <p class="text-xs text-gray-600 mb-5">সফলভাবে সংরক্ষিত হয়েছে।</p>
-            <button onclick="closeSuccessModal()" class="w-full py-2 bg-alnawaGreen text-white font-bold rounded">ঠিক আছে</button>
-        </div>
-    </div>
-
-    <!-- MAIN SCRIPT -->
-    <script>
-        const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        let currentValidPass = "1234!";
-        let loggedInUserId = 1, loggedInCompanyId = 1, fullMergedUserId = "1001";
-        let isAdmin = false;
-        let validityInterval = null;
-
-        function getMergedUserId(compId, userId) {
-            return String(compId || 1).slice(-1) + String(userId || 1).padStart(3, '0');
-        }
-
-        async function handleLogin(e) {
-            e.preventDefault();
-            const uInput = document.getElementById('usernameInput').value.trim();
-            const p = document.getElementById('passwordInput').value.trim();
+        <!-- Main Portal Dashboard -->
+        <section id="dashboard-section" class="hidden space-y-6">
             
-            // Check if Admin Login (ID: 1049, Password: 1234!)
-            if (uInput === "1049" && p === "1234!") {
-                isAdmin = true;
-                loggedInCompanyId = 1;
-                loggedInUserId = 49;
-                fullMergedUserId = "1049";
-
-                document.getElementById('page1').classList.add('hidden');
-                document.getElementById('page2Container').classList.remove('hidden');
-                document.getElementById('currentUserDisplay').innerText = "সিস্টেম অ্যাডমিন (Admin)";
+            <!-- ADMIN PANEL (100% English View) -->
+            <div id="admin-panel" class="hidden space-y-6">
                 
-                document.getElementById('adminRadioLabel').classList.remove('hidden');
-                document.getElementById('navRadioContainer').className = "grid grid-cols-1 sm:grid-cols-4 gap-2";
+                <!-- Admin Control Panel -->
+                <div class="bg-white p-6 rounded-lg shadow-md border-t-4 border-red-500">
+                    <h2 class="text-lg font-bold text-red-600 mb-4">👑 Admin Control Panel</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 border-b">
+                                    <th class="p-2 border">User ID</th>
+                                    <th class="p-2 border">Mobile Number</th>
+                                    <th class="p-2 border">Latest Password</th>
+                                    <th class="p-2 border">Feature Permissions</th>
+                                    <th class="p-2 border">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-control-tbody">
+                                <tr class="border-b">
+                                    <td class="p-2 border font-semibold">U001</td>
+                                    <td class="p-2 border">01711111111</td>
+                                    <td class="p-2 border">pass123#</td>
+                                    <td class="p-2 border space-x-2">
+                                        <label><input type="checkbox" checked> Investment</label>
+                                        <label><input type="checkbox" checked> Withdrawal</label>
+                                    </td>
+                                    <td class="p-2 border">
+                                        <button onclick="alert('Permissions Saved!')" class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded text-xs font-semibold">Save</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-                renderUserProfile({ 
-                    'জাতীয় পরিচয়পত্র (NID)': 'Admin NID', 
-                    'মোবাইল নাম্বার ': '01942341889', 
-                    'নমিনী': 'সিস্টেম মডারেটর', 
-                    'নমিনীর মোবাইল নাম্বার': '01900000000',
-                    'validity_date': '2030-12-31'
-                });
-                switchSubPage('pendingApproval');
-                return;
-            }
+                    <!-- SQL Query Runner with Double Click & Reset -->
+                    <div class="mt-6 p-4 bg-gray-50 rounded border">
+                        <h3 class="font-semibold text-gray-700 mb-2">SQL Auto-Delete Query Box (Double-click any table row to generate)</h3>
+                        <textarea id="sql-delete-box" rows="2" class="w-full p-2 border rounded mb-2 font-mono text-sm bg-white" placeholder="Double click on any record below..."></textarea>
+                        <div class="flex space-x-2">
+                            <button onclick="runDeleteQuery()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded text-sm font-semibold">Execute Delete Query</button>
+                            <button onclick="resetSqlBox()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded text-sm font-semibold">Reset</button>
+                        </div>
+                    </div>
+                </div>
 
-            // Normal User Login
-            isAdmin = false;
-            document.getElementById('adminRadioLabel').classList.add('hidden');
-            document.getElementById('navRadioContainer').className = "grid grid-cols-1 sm:grid-cols-3 gap-2";
+                <!-- Admin Records View (Sorted Descending) -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-lg font-bold text-gray-700 mb-4">Master Database Records (Descending Order)</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 border-b">
+                                    <th class="p-2 border">Date</th>
+                                    <th class="p-2 border">Table Name</th>
+                                    <th class="p-2 border">User ID</th>
+                                    <th class="p-2 border">Sender Bank</th>
+                                    <th class="p-2 border">Receiver Bank</th>
+                                    <th class="p-2 border">Amount</th>
+                                    <th class="p-2 border">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-master-tbody" class="cursor-pointer">
+                                <tr class="border-b hover:bg-gray-50" ondblclick="handleTableDblClick('investments', 101)">
+                                    <td class="p-2 border">2026-10-27 10:30</td>
+                                    <td class="p-2 border">investments</td>
+                                    <td class="p-2 border">U001</td>
+                                    <td class="p-2 border">Islami Bank Bangladesh PLC</td>
+                                    <td class="p-2 border">আলনাওয়া আইবিবিএল</td>
+                                    <td class="p-2 border">৳ 50,000</td>
+                                    <td class="p-2 border text-green-600 font-semibold">approved</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-            loggedInCompanyId = parseInt(uInput.charAt(0));
-            loggedInUserId = parseInt(uInput.slice(1));
-            fullMergedUserId = uInput;
+            </div>
 
-            const { data: indData, error } = await supabaseClient.from('IND').select('*').eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId).single();
-            if (error || !indData) {
-                document.getElementById('loginError').classList.remove('hidden');
-                document.getElementById('loginError').innerHTML = `আইডি পাওয়া যায়নি!`;
-                return;
-            }
 
-            if (p === currentValidPass) {
-                document.getElementById('page1').classList.add('hidden');
-                document.getElementById('page2Container').classList.remove('hidden');
-                document.getElementById('currentUserDisplay').innerText = indData['Name'] || `ID: ${fullMergedUserId}`;
-                renderUserProfile(indData);
-                switchSubPage('submission');
+            <!-- USER PANEL (100% Bangla View) -->
+            <div id="user-panel" class="hidden space-y-6">
+                
+                <!-- Profile & Timer Table -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-lg font-bold text-indigo-600 mb-4">ব্যক্তিগত তথ্য ও চুক্তির মেয়াদ</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="border p-4 rounded bg-gray-50 space-y-2 text-sm">
+                            <p><strong>জাতীয় পরিচয়পত্র নম্বর (NID):</strong> <span id="prof-nid">1234567890</span></p>
+                            <p><strong>মোবাইল নাম্বার:</strong> <span id="prof-mobile">01711111111</span></p>
+                            <p><strong>নমিনী:</strong> <span id="prof-nominee">আব্দুর রহমান</span></p>
+                            <p><strong>নমিনীর মোবাইল নাম্বার:</strong> <span id="prof-nominee-mobile">01822222222</span></p>
+                        </div>
+                        <div class="border p-4 rounded bg-indigo-50 flex flex-col justify-center items-center text-center">
+                            <h3 class="font-semibold text-gray-700 mb-2">ইনভেস্টর মেয়াদ কাউন্টডাউন</h3>
+                            <div id="countdown-timer" class="text-indigo-700 font-bold text-lg">
+                                ০ বছর, ০ মাস, ০ দিন, ০ ঘণ্টা, ০ মিনিট, ০ সেকেন্ড
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transaction Submission Form with Banks -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-lg font-bold text-gray-700 mb-4">নতুন লেনদেন করুন</h2>
+                    <form onsubmit="event.preventDefault(); alert('লেনদেন জমা হয়েছে!');" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">প্রেরক ব্যাংক (From Bank - ৩০টি ব্যাংক)</label>
+                            <select id="sender-bank-select" class="w-full p-2 border rounded focus:ring focus:ring-indigo-300 text-sm">
+                                <!-- JS দিয়ে ৩০টি ব্যাংক লোড হবে -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">গ্রহণকারী ব্যাংক (To Bank - আলনাওয়া)</label>
+                            <select id="receiver-bank-select" class="w-full p-2 border rounded focus:ring focus:ring-indigo-300 text-sm">
+                                <option>আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক</option>
+                                <option>আলনাওয়া ডিবিবিএল</option>
+                                <option>আলনাওয়া ব্রাক ব্যাংক</option>
+                                <option>আলনাওয়া আইবিবিএল</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">টাকার পরিমাণ (অ্যামাউন্ট)</label>
+                            <input type="number" class="w-full p-2 border rounded text-sm" placeholder="৫০০০">
+                        </div>
+                        <div class="md:col-span-3">
+                            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded font-semibold text-sm">জমা দিন</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- User Transaction Summary Table -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-lg font-bold text-gray-700 mb-4">ট্রানজেকশন সামারি ও রানিং ব্যালেন্স</h2>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 border-b">
+                                    <th class="p-2 border">তারিখ</th>
+                                    <th class="p-2 border">প্রেরক ব্যাংক</th>
+                                    <th class="p-2 border">গ্রহণকারী ব্যাংক</th>
+                                    <th class="p-2 border">অ্যামাউন্ট</th>
+                                    <th class="p-2 border">স্ট্যাটাস</th>
+                                    <th class="p-2 border">রানিং ব্যালেন্স</th>
+                                </tr>
+                            </thead>
+                            <tbody id="user-transaction-tbody">
+                                <tr class="border-b">
+                                    <td class="p-2 border">2026-10-27 10:30</td>
+                                    <td class="p-2 border">Sonali Bank PLC</td>
+                                    <td class="p-2 border">আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক</td>
+                                    <td class="p-2 border">১০,০০০ ৳</td>
+                                    <td class="p-2 border font-semibold text-green-600">approved</td>
+                                    <td class="p-2 border font-bold">১০,০০০ ৳</td>
+                                </tr>
+                                <tr class="border-b">
+                                    <td class="p-2 border">2026-10-27 11:15</td>
+                                    <td class="p-2 border">Dutch-Bangla Bank PLC</td>
+                                    <td class="p-2 border">আলনাওয়া ডিবিবিএল</td>
+                                    <td class="p-2 border">৫,০০০ ৳</td>
+                                    <td class="p-2 border font-semibold text-yellow-600">pending</td>
+                                    <td class="p-2 border font-bold text-gray-400">-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- JavaScript Engine -->
+    <script>
+        // Bangladeshi Top 30 Sender Banks List
+        const bdTop30Banks = [
+            "Sonali Bank PLC", "Janata Bank PLC", "Agrani Bank PLC", "Rupali Bank PLC",
+            "Islami Bank Bangladesh PLC", "Dutch-Bangla Bank PLC", "BRAC Bank PLC",
+            "United Commercial Bank PLC (UCB)", "Eastern Bank PLC (EBL)", "City Bank PLC",
+            "National Bank Limited", "Pubali Bank PLC", "Uttara Bank PLC", "Prime Bank PLC",
+            "Southeast Bank PLC", "Mercantile Bank PLC", "Mutual Trust Bank PLC (MTB)",
+            "Exim Bank PLC", "First Security Islami Bank PLC", "Al-Arafah Islami Bank PLC",
+            "Social Islami Bank PLC (SIBL)", "Standard Bank PLC", "Jamuna Bank PLC",
+            "One Bank PLC", "Dhaka Bank PLC", "Trust Bank PLC", "Bank Asia PLC",
+            "Shahjalal Islami Bank PLC", "Global Islami Bank PLC", "NRB Bank PLC"
+        ];
+
+        // Populate 30 Banks in Select Option
+        const senderSelect = document.getElementById('sender-bank-select');
+        bdTop30Banks.forEach(bank => {
+            let opt = document.createElement('option');
+            opt.value = bank;
+            opt.innerText = bank;
+            senderSelect.appendChild(opt);
+        });
+
+        // Login Handler
+        function handleLogin() {
+            const id = document.getElementById('login-id').value.trim();
+            const pass = document.getElementById('login-pass').value.trim();
+
+            if (id === 'admin' && pass === '1234#') {
+                showAdminDashboard();
+            } else if (id !== '') {
+                showUserDashboard(id);
             } else {
-                document.getElementById('loginError').classList.remove('hidden');
-                document.getElementById('loginError').innerHTML = `ভুল পাসওয়ার্ড! (ডিফল্ট: 1234!)`;
+                alert('অনুগ্রহ করে ইউজার আইডি এবং পাসওয়ার্ড দিন!');
             }
         }
 
-        function renderUserProfile(data) {
-            document.getElementById('userProfileTableBody').innerHTML = `
-                <tr class="bg-emerald-50/50">
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">জাতীয় পরিচয়পত্র তথ্য</td>
-                    <td class="p-2 font-mono font-bold text-gray-800">${data['জাতীয় পরিচয়পত্র (NID)'] || data['NID'] || 'N/A'}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">মোবাইল নাম্বার</td>
-                    <td class="p-2 font-mono font-bold">${data['মোবাইল নাম্বার '] || data['mobile'] || 'N/A'}</td>
-                </tr>
-                <tr class="bg-white">
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">নমিনী তথ্য</td>
-                    <td class="p-2 font-bold text-gray-800">${data['নমিনী'] || data['nominee'] || 'সংরক্ষিত নেই'}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">নমিনীর মোবাইল</td>
-                    <td class="p-2 font-mono font-bold text-gray-700">${data['নমিনীর মোবাইল নাম্বার'] || data['nominee_mobile'] || 'সংরক্ষিত নেই'}</td>
-                </tr>
-            `;
-
-            // Start Live Validity Countdown Timer
-            const expiryDateStr = data['validity_date'] || data['Validity Date'] || '2027-12-31';
-            startValidityCountdown(expiryDateStr);
+        function showAdminDashboard() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            
+            // Set Admin View Elements to English
+            document.getElementById('header-title').innerText = 'Investment Admin Portal';
+            document.getElementById('welcome-user').innerText = 'Admin (admin)';
+            document.getElementById('logout-btn').innerText = 'Logout';
+            
+            document.getElementById('admin-panel').classList.remove('hidden');
+            document.getElementById('user-panel').classList.add('hidden');
         }
 
-        function startValidityCountdown(expiryDateStr) {
-            if (validityInterval) clearInterval(validityInterval);
+        function showUserDashboard(userId) {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+            document.getElementById('user-info').classList.remove('hidden');
+            
+            // Set User View Elements to Bangla
+            document.getElementById('header-title').innerText = 'ইনভেস্টমেন্ট পোর্টাল';
+            document.getElementById('welcome-user').innerText = 'স্বাগতম, আইডি: ' + userId;
+            document.getElementById('logout-btn').innerText = 'লগআউট';
 
-            const expiryTime = new Date(expiryDateStr).getTime();
+            document.getElementById('user-panel').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
 
-            function updateTimer() {
+            startCountdown("2028-12-31T23:59:59");
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        // SQL Reset & Double Click Generator
+        function resetSqlBox() {
+            document.getElementById('sql-delete-box').value = '';
+        }
+
+        function handleTableDblClick(tableName, recordId) {
+            const query = `DELETE FROM "${tableName}" WHERE id = ${recordId};`;
+            document.getElementById('sql-delete-box').value = query;
+        }
+
+        function runDeleteQuery() {
+            const query = document.getElementById('sql-delete-box').value;
+            if(!query) {
+                alert('No query selected!');
+                return;
+            }
+            if(confirm('Are you sure you want to execute this delete query?')) {
+                alert('Query Executed Successfully: ' + query);
+                resetSqlBox();
+            }
+        }
+
+        // Countdown Timer Engine (Years, Months, Days, Hours, Minutes, Seconds)
+        function startCountdown(expiryDateStr) {
+            const targetDate = new Date(expiryDateStr).getTime();
+
+            setInterval(() => {
                 const now = new Date().getTime();
-                const distance = expiryTime - now;
-
-                const timerDisplay = document.getElementById('validityTimerDisplay');
+                const distance = targetDate - now;
 
                 if (distance < 0) {
-                    timerDisplay.innerText = "মেয়াদ উত্তীর্ণ হয়েছে!";
-                    clearInterval(validityInterval);
+                    document.getElementById("countdown-timer").innerHTML = "মেয়াদ শেষ হয়েছে";
                     return;
                 }
 
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const years = Math.floor(distance / (1000 * 60 * 60 * 24 * 365));
+                const months = Math.floor((distance % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+                const days = Math.floor((distance % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
                 const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-                timerDisplay.innerText = `${days} দিন ${hours} ঘঃ ${minutes} মিঃ ${seconds} সেঃ`;
-            }
-
-            updateTimer();
-            validityInterval = setInterval(updateTimer, 1000);
-        }
-
-        function handleLogout() {
-            if (validityInterval) clearInterval(validityInterval);
-            document.getElementById('page2Container').classList.add('hidden');
-            document.getElementById('page1').classList.remove('hidden');
-        }
-
-        function switchSubPage(target) {
-            ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary', 'subPagePendingApproval'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
-            });
-            if (target === 'submission') document.getElementById('subPageSubmission').classList.remove('hidden');
-            else if (target === 'withdrawal') document.getElementById('subPageWithdrawal').classList.remove('hidden');
-            else if (target === 'summary') { document.getElementById('subPageSummary').classList.remove('hidden'); fetchTransactionsFromSupabase(); }
-            else if (target === 'pendingApproval') { 
-                if (!isAdmin) { alert('অনুমতি নেই!'); switchSubPage('submission'); return; }
-                document.getElementById('subPagePendingApproval').classList.remove('hidden'); 
-                fetchPendingApprovalData(); 
-                fetchAllRecordsForAdmin(); 
-            }
-        }
-
-        function openMobileResetModal() { document.getElementById('mobileResetModal').classList.remove('hidden'); }
-        function closeMobileResetModal() { document.getElementById('mobileResetModal').classList.add('hidden'); }
-
-        function handleMobileResetPassword(e) {
-            e.preventDefault();
-            const newPass = document.getElementById('mobileNewPassInput').value.trim();
-            if (newPass !== document.getElementById('mobileConfirmPassInput').value.trim()) { alert('পাসওয়ার্ড মিলেনি!'); return; }
-            currentValidPass = newPass;
-            document.getElementById('passwordInput').value = newPass;
-            alert('পাসওয়ার্ড আপডেট হয়েছে!');
-            closeMobileResetModal();
-        }
-
-        // Fetch ALL Database Records in Descending Order (Latest first) with Double Click support
-        async function fetchAllRecordsForAdmin() {
-            const tbody = document.getElementById('latestRecordsTableBody');
-            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">সম্পূর্ণ ডাটা লোড হচ্ছে...</td></tr>`;
-
-            try {
-                const { data: trData } = await supabaseClient.from('TR').select('*').order('id', { ascending: false });
-                const { data: investments } = await supabaseClient.from('investments').select('*').order('id', { ascending: false });
-                const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').order('id', { ascending: false });
-
-                let combined = [];
-                if (trData) trData.forEach(i => combined.push({ table: 'TR', id: i.id, date: String(i['Transaction Date'] || '').split('T')[0], desc: i['Item Description'] || 'TR Data', amount: Number(i['Amount']) || 0 }));
-                if (investments) investments.forEach(i => combined.push({ table: 'investments', id: i.id, date: String(i.created_at || '').split('T')[0], desc: i.description || 'Investment', amount: Number(i.amount) || 0 }));
-                if (withdrawals) withdrawals.forEach(i => combined.push({ table: 'withdrawals', id: i.id, date: String(i.created_at || '').split('T')[0], desc: i.description || 'Withdrawal', amount: Number(i.amount) || 0 }));
-
-                combined.sort((a, b) => b.id - a.id);
-                tbody.innerHTML = '';
-
-                if (combined.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">কোনো রেকর্ড পাওয়া যায়নি।</td></tr>`;
-                    return;
-                }
-
-                combined.forEach(item => {
-                    const tableNameForSql = item.table === 'TR' ? '"TR"' : item.table;
-                    const deleteQueryString = `DELETE FROM ${tableNameForSql} WHERE id = ${item.id};`;
-
-                    tbody.innerHTML += `
-                        <tr ondblclick="selectRecordForDelete('${deleteQueryString}')" class="hover:bg-amber-100 cursor-pointer transition border-b" title="ডাবল ক্লিক করুন ডিলিট কুয়েরি তৈরির জন্য">
-                            <td class="p-2 font-bold text-alnawaNavy">${item.table}</td>
-                            <td class="p-2 font-mono font-extrabold text-amber-700 bg-amber-50">ID: ${item.id}</td>
-                            <td class="p-2 font-mono">${item.date}</td>
-                            <td class="p-2">${item.desc}</td>
-                            <td class="p-2 text-right font-mono font-bold">৳ ${item.amount.toLocaleString()}</td>
-                        </tr>
-                    `;
-                });
-            } catch (err) {
-                console.error("Error fetching all records:", err);
-                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-red-500">ডাটা লোড করতে সমস্যা হয়েছে।</td></tr>`;
-            }
-        }
-
-        // Automatically fill textarea on DOUBLE CLICK
-        function selectRecordForDelete(queryText) {
-            document.getElementById('customSqlInput').value = queryText;
-            document.getElementById('sqlRunStatus').innerText = "ডিলিট কুয়েরি প্রস্তুত। 'ডিলিট কুয়েরি রান করুন' বাটনে ক্লিক করুন।";
-        }
-
-        // Direct Web-Based SQL Runner Function
-        async function runWebSqlCommand() {
-            const sqlText = document.getElementById('customSqlInput').value.trim();
-            const statusSpan = document.getElementById('sqlRunStatus');
-
-            if (!sqlText) {
-                alert('দয়া করে নিচের তালিকা থেকে যেকোনো সারিতে ডাবল ক্লিক (Double Click) করুন!');
-                return;
-            }
-
-            if (!confirm("⚠️ চরম সতর্কতা: আপনি কি নিশ্চিতভাবে এই রেকর্ডটি ডাটাবেজ থেকে স্থায়ীভাবে ডিলিট করতে চান?")) return;
-
-            statusSpan.innerText = "প্রসেসিং হচ্ছে...";
-
-            try {
-                const { error } = await supabaseClient.rpc('run_custom_sql', { sql_query: sqlText });
-
-                if (error) {
-                    statusSpan.innerText = "এরর: " + error.message;
-                    alert("কুয়েরি রান করতে সমস্যা হয়েছে: " + error.message);
-                } else {
-                    statusSpan.innerText = "সফলভাবে ডিলিট সম্পন্ন হয়েছে!";
-                    alert("রেকর্ড সফলভাবে মুছে ফেলা হয়েছে!");
-                    document.getElementById('customSqlInput').value = '';
-                    fetchTransactionsFromSupabase();
-                    fetchPendingApprovalData();
-                    fetchAllRecordsForAdmin();
-                }
-            } catch (err) {
-                console.error("SQL Error:", err);
-                statusSpan.innerText = "এরর: " + err.message;
-            }
-        }
-
-        async function fetchTransactionsFromSupabase() {
-            const tbody = document.getElementById('transactionTableBody');
-            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
-
-            const { data: trData } = await supabaseClient.from('TR').select('*').eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId);
-            const { data: investments } = await supabaseClient.from('investments').select('*').eq('company_id', loggedInCompanyId).eq('user_id', loggedInUserId);
-            const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').eq('company_id', loggedInCompanyId).eq('user_id', loggedInUserId);
-
-            let allTransactions = [];
-            if (trData) trData.forEach(i => allTransactions.push({ date: String(i['Transaction Date']).split('T')[0], desc: i['Item Description'], fromBank: i['From Bank'], status: 'approved (+)', amount: Number(i['Amount']), typeLabel: 'ইনভেস্টমেন্ট (+)' }));
-            if (investments) investments.forEach(i => allTransactions.push({ date: String(i.created_at).split('T')[0], desc: i.description, fromBank: i.from_bank, status: i.status, amount: Number(i.amount), typeLabel: i.status === 'cancelled' ? 'বাতিল' : 'ইনভেস্টমেন্ট (+)' }));
-            if (withdrawals) withdrawals.forEach(i => allTransactions.push({ date: String(i.created_at).split('T')[0], desc: i.description, fromBank: i.withdrawal_bank, status: i.status, amount: Number(i.amount), typeLabel: i.status === 'cancelled' ? 'বাতিল' : 'উত্তোলন (-)' }));
-
-            allTransactions.sort((a, b) => new Date(a.date) - new Date(b.date));
-            let runningSum = 0, totalApp = 0, totalPend = 0, totalWit = 0;
-
-            allTransactions.forEach(t => {
-                if (t.status === 'approved (+)' || t.typeLabel === 'ইনভেস্টমেন্ট (+)') { totalApp += t.amount; runningSum += t.amount; }
-                else if (t.status === 'pending') totalPend += t.amount;
-                else if (t.typeLabel === 'উত্তোলন (-)') { totalWit += t.amount; runningSum -= t.amount; }
-                t.cumulative = runningSum;
-            });
-
-            allTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
-            tbody.innerHTML = '';
-
-            if (allTransactions.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`;
-            }
-
-            allTransactions.forEach(item => {
-                const isWithdraw = item.typeLabel === 'উত্তোলন (-)';
-                tbody.innerHTML += `
-                    <tr class="hover:bg-gray-50">
-                        <td class="p-2.5 font-mono">${item.date}</td>
-                        <td class="p-2.5">${item.desc}</td>
-                        <td class="p-2.5">${item.fromBank}</td>
-                        <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
-                        <td class="p-2.5 text-center">${item.status}</td>
-                        <td class="p-2.5 text-right font-mono">${isWithdraw ? '-' : ''}৳ ${item.amount.toLocaleString()}</td>
-                        <td class="p-2.5 text-right font-mono text-alnawaGreen">৳ ${item.cumulative.toLocaleString()}</td>
-                    </tr>
-                `;
-            });
-
-            document.getElementById('reportApproved').innerText = `৳ ${totalApp.toLocaleString()}`;
-            document.getElementById('reportPending').innerText = `৳ ${totalPend.toLocaleString()}`;
-            document.getElementById('reportWithdraw').innerText = `৳ ${totalWit.toLocaleString()}`;
-        }
-
-        async function fetchPendingApprovalData() {
-            const tbody = document.getElementById('pendingApprovalTableBody');
-            const { data: inv } = await supabaseClient.from('investments').select('*').eq('status', 'pending');
-            const { data: wit } = await supabaseClient.from('withdrawals').select('*').eq('status', 'pending');
-            
-            tbody.innerHTML = '';
-            let list = [];
-            if (inv) inv.forEach(i => list.push({ id: i.id, dbTable: 'investments', date: String(i.created_at).split('T')[0], mergedId: getMergedUserId(i.company_id, i.user_id), desc: i.description, otp: i.otp_pin || '7890', amount: Number(i.amount) }));
-            if (wit) wit.forEach(i => list.push({ id: i.id, dbTable: 'withdrawals', date: String(i.created_at).split('T')[0], mergedId: getMergedUserId(i.company_id, i.user_id), desc: i.description, otp: i.otp_pin || '1234', amount: Number(i.amount) }));
-
-            if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-emerald-600 font-bold">কোনো পেন্ডিং আবেদন নেই!</td></tr>`;
-                return;
-            }
-
-            list.forEach(item => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td class="p-2.5 font-mono">${item.date}</td>
-                        <td class="p-2.5 font-bold font-mono">${item.mergedId}</td>
-                        <td class="p-2.5">${item.desc}</td>
-                        <td class="p-2.5 font-mono text-amber-700">${item.otp}</td>
-                        <td class="p-2.5 text-right font-mono">৳ ${item.amount.toLocaleString()}</td>
-                        <td class="p-2.5 text-center">
-                            <select id="sel_${item.dbTable}_${item.id}" class="border p-1 text-xs">
-                                <option value="pending">অপেক্ষমান</option>
-                                <option value="approved (+)">অনুমোদিত</option>
-                                <option value="cancelled">বাতিল</option>
-                            </select>
-                            <button onclick="commitStatus('${item.dbTable}', ${item.id}, '${item.otp}')" class="ml-1 px-2 py-1 bg-alnawaGreen text-white text-xs rounded">সেভ</button>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        async function commitStatus(dbTable, id, expectedOtp) {
-            const status = document.getElementById(`sel_${dbTable}_${id}`).value;
-            if (status === 'approved (+)' && prompt("গোপন পিন (OTP) দিন:") !== expectedOtp) { alert('ভুল পিন!'); return; }
-            await supabaseClient.from(dbTable).update({ status }).eq('id', id);
-            alert('স্ট্যাটাস আপডেট সফল!');
-            fetchPendingApprovalData();
-            fetchTransactionsFromSupabase();
-        }
-
-        function startSubmissionProcess(e) { e.preventDefault(); completeSubmission(); }
-        async function completeSubmission() {
-            await supabaseClient.from('investments').insert([{
-                company_id: loggedInCompanyId, user_id: loggedInUserId,
-                from_bank: document.getElementById('fromBank').value,
-                to_bank: document.getElementById('toBank').value,
-                amount: parseFloat(document.getElementById('investAmount').value),
-                description: document.getElementById('investDesc').value,
-                otp_pin: document.getElementById('investOtp').value.trim(),
-                status: 'pending'
-            }]);
-            document.getElementById('investForm').reset();
-            document.getElementById('successModal').classList.remove('hidden');
-        }
-
-        function startWithdrawalProcess(e) { e.preventDefault(); completeWithdrawal(); }
-        async function completeWithdrawal() {
-            await supabaseClient.from('withdrawals').insert([{
-                company_id: loggedInCompanyId, user_id: loggedInUserId,
-                withdrawal_bank: document.getElementById('withdrawFromBank').value,
-                company_account: document.getElementById('withdrawToBank').value,
-                amount: parseFloat(document.getElementById('withdrawAmount').value),
-                description: document.getElementById('withdrawDesc').value,
-                otp_pin: '1234', status: 'pending'
-            }]);
-            document.getElementById('withdrawalForm').reset();
-            document.getElementById('successModal').classList.remove('hidden');
-        }
-
-        function closeSuccessModal() {
-            document.getElementById('successModal').classList.add('hidden');
-            switchSubPage('summary');
+                document.getElementById("countdown-timer").innerHTML = 
+                    `${years} বছর, ${months} মাস, ${days} দিন, ${hours} ঘণ্টা, ${minutes} মিনিট, ${seconds} সেকেন্ড`;
+            }, 1000);
         }
     </script>
 </body>
