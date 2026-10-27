@@ -683,12 +683,10 @@
                 return;
             }
 
-            // Extract Company ID (1st digit) and User ID (last 3 digits)
             loggedInCompanyId = parseInt(uInput.charAt(0));
             loggedInUserId = parseInt(uInput.slice(1));
             fullMergedUserId = uInput;
 
-            // Fetch user profile from Supabase 'IND' table
             const { data: indData, error } = await supabaseClient
                 .from('IND')
                 .select('*')
@@ -839,7 +837,7 @@
                     alert("ডিলিট করতে সমস্যা হয়েছে: " + error.message);
                 } else {
                     alert("লেনদেনটি সফলভাবে মুছে ফেলা হয়েছে!");
-                    fetchTransactionsFromSupabase(); // Reload transaction summary
+                    fetchTransactionsFromSupabase();
                 }
             } catch (err) {
                 console.error("Error deleting transaction:", err);
