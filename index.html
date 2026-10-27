@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল (alnawa.html)</title>
+    <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts for Bengali & English -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
@@ -171,7 +171,7 @@
                         </label>
                         <label onclick="switchSubPage('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
                             <input type="radio" name="pageOption" id="radioPendingApproval" class="accent-orange-500">
-                            <div class="text-xs font-extrabold text-amber-300">পেন্ডিং ও ডিলিট প্যানেল (এডমিন)</div>
+                            <div class="text-xs font-extrabold text-amber-300">পেন্ডিং ও SQL রান বক্স (এডমিন)</div>
                         </label>
                     </div>
                 </div>
@@ -259,27 +259,27 @@
                     </div>
                 </div>
 
-                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & DIRECT RECORD DELETION PANEL -->
+                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & WEB SQL RUNNER BOX -->
                 <div id="subPagePendingApproval" class="hidden space-y-4 fade-in">
                     
-                    <!-- Direct Record Delete / Management Box -->
+                    <!-- WEB-BASED SQL RUNNER BOX -->
                     <div class="bg-gray-900 text-white rounded-xl p-4 shadow border border-amber-500">
                         <h4 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-terminal"></i> সরাসরি আইডি দিয়ে যেকোনো ডাটা মুছুন (Direct Record Delete Box)
+                            <i class="fa-solid fa-terminal"></i> সরাসরি ওয়েবসাইট থেকে SQL কুয়েরি রান বক্স (SQL Runner)
                         </h4>
-                        <p class="text-[11px] text-gray-300 mb-2">যে টেবিল থেকে মুছতে চান তা সিলেক্ট করে আইডি নম্বরটি দিন:</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <select id="sqlTableName" class="bg-black border border-gray-700 rounded p-2 text-xs text-white">
-                                <option value="investments">Investments টেবিল</option>
-                                <option value="withdrawals">Withdrawals টেবিল</option>
-                                <option value="TR">TR (মূল শিট) টেবিল</option>
-                            </select>
-                            <input type="number" id="sqlRecordId" placeholder="রেকর্ড আইডি (যেমন: 1, 2, 3...)" class="bg-black border border-gray-700 rounded p-2 text-xs text-white font-mono">
-                            <button onclick="deleteRecordById()" class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded p-2 transition shadow">
-                                <i class="fa-solid fa-trash mr-1"></i> স্থায়ীভাবে ডিলিট করুন
-                            </button>
+                        <p class="text-[11px] text-gray-300 mb-2">এখানে সরাসরি SQL কমান্ড লিখে রান করতে পারেন (যেমন: <code>DELETE FROM investments WHERE id = 5;</code>)</p>
+                        
+                        <div class="flex flex-col gap-2">
+                            <textarea id="customSqlInput" rows="2" placeholder='DELETE FROM "TR" WHERE id = 10;' 
+                                      class="w-full bg-black/80 border border-gray-700 rounded p-2 text-xs font-mono text-emerald-400 focus:outline-none focus:ring-1 focus:ring-amber-400"></textarea>
+                            
+                            <div class="flex justify-between items-center">
+                                <span id="sqlRunStatus" class="text-[10px] text-amber-300"></span>
+                                <button onclick="runWebSqlCommand()" class="px-4 py-1.5 bg-amber-500 hover:bg-amber-600 text-black font-bold text-xs rounded shadow transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-play"></i> কুয়েরি রান করুন (Run SQL)
+                                </button>
+                            </div>
                         </div>
-                        <div id="sqlRunStatus" class="text-[10px] text-amber-300 mt-1"></div>
                     </div>
 
                     <!-- PENDING APPROVAL TABLE -->
@@ -306,7 +306,7 @@
         <footer class="bg-white flex-shrink-0 border-t-2 border-alnawaGreen">
             <div class="grid grid-cols-1 md:grid-cols-12 h-auto md:h-12 text-white font-sans text-xs">
                 <div class="md:col-span-7 bg-alnawaGreen px-3 py-2 flex items-center">
-                    <div>১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪১১, বন্দর, নারায়ণগঞ্জ।</div>
+                    <div>১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪টিআই, বন্দর, নারায়ণগঞ্জ।</div>
                 </div>
                 <div class="md:col-span-5 bg-gradient-to-r from-alnawaNavy to-blue-900 px-4 py-2 flex flex-col justify-center items-end">
                     <div>মোবাইল : 01942-341889</div>
@@ -418,33 +418,41 @@
             closeMobileResetModal();
         }
 
-        // Direct Record Delete from Admin Box
-        async function deleteRecordById() {
-            const tableName = document.getElementById('sqlTableName').value;
-            const recordId = document.getElementById('sqlRecordId').value.trim();
+        // Direct Web-Based SQL Runner Function
+        async function runWebSqlCommand() {
+            const sqlText = document.getElementById('customSqlInput').value.trim();
             const statusSpan = document.getElementById('sqlRunStatus');
 
-            if (!recordId) { alert('রেকর্ড আইডি দিন!'); return; }
-            if (!confirm(`টেবিল "${tableName}" থেকে আইডি ${recordId} ডিলিট করতে চান?`)) return;
+            if (!sqlText) {
+                alert('দয়া করে কোনো কুয়েরি বা SQL কমান্ড লিখুন!');
+                return;
+            }
+
+            if (!confirm("সতর্কতা: আপনি কি নিশ্চিত যে এই SQL কমান্ডটি ডাটাবেজে রান করতে চান?")) return;
 
             statusSpan.innerText = "প্রসেসিং হচ্ছে...";
-            const queryTable = tableName === 'TR' ? '"TR"' : tableName;
-            const { error } = await supabaseClient.from(queryTable).delete().eq('id', recordId);
 
-            if (error) {
-                statusSpan.innerText = "এরর: " + error.message;
-                alert("ডিলিট সমস্যা: " + error.message);
-            } else {
-                statusSpan.innerText = `সফলভাবে আইডি ${recordId} মুছে ফেলা হয়েছে!`;
-                alert("সফলভাবে ডিলিট হয়েছে!");
-                document.getElementById('sqlRecordId').value = '';
-                fetchPendingApprovalData();
-                fetchTransactionsFromSupabase();
+            try {
+                const { error } = await supabaseClient.rpc('run_custom_sql', { sql_query: sqlText });
+
+                if (error) {
+                    statusSpan.innerText = "এরর: " + error.message;
+                    alert("কুয়েরি রান করতে সমস্যা হয়েছে: " + error.message);
+                } else {
+                    statusSpan.innerText = "কুয়েরি সফলভাবে এক্সিকিউট করা হয়েছে!";
+                    alert("সফলভাবে কুয়েরি রান হয়েছে!");
+                    document.getElementById('customSqlInput').value = '';
+                    fetchTransactionsFromSupabase();
+                    fetchPendingApprovalData();
+                }
+            } catch (err) {
+                console.error("SQL Error:", err);
+                statusSpan.innerText = "এরর: " + err.message;
             }
         }
 
         async function deleteTransaction(tableName, id) {
-            if (!confirm("ডিলিট করতে চান?")) return;
+            if (!confirm("এই ট্রানজেকশনটি ডিলিট করতে চান?")) return;
             const queryTable = tableName === 'TR' ? '"TR"' : tableName;
             const { error } = await supabaseClient.from(queryTable).delete().eq('id', id);
             if (error) alert("সমস্যা: " + error.message);
@@ -549,11 +557,7 @@
             fetchTransactionsFromSupabase();
         }
 
-        function startSubmissionProcess(e) {
-            e.preventDefault();
-            completeSubmission();
-        }
-
+        function startSubmissionProcess(e) { e.preventDefault(); completeSubmission(); }
         async function completeSubmission() {
             await supabaseClient.from('investments').insert([{
                 company_id: loggedInCompanyId, user_id: loggedInUserId,
@@ -568,11 +572,7 @@
             document.getElementById('successModal').classList.remove('hidden');
         }
 
-        function startWithdrawalProcess(e) {
-            e.preventDefault();
-            completeWithdrawal();
-        }
-
+        function startWithdrawalProcess(e) { e.preventDefault(); completeWithdrawal(); }
         async function completeWithdrawal() {
             await supabaseClient.from('withdrawals').insert([{
                 company_id: loggedInCompanyId, user_id: loggedInUserId,
