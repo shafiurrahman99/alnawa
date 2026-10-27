@@ -104,7 +104,7 @@
                         <p class="text-emerald-900 text-lg sm:text-xl font-bold leading-relaxed">আস্সালামুআ'লাইকুম ওয়া রহমাতুল্লাহি ওয়া বারকাতুহু।</p>
                     </div>
                     <h3 class="text-2xl font-bold text-alnawaNavy mb-1">সাইন ইন (Sign In)</h3>
-                    <p class="text-xs text-gray-500 mb-6">৪ ডিজিটের ইউজার আইডি এবং পাসওয়ার্ড দিন (যেমন: 1001 / 1234!)</p>
+                    <p class="text-xs text-gray-500 mb-6">আপনার ইউজার আইডি এবং পাসওয়ার্ড দিন (এডমিন আইডি: 1049)</p>
 
                     <div id="loginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
 
@@ -145,19 +145,28 @@
                     </div>
                 </div>
 
-                <!-- PERSONAL INFO -->
-                <div class="bg-white/95 backdrop-blur-md rounded-xl p-3 shadow border">
-                    <div class="overflow-x-auto custom-scrollbar">
-                        <table class="w-full text-left text-xs border border-gray-200 rounded-lg">
-                            <tbody class="divide-y divide-gray-200" id="userProfileTableBody"></tbody>
-                        </table>
+                <!-- PERSONAL INFO & VALIDITY TIMER -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <!-- Profile Details -->
+                    <div class="md:col-span-2 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow border flex flex-col justify-center">
+                        <div class="overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left text-xs border border-gray-200 rounded-lg">
+                                <tbody class="divide-y divide-gray-200" id="userProfileTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Validity Countdown Timer Card -->
+                    <div class="bg-gradient-to-br from-alnawaNavy to-blue-900 text-white rounded-xl p-3 shadow border border-amber-400 flex flex-col justify-between text-center">
+                        <div class="text-xs font-bold text-amber-300"><i class="fa-solid fa-clock"></i> ইনভেস্টর মেয়াদ কাউন্টডাউন</div>
+                        <div id="validityTimerDisplay" class="text-sm font-mono font-bold tracking-tight my-2 text-emerald-300">লোড হচ্ছে...</div>
+                        <div class="text-[10px] text-gray-300">চুক্তিভিত্তিক মেয়াদ অবশিষ্ট সময়</div>
                     </div>
                 </div>
 
                 <!-- RADIO BUTTON SELECTION BAR -->
                 <div class="bg-gradient-to-r from-emerald-800 via-alnawaNavy to-emerald-900 rounded-xl p-3 shadow-lg text-white">
                     <div class="text-xs font-bold text-amber-300 mb-2"><i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:</div>
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="navRadioContainer">
                         <label onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer">
                             <input type="radio" name="pageOption" id="radioSubmission" checked class="accent-orange-500">
                             <div class="text-xs font-extrabold">ইনভেস্টমেন্ট ফরম</div>
@@ -170,7 +179,8 @@
                             <input type="radio" name="pageOption" id="radioSummary" class="accent-orange-500">
                             <div class="text-xs font-extrabold">ট্রানজেকশন সামারি</div>
                         </label>
-                        <label onclick="switchSubPage('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
+                        <!-- Admin Panel Radio (Shown only for Admin 1049) -->
+                        <label id="adminRadioLabel" onclick="switchSubPage('pendingApproval')" class="hidden flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
                             <input type="radio" name="pageOption" id="radioPendingApproval" class="accent-orange-500">
                             <div class="text-xs font-extrabold text-amber-300">পেন্ডিং ও ডিলিট প্যানেল (এডমিন)</div>
                         </label>
@@ -260,45 +270,40 @@
                     </div>
                 </div>
 
-                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & CLICK-TO-DELETE SQL BOX -->
+                <!-- SUB-PAGE 4: ADMIN PENDING APPROVAL & DOUBLE-CLICK SQL RUNNER BOX -->
                 <div id="subPagePendingApproval" class="hidden space-y-4 fade-in">
                     
-                    <!-- WEB-BASED SQL RUNNER BOX WITH AUTO-SELECT DELETE -->
+                    <!-- WEB-BASED SQL RUNNER BOX (DOUBLE CLICK TO FILL) -->
                     <div class="bg-gray-900 text-white rounded-xl p-4 shadow border border-amber-500">
                         <h4 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-terminal"></i> সরাসরি ডিলিট কুয়েরি বক্স (নিচের তালিকায় ক্লিক করুন)
+                            <i class="fa-solid fa-terminal"></i> সরাসরি ডিলিট কুয়েরি বক্স (নিচের তালিকায় ডাবল ক্লিক করুন)
                         </h4>
-                        <p class="text-[11px] text-gray-300 mb-2">নিচের টেবিল থেকে যেকোনো এন্ট্রিতে ক্লিক করলেই এখানে ডিলিট কমান্ড চলে আসবে:</p>
+                        <p class="text-[11px] text-gray-300 mb-2">নিচের তালিকা থেকে যেকোনো এন্ট্রিতে **ডাবল ক্লিক (Double Click)** করলেই এখানে ডিলিট কমান্ড চলে আসবে:</p>
                         
                         <div class="flex flex-col gap-2">
-                            <textarea id="customSqlInput" rows="2" placeholder='নিচের তালিকায় ক্লিক করলে কুয়েরি এখানে চলে আসবে...' 
+                            <textarea id="customSqlInput" rows="2" placeholder='নিচের তালিকায় ডাবল ক্লিক করলে কুয়েরি এখানে চলে আসবে...' 
                                       class="w-full bg-black/90 border border-gray-700 rounded p-2 text-xs font-mono text-emerald-400 focus:outline-none focus:ring-1 focus:ring-amber-400"></textarea>
                             
                             <div class="flex justify-between items-center">
                                 <span id="sqlRunStatus" class="text-[10px] text-amber-300"></span>
-                                <div class="flex gap-2">
-                                    <button onclick="clearSqlBox()" class="px-3 py-1.5 bg-gray-700 hover:bg-gray-600 text-white font-bold text-xs rounded transition">
-                                        ক্যান্সেল
-                                    </button>
-                                    <button onclick="runWebSqlCommand()" class="px-4 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded shadow transition flex items-center gap-1.5">
-                                        <i class="fa-solid fa-trash"></i> ডিলিট কুয়েরি রান করুন
-                                    </button>
-                                </div>
+                                <button onclick="runWebSqlCommand()" class="px-5 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded shadow transition flex items-center gap-1.5">
+                                    <i class="fa-solid fa-trash"></i> ডিলিট কুয়েরি রান করুন
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- LIVE LATEST 20 RECORDS (CLICKABLE FOR AUTO DELETE QUERY) -->
+                    <!-- FULL DATABASE RECORDS (DESCENDING & DOUBLE CLICK ENABLED) -->
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-blue-300">
                         <div class="flex justify-between items-center mb-2 border-b pb-2">
                             <h4 class="text-xs font-bold text-alnawaNavy flex items-center gap-2">
-                                <i class="fa-solid fa-database text-blue-600"></i> ডাটাবেজের সর্বশেষ ২০টি এন্ট্রি (ক্লিক করলেই ডিলিট কুয়েরি তৈরি হবে)
+                                <i class="fa-solid fa-database text-blue-600"></i> ডাটাবেজের সম্পূর্ণ এন্ট্রি লিস্ট (ডাবল ক্লিক করলে ডিলিট কুয়েরি তৈরি হবে)
                             </h4>
                             <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold border border-amber-300 animate-pulse">
-                                সারিতে ক্লিক করুন
+                                ডাবল ক্লিক (DblClick) করুন
                             </span>
                         </div>
-                        <div class="overflow-x-auto custom-scrollbar max-h-60">
+                        <div class="overflow-x-auto custom-scrollbar max-h-72">
                             <table class="w-full text-left text-xs border-collapse min-w-[700px]">
                                 <thead class="sticky top-0 bg-alnawaNavy text-white">
                                     <tr class="text-[10px] uppercase">
@@ -310,7 +315,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="latestRecordsTableBody" class="divide-y divide-gray-200 text-[11px] font-medium">
-                                    <!-- Dynamic Clickable Rows -->
+                                    <!-- Dynamic DblClick Rows -->
                                 </tbody>
                             </table>
                         </div>
@@ -379,7 +384,8 @@
 
         let currentValidPass = "1234!";
         let loggedInUserId = 1, loggedInCompanyId = 1, fullMergedUserId = "1001";
-        let submitTimer = null, submitRemainingSeconds = 10;
+        let isAdmin = false;
+        let validityInterval = null;
 
         function getMergedUserId(compId, userId) {
             return String(compId || 1).slice(-1) + String(userId || 1).padStart(3, '0');
@@ -390,6 +396,36 @@
             const uInput = document.getElementById('usernameInput').value.trim();
             const p = document.getElementById('passwordInput').value.trim();
             
+            // Check if Admin Login (ID: 1049, Password: 1234!)
+            if (uInput === "1049" && p === "1234!") {
+                isAdmin = true;
+                loggedInCompanyId = 1;
+                loggedInUserId = 49;
+                fullMergedUserId = "1049";
+
+                document.getElementById('page1').classList.add('hidden');
+                document.getElementById('page2Container').classList.remove('hidden');
+                document.getElementById('currentUserDisplay').innerText = "সিস্টেম অ্যাডমিন (Admin)";
+                
+                document.getElementById('adminRadioLabel').classList.remove('hidden');
+                document.getElementById('navRadioContainer').className = "grid grid-cols-1 sm:grid-cols-4 gap-2";
+
+                renderUserProfile({ 
+                    'জাতীয় পরিচয়পত্র (NID)': 'Admin NID', 
+                    'মোবাইল নাম্বার ': '01942341889', 
+                    'নমিনী': 'সিস্টেম মডারেটর', 
+                    'নমিনীর মোবাইল নাম্বার': '01900000000',
+                    'validity_date': '2030-12-31'
+                });
+                switchSubPage('pendingApproval');
+                return;
+            }
+
+            // Normal User Login
+            isAdmin = false;
+            document.getElementById('adminRadioLabel').classList.add('hidden');
+            document.getElementById('navRadioContainer').className = "grid grid-cols-1 sm:grid-cols-3 gap-2";
+
             loggedInCompanyId = parseInt(uInput.charAt(0));
             loggedInUserId = parseInt(uInput.slice(1));
             fullMergedUserId = uInput;
@@ -416,15 +452,55 @@
         function renderUserProfile(data) {
             document.getElementById('userProfileTableBody').innerHTML = `
                 <tr class="bg-emerald-50/50">
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">নাম</td>
-                    <td class="p-2 font-bold text-gray-800">${data['Name'] || 'N/A'}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">মোবাইল</td>
-                    <td class="p-2 font-mono font-bold">${data['মোবাইল নাম্বার '] || 'N/A'}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">জাতীয় পরিচয়পত্র তথ্য</td>
+                    <td class="p-2 font-mono font-bold text-gray-800">${data['জাতীয় পরিচয়পত্র (NID)'] || data['NID'] || 'N/A'}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">মোবাইল নাম্বার</td>
+                    <td class="p-2 font-mono font-bold">${data['মোবাইল নাম্বার '] || data['mobile'] || 'N/A'}</td>
+                </tr>
+                <tr class="bg-white">
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">নমিনী তথ্য</td>
+                    <td class="p-2 font-bold text-gray-800">${data['নমিনী'] || data['nominee'] || 'সংরক্ষিত নেই'}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">নমিনীর মোবাইল</td>
+                    <td class="p-2 font-mono font-bold text-gray-700">${data['নমিনীর মোবাইল নাম্বার'] || data['nominee_mobile'] || 'সংরক্ষিত নেই'}</td>
                 </tr>
             `;
+
+            // Start Live Validity Countdown Timer
+            const expiryDateStr = data['validity_date'] || data['Validity Date'] || '2027-12-31';
+            startValidityCountdown(expiryDateStr);
+        }
+
+        function startValidityCountdown(expiryDateStr) {
+            if (validityInterval) clearInterval(validityInterval);
+
+            const expiryTime = new Date(expiryDateStr).getTime();
+
+            function updateTimer() {
+                const now = new Date().getTime();
+                const distance = expiryTime - now;
+
+                const timerDisplay = document.getElementById('validityTimerDisplay');
+
+                if (distance < 0) {
+                    timerDisplay.innerText = "মেয়াদ উত্তীর্ণ হয়েছে!";
+                    clearInterval(validityInterval);
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                timerDisplay.innerText = `${days} দিন ${hours} ঘঃ ${minutes} মিঃ ${seconds} সেঃ`;
+            }
+
+            updateTimer();
+            validityInterval = setInterval(updateTimer, 1000);
         }
 
         function handleLogout() {
+            if (validityInterval) clearInterval(validityInterval);
             document.getElementById('page2Container').classList.add('hidden');
             document.getElementById('page1').classList.remove('hidden');
         }
@@ -437,9 +513,10 @@
             else if (target === 'withdrawal') document.getElementById('subPageWithdrawal').classList.remove('hidden');
             else if (target === 'summary') { document.getElementById('subPageSummary').classList.remove('hidden'); fetchTransactionsFromSupabase(); }
             else if (target === 'pendingApproval') { 
+                if (!isAdmin) { alert('অনুমতি নেই!'); switchSubPage('submission'); return; }
                 document.getElementById('subPagePendingApproval').classList.remove('hidden'); 
                 fetchPendingApprovalData(); 
-                fetchLatestRecordsForAdmin(); 
+                fetchAllRecordsForAdmin(); 
             }
         }
 
@@ -456,15 +533,15 @@
             closeMobileResetModal();
         }
 
-        // Fetch Latest 20 Records and make them clickable for auto-delete query
-        async function fetchLatestRecordsForAdmin() {
+        // Fetch ALL Database Records in Descending Order (Latest first) with Double Click support
+        async function fetchAllRecordsForAdmin() {
             const tbody = document.getElementById('latestRecordsTableBody');
-            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">সর্বশেষ ডাটা লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-gray-500">সম্পূর্ণ ডাটা লোড হচ্ছে...</td></tr>`;
 
             try {
-                const { data: trData } = await supabaseClient.from('TR').select('*').order('id', { ascending: false }).limit(10);
-                const { data: investments } = await supabaseClient.from('investments').select('*').order('id', { ascending: false }).limit(10);
-                const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').order('id', { ascending: false }).limit(10);
+                const { data: trData } = await supabaseClient.from('TR').select('*').order('id', { ascending: false });
+                const { data: investments } = await supabaseClient.from('investments').select('*').order('id', { ascending: false });
+                const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').order('id', { ascending: false });
 
                 let combined = [];
                 if (trData) trData.forEach(i => combined.push({ table: 'TR', id: i.id, date: String(i['Transaction Date'] || '').split('T')[0], desc: i['Item Description'] || 'TR Data', amount: Number(i['Amount']) || 0 }));
@@ -479,13 +556,12 @@
                     return;
                 }
 
-                combined.slice(0, 20).forEach(item => {
-                    // Table name formatting for SQL query (TR requires double quotes)
+                combined.forEach(item => {
                     const tableNameForSql = item.table === 'TR' ? '"TR"' : item.table;
                     const deleteQueryString = `DELETE FROM ${tableNameForSql} WHERE id = ${item.id};`;
 
                     tbody.innerHTML += `
-                        <tr onclick="selectRecordForDelete('${deleteQueryString}')" class="hover:bg-amber-100 cursor-pointer transition border-b">
+                        <tr ondblclick="selectRecordForDelete('${deleteQueryString}')" class="hover:bg-amber-100 cursor-pointer transition border-b" title="ডাবল ক্লিক করুন ডিলিট কুয়েরি তৈরির জন্য">
                             <td class="p-2 font-bold text-alnawaNavy">${item.table}</td>
                             <td class="p-2 font-mono font-extrabold text-amber-700 bg-amber-50">ID: ${item.id}</td>
                             <td class="p-2 font-mono">${item.date}</td>
@@ -495,30 +571,24 @@
                     `;
                 });
             } catch (err) {
-                console.error("Error fetching latest records:", err);
+                console.error("Error fetching all records:", err);
                 tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-red-500">ডাটা লোড করতে সমস্যা হয়েছে।</td></tr>`;
             }
         }
 
-        // Automatically fill textarea when a row is clicked
+        // Automatically fill textarea on DOUBLE CLICK
         function selectRecordForDelete(queryText) {
             document.getElementById('customSqlInput').value = queryText;
-            document.getElementById('sqlRunStatus').innerText = "ডিলিট কুয়েরি তৈরি হয়েছে। এখন 'ডিলিট কুয়েরি রান করুন' বাটনে ক্লিক করুন।";
+            document.getElementById('sqlRunStatus').innerText = "ডিলিট কুয়েরি প্রস্তুত। 'ডিলিট কুয়েরি রান করুন' বাটনে ক্লিক করুন।";
         }
 
-        // Clear SQL Box (Cancel Button)
-        function clearSqlBox() {
-            document.getElementById('customSqlInput').value = '';
-            document.getElementById('sqlRunStatus').innerText = "বাতিল করা হয়েছে।";
-        }
-
-        // Direct Web-Based SQL Runner Function with 10-Second safety confirmation
+        // Direct Web-Based SQL Runner Function
         async function runWebSqlCommand() {
             const sqlText = document.getElementById('customSqlInput').value.trim();
             const statusSpan = document.getElementById('sqlRunStatus');
 
             if (!sqlText) {
-                alert('দয়া করে প্রথমে নিচের তালিকা থেকে কোনো একটি এন্ট্রিতে ক্লিক করুন!');
+                alert('দয়া করে নিচের তালিকা থেকে যেকোনো সারিতে ডাবল ক্লিক (Double Click) করুন!');
                 return;
             }
 
@@ -538,7 +608,7 @@
                     document.getElementById('customSqlInput').value = '';
                     fetchTransactionsFromSupabase();
                     fetchPendingApprovalData();
-                    fetchLatestRecordsForAdmin();
+                    fetchAllRecordsForAdmin();
                 }
             } catch (err) {
                 console.error("SQL Error:", err);
