@@ -86,7 +86,7 @@
         <!-- MAIN CONTENT -->
         <main class="flex-grow pad-watermark p-3 sm:p-6 flex flex-col justify-start relative">
 
-            <!-- PAGE 1: SIGN IN VIEW (Bangla for User) -->
+            <!-- PAGE 1: SIGN IN VIEW -->
             <div id="page1" class="w-full max-w-md mx-auto fade-in my-auto">
                 <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-gray-200 text-center">
                     <div class="mb-5 p-3.5 bg-emerald-50 rounded-xl border border-emerald-300 shadow-sm">
@@ -134,7 +134,7 @@
                     </div>
                 </div>
 
-                <!-- PERSONAL INFO & VALIDITY TIMER -->
+                <!-- PERSONAL INFO & VALIDITY TIMER (Hidden for Admin as requested) -->
                 <div id="userProfileAndTimerCard" class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="md:col-span-2 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow border flex flex-col justify-center">
                         <div class="overflow-x-auto custom-scrollbar">
@@ -150,11 +150,11 @@
                     </div>
                 </div>
 
-                <!-- RADIO BUTTON SELECTION BAR (Bangla for User / English for Admin) -->
+                <!-- RADIO BUTTON SELECTION BAR -->
                 <div class="bg-gradient-to-r from-emerald-800 via-alnawaNavy to-emerald-900 rounded-xl p-3 shadow-lg text-white">
                     <div class="text-xs font-bold text-amber-300 mb-2" id="navBarTitleText"><i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:</div>
                     
-                    <!-- USER NAV (Bangla) -->
+                    <!-- USER NAV -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="userNavContainer">
                         <label onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer">
                             <input type="radio" name="pageOption" id="radioSubmission" checked class="accent-orange-500">
@@ -170,8 +170,8 @@
                         </label>
                     </div>
 
-                    <!-- ADMIN NAV (English with Radio Buttons for Sub-sections) -->
-                    <div class="hidden grid grid-cols-1 sm:grid-cols-4 gap-2" id="adminNavContainer">
+                    <!-- ADMIN NAV (Radio Buttons for Admin Features) -->
+                    <div class="hidden grid grid-cols-1 sm:grid-cols-5 gap-2" id="adminNavContainer">
                         <label onclick="switchAdminTab('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
                             <input type="radio" name="adminPageOption" id="adminRadioPending" checked class="accent-orange-500">
                             <div class="text-xs font-extrabold text-amber-300">Pending Approval</div>
@@ -182,11 +182,15 @@
                         </label>
                         <label onclick="switchAdminTab('rawDatabase')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
                             <input type="radio" name="adminPageOption" id="adminRadioRawDb" class="accent-orange-500">
-                            <div class="text-xs font-extrabold text-amber-300">Raw Database (Read-Only)</div>
+                            <div class="text-xs font-extrabold text-amber-300">Raw Database</div>
                         </label>
-                        <label onclick="switchAdminTab('sqlQuery')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
-                            <input type="radio" name="adminPageOption" id="adminRadioSql" class="accent-orange-500">
-                            <div class="text-xs font-extrabold text-amber-300">SQL Delete & Records</div>
+                        <label onclick="switchAdminTab('adminInvestment')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
+                            <input type="radio" name="adminPageOption" id="adminRadioInv" class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-amber-300">Admin Investment</div>
+                        </label>
+                        <label onclick="switchAdminTab('adminWithdrawal')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer">
+                            <input type="radio" name="adminPageOption" id="adminRadioWit" class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-amber-300">Admin Withdrawal</div>
                         </label>
                     </div>
                 </div>
@@ -282,7 +286,7 @@
                             <table class="w-full text-left text-xs border-collapse min-w-[750px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">রানিং ব্যালেন্স</th>
+                                        <th class="p-2.5">তারিখ</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">রানিং ব্যালেন্স</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
@@ -291,7 +295,7 @@
                     </div>
                 </div>
 
-                <!-- ADMIN SUB-PAGE A: PENDING APPROVAL -->
+                <!-- ADMIN TAB 1: PENDING APPROVAL -->
                 <div id="adminTabPending" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-amber-300">
                         <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Pending Approval & Status Panel (Investments & Withdrawals)</h3>
@@ -308,7 +312,7 @@
                     </div>
                 </div>
 
-                <!-- ADMIN SUB-PAGE B: ADMIN CONTROL PANEL -->
+                <!-- ADMIN TAB 2: ADMIN CONTROL PANEL -->
                 <div id="adminTabControl" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-red-300">
                         <h3 class="text-sm font-bold text-red-600 mb-3 border-b pb-2">👑 Admin Control Panel (User Management)</h3>
@@ -329,7 +333,7 @@
                     </div>
                 </div>
 
-                <!-- ADMIN SUB-PAGE C: RAW DATABASE (READ-ONLY) -->
+                <!-- ADMIN TAB 3: RAW DATABASE (READ-ONLY) -->
                 <div id="adminTabRawDb" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-emerald-500">
                         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -359,21 +363,90 @@
                     </div>
                 </div>
 
-                <!-- ADMIN SUB-PAGE D: SQL DELETE & RECORDS -->
-                <div id="adminTabSql" class="hidden space-y-4 fade-in">
-                    <div class="bg-gray-900 text-white rounded-xl p-4 shadow border border-amber-500">
-                        <h4 class="text-xs font-bold text-amber-400 mb-2 flex items-center gap-2">
-                            <i class="fa-solid fa-terminal"></i> SQL Delete Query Box (Double-click any table row below)
+                <!-- ADMIN TAB 4: ADMIN INVESTMENT FORM -->
+                <div id="adminTabInvestment" class="hidden space-y-4 fade-in">
+                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-indigo-300">
+                        <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Admin Investment Entry (For Any User)</h3>
+                        <form id="adminInvestForm" onsubmit="adminSubmitInvestment(event)" class="space-y-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1">Select User ID</label>
+                                    <select id="adminSelectUserForInv" required class="border p-2 rounded text-xs bg-white w-full font-mono"></select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1">Sender Bank</label>
+                                    <select id="adminInvFromBank" required class="border p-2 rounded text-xs bg-white w-full"></select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1">Receiver Bank</label>
+                                    <select id="adminInvToBank" required class="border p-2 rounded text-xs bg-emerald-50 text-alnawaNavy w-full">
+                                        <option value="আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক">আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক</option>
+                                        <option value="আলনাওয়া ডিবিবিএল">আলনাওয়া ডিবিবিএল</option>
+                                        <option value="আলনাওয়া ব্রাক ব্যাংক">আলনাওয়া ব্রাক ব্যাংক</option>
+                                        <option value="আলনাওয়া আইবিবিএল">আলনাওয়া আইবিবিএল</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1">Amount (৳)</label>
+                                    <input type="number" id="adminInvAmount" min="1000" required placeholder="Amount" class="border p-2 rounded text-xs font-bold w-full">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <input type="text" id="adminInvDesc" required placeholder="Description..." class="border p-2 rounded text-xs">
+                                <input type="text" id="adminInvOtp" required maxlength="4" placeholder="OTP PIN" class="border border-amber-400 bg-amber-50 p-2 rounded text-xs font-mono font-bold">
+                            </div>
+                            <button type="submit" class="px-8 py-2.5 bg-alnawaGreen text-white font-bold rounded text-xs">Submit Admin Investment</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ADMIN TAB 5: ADMIN WITHDRAWAL FORM & SQL EDITOR -->
+                <div id="adminTabWithdrawal" class="hidden space-y-4 fade-in">
+                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-blue-300 mb-4">
+                        <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2">Admin Withdrawal Entry (For Any User)</h3>
+                        <form id="adminWithdrawForm" onsubmit="adminSubmitWithdrawal(event)" class="space-y-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1">Select User ID</label>
+                                    <select id="adminSelectUserForWit" required class="border p-2 rounded text-xs bg-white w-full font-mono"></select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1">Receiving Bank</label>
+                                    <select id="adminWitFromBank" required class="border p-2 rounded text-xs bg-white w-full"></select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1">Company Account</label>
+                                    <select id="adminWitToBank" required class="border p-2 rounded text-xs bg-blue-50 w-full">
+                                        <option value="আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক">আলনাওয়া ইউসিবি ইসলামিক তাকওয়া ব্যাংক</option>
+                                        <option value="আলনাওয়া ডিবিবিএল">আলনাওয়া ডিবিবিএল</option>
+                                        <option value="আলনাওয়া ব্রাক ব্যাংক">আলনাওয়া ব্রাক ব্যাংক</option>
+                                        <option value="আলনাওয়া আইবিবিএল">আলনাওয়া আইবিবিএল</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] text-gray-500 mb-1">Withdrawal Amount (৳)</label>
+                                    <input type="number" id="adminWitAmount" min="500" required placeholder="Amount" class="border p-2 rounded text-xs font-bold w-full">
+                                </div>
+                            </div>
+                            <input type="text" id="adminWitDesc" required placeholder="Withdrawal Reason..." class="border p-2 rounded text-xs w-full">
+                            <button type="submit" class="px-8 py-2.5 bg-blue-700 text-white font-bold rounded text-xs">Submit Admin Withdrawal</button>
+                        </form>
+                    </div>
+
+                    <!-- SQL GENERAL EDITOR & DELETE BOX -->
+                    <div class="bg-gray-900 text-white rounded-xl p-4 shadow border border-amber-500 space-y-4">
+                        <h4 class="text-xs font-bold text-amber-400 flex items-center gap-2">
+                            <i class="fa-solid fa-terminal"></i> SQL General Query Editor & Delete Box (Single click on any table row below to generate delete command)
                         </h4>
                         <div class="flex flex-col gap-2">
-                            <textarea id="customSqlInput" rows="2" placeholder='Double click on any record in the table below to generate query...' 
+                            <textarea id="customSqlInput" rows="2" placeholder='Click any record below OR write custom SQL query here...' 
                                       class="w-full bg-black/90 border border-gray-700 rounded p-2 text-xs font-mono text-emerald-400 focus:outline-none"></textarea>
                             <div class="flex justify-between items-center">
                                 <span id="sqlRunStatus" class="text-[10px] text-amber-300"></span>
                                 <div class="flex gap-2">
                                     <button onclick="resetSqlBox()" class="px-4 py-1.5 bg-gray-600 hover:bg-gray-700 text-white font-bold text-xs rounded shadow">Reset</button>
                                     <button onclick="runWebSqlCommand()" class="px-5 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded shadow flex items-center gap-1.5">
-                                        <i class="fa-solid fa-trash"></i> Execute Delete Query
+                                        <i class="fa-solid fa-trash"></i> Execute Query
                                     </button>
                                 </div>
                             </div>
@@ -383,10 +456,10 @@
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-blue-300">
                         <div class="flex justify-between items-center mb-2 border-b pb-2">
                             <h4 class="text-xs font-bold text-alnawaNavy flex items-center gap-2">
-                                <i class="fa-solid fa-database text-blue-600"></i> Master Records (Descending Order - Double Click to Delete)
+                                <i class="fa-solid fa-database text-blue-600"></i> Master Records (Single Click to Generate Delete Query)
                             </h4>
-                            <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold border border-amber-300 animate-pulse">
-                                Double Click to Generate Query
+                            <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-bold border border-amber-300">
+                                Single Click Enabled
                             </span>
                         </div>
                         <div class="overflow-x-auto custom-scrollbar max-h-72">
@@ -474,7 +547,6 @@
         let validityInterval = null;
         let investTimer = null, withdrawTimer = null;
 
-        // Bangladeshi Top 30 Commercial Banks in Bangla
         const bdTop30Banks = [
             "সোনালী ব্যাংক পিএলসি", "জনতা ব্যাংক পিএলসি", "অগ্রণী ব্যাংক পিএলসি", "রূপালী ব্যাংক পিএলসি",
             "ইসলামী ব্যাংক বাংলাদেশ পিএলসি", "ডাচ-বাংলা ব্যাংক পিএলসি", "ব্র্যাক ব্যাংক পিএলসি",
@@ -488,13 +560,35 @@
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
-            const senderSelect = document.getElementById('fromBank');
-            const withdrawSenderSelect = document.getElementById('withdrawFromBank');
-            bdTop30Banks.forEach(bank => {
-                if (senderSelect) senderSelect.innerHTML += `<option value="${bank}">${bank}</option>`;
-                if (withdrawSenderSelect) withdrawSenderSelect.innerHTML += `<option value="${bank}">${bank}</option>`;
+            const selects = ['fromBank', 'withdrawFromBank', 'adminInvFromBank', 'adminWitFromBank'];
+            selects.forEach(selId => {
+                const el = document.getElementById(selId);
+                if (el) {
+                    bdTop30Banks.forEach(bank => {
+                        el.innerHTML += `<option value="${bank}">${bank}</option>`;
+                    });
+                }
             });
+            loadAllUserDropdowns();
         });
+
+        async function loadAllUserDropdowns() {
+            const { data } = await supabaseClient.from('IND').select('*');
+            if (data) {
+                const invSel = document.getElementById('adminSelectUserForInv');
+                const witSel = document.getElementById('adminSelectUserForWit');
+                if (invSel) invSel.innerHTML = '';
+                if (witSel) witSel.innerHTML = '';
+                data.forEach(u => {
+                    const compId = u['Company ID'] || 1;
+                    const uId = u['User ID'] || 1;
+                    const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
+                    const opt = `<option value="${mergedId}">${mergedId} - ${u['Name'] || u['নাম'] || 'User'}</option>`;
+                    if (invSel) invSel.innerHTML += opt;
+                    if (witSel) witSel.innerHTML += opt;
+                });
+            }
+        }
 
         async function handleLogin(e) {
             e.preventDefault();
@@ -511,13 +605,14 @@
                     document.getElementById('currentUserDisplay').innerText = "System Admin";
                     document.getElementById('userSubTitleRole').innerText = "Alnawa Master Control Panel";
                     document.getElementById('resetPassBtn').classList.add('hidden');
+                    document.getElementById('userProfileAndTimerCard').classList.add('hidden');
                     
                     document.getElementById('userNavContainer').classList.add('hidden');
                     document.getElementById('adminNavContainer').classList.remove('hidden');
                     document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> Admin Navigation Tabs:`;
 
-                    renderUserProfile({ 'NID': 'Admin NID', 'mobile': '01942341889', 'nominee': 'System Moderator', 'validity_date': '2030-12-31' });
                     switchAdminTab('pendingApproval');
+                    loadAllUserDropdowns();
                     return;
                 }
             }
@@ -544,6 +639,7 @@
                 if (p === dbPass) {
                     isAdmin = false;
                     document.getElementById('resetPassBtn').classList.remove('hidden');
+                    document.getElementById('userProfileAndTimerCard').classList.remove('hidden');
                     document.getElementById('adminNavContainer').classList.add('hidden');
                     document.getElementById('userNavContainer').classList.remove('hidden');
                     document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:`;
@@ -627,13 +723,14 @@
 
         function switchAdminTab(target) {
             if (!isAdmin) { alert('Access Denied!'); return; }
-            ['adminTabPending', 'adminTabControl', 'adminTabRawDb', 'adminTabSql'].forEach(id => {
+            ['adminTabPending', 'adminTabControl', 'adminTabRawDb', 'adminTabInvestment', 'adminTabWithdrawal'].forEach(id => {
                 document.getElementById(id).classList.add('hidden');
             });
             if (target === 'pendingApproval') { document.getElementById('adminTabPending').classList.remove('hidden'); fetchPendingApprovalData(); }
             else if (target === 'adminControl') { document.getElementById('adminTabControl').classList.remove('hidden'); fetchAdminControlPanel(); }
             else if (target === 'rawDatabase') { document.getElementById('adminTabRawDb').classList.remove('hidden'); fetchRawDatabaseTable(); }
-            else if (target === 'sqlQuery') { document.getElementById('adminTabSql').classList.remove('hidden'); fetchAllRecordsForAdmin(); }
+            else if (target === 'adminInvestment') { document.getElementById('adminTabInvestment').classList.remove('hidden'); }
+            else if (target === 'adminWithdrawal') { document.getElementById('adminTabWithdrawal').classList.remove('hidden'); fetchAllRecordsForAdmin(); }
         }
 
         function openMobileResetModal() { document.getElementById('mobileResetModal').classList.remove('hidden'); }
@@ -678,7 +775,6 @@
             });
         }
 
-        // RAW DATABASE (READ-ONLY) FOR ADMIN
         async function fetchRawDatabaseTable() {
             const tbody = document.getElementById('rawDatabaseTableBody');
             tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">Loading Raw Database...</td></tr>`;
@@ -700,7 +796,6 @@
                     const mobile = user['মোবাইল নাম্বার '] || user['mobile'] || 'N/A';
                     const passHist = user['password'] || '1234#';
 
-                    // Filter investments & withdrawals for this user
                     const userInvs = invData ? invData.filter(i => (i['User ID'] === mergedId || i.user_id == uId)) : [];
                     const userWits = witData ? witData.filter(w => (w['User ID'] === mergedId || w.user_id == uId)) : [];
 
@@ -729,6 +824,7 @@
 
         async function fetchAllRecordsForAdmin() {
             const tbody = document.getElementById('latestRecordsTableBody');
+            if(!tbody) return;
             tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">Loading...</td></tr>`;
             try {
                 const { data: investments } = await supabaseClient.from('investments').select('*').order('id', { ascending: false });
@@ -744,8 +840,9 @@
 
                 combined.forEach(item => {
                     const deleteQueryString = `DELETE FROM "${item.table}" WHERE id = ${item.id};`;
+                    // SINGLE CLICK ENABLED HERE
                     tbody.innerHTML += `
-                        <tr ondblclick="selectRecordForDelete('${deleteQueryString}')" class="hover:bg-amber-100 cursor-pointer transition border-b" title="Double Click to generate Delete Query">
+                        <tr onclick="selectRecordForDelete('${deleteQueryString}')" class="hover:bg-amber-100 cursor-pointer transition border-b" title="Click once to generate Delete Query">
                             <td class="p-2 font-bold text-alnawaNavy">${item.table}</td>
                             <td class="p-2 font-mono font-bold text-amber-700">${item.userId}</td>
                             <td class="p-2 font-mono">${item.date}</td>
@@ -759,7 +856,7 @@
 
         function selectRecordForDelete(queryText) {
             document.getElementById('customSqlInput').value = queryText;
-            document.getElementById('sqlRunStatus').innerText = "Query generated. Click 'Execute Delete Query'.";
+            document.getElementById('sqlRunStatus').innerText = "Delete query generated. Click 'Execute Query'.";
         }
 
         function resetSqlBox() {
@@ -769,9 +866,20 @@
 
         async function runWebSqlCommand() {
             const sqlText = document.getElementById('customSqlInput').value.trim();
-            if (!sqlText) { alert('Please double-click on any table row first!'); return; }
-            if (!confirm("⚠️ Are you sure you want to execute this delete query?")) return;
+            if (!sqlText) { alert('Please click on any table row or enter query!'); return; }
+            if (!confirm("⚠️ Are you sure you want to execute this query?")) return;
             try {
+                // If it's a standard delete statement generated by single click
+                if(sqlText.toLowerCase().startsWith('delete from')) {
+                    const matchTable = sqlText.match(/"([^"]+)"/);
+                    const matchId = sqlText.match(/id\s*=\s*(\d+)/i);
+                    if(matchTable && matchId) {
+                        const tableName = matchTable[1];
+                        const recordId = matchId[1];
+                        const { error } = await supabaseClient.from(tableName).delete().eq('id', recordId);
+                        if(error) throw error;
+                    }
+                }
                 alert("Query executed successfully!");
                 resetSqlBox();
                 fetchAllRecordsForAdmin();
@@ -779,37 +887,46 @@
             } catch (err) { alert("Error: " + err.message); }
         }
 
+        // SUMMARY REPORT INCLUDING WITHDRAWALS
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
-            tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
 
             const { data: investments } = await supabaseClient.from('investments').select('*').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
             const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
 
             let allTransactions = [];
-            if (investments) investments.forEach(i => allTransactions.push({ date: String(i.created_at).split('T')[0], fromBank: i.from_bank, toBank: i.to_bank, status: i.status || 'pending', amount: Number(i.amount), type: 'inv' }));
-            if (withdrawals) withdrawals.forEach(i => allTransactions.push({ date: String(i.created_at).split('T')[0], fromBank: i.withdrawal_bank, toBank: i.company_account, status: i.status || 'pending', amount: Number(i.amount), type: 'wit' }));
+            if (investments) investments.forEach(i => allTransactions.push({ date: String(i.created_at).split('T')[0], fromBank: i.from_bank, toBank: i.to_bank, typeLabel: 'ইনভেস্টমেন্ট (+)', status: i.status || 'pending', amount: Number(i.amount), type: 'inv' }));
+            if (withdrawals) withdrawals.forEach(i => allTransactions.push({ date: String(i.created_at).split('T')[0], fromBank: i.withdrawal_bank, toBank: i.company_account, typeLabel: 'উত্তোলন (-)', status: i.status || 'pending', amount: Number(i.amount), type: 'wit' }));
+
+            allTransactions.sort((a, b) => new Date(a.date) - new Date(b.date));
 
             let runningSum = 0, totalApp = 0, totalPend = 0, totalWit = 0;
             allTransactions.forEach(t => {
                 if (t.status === 'approved (+)' || t.status === 'approved') {
                     if (t.type === 'inv') { totalApp += t.amount; runningSum += t.amount; }
                     else { totalWit += t.amount; runningSum -= t.amount; }
-                } else if (t.status === 'pending') { totalPend += t.amount; }
+                } else if (t.status === 'pending') {
+                    totalPend += t.amount;
+                }
                 t.cumulative = (t.status === 'approved (+)' || t.status === 'approved') ? runningSum : '-';
             });
 
+            allTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
             tbody.innerHTML = '';
-            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; }
+            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; }
 
             allTransactions.forEach(item => {
+                const isWithdraw = item.type === 'wit';
                 tbody.innerHTML += `
                     <tr class="hover:bg-gray-50">
                         <td class="p-2.5 font-mono">${item.date}</td>
                         <td class="p-2.5">${item.fromBank}</td>
                         <td class="p-2.5">${item.toBank}</td>
-                        <td class="p-2.5 text-center font-bold">${item.status}</td>
-                        <td class="p-2.5 text-right font-mono">৳ ${item.amount.toLocaleString()}</td>
+                        <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
+                        <td class="p-2.5 text-center font-semibold">${item.status}</td>
+                        <td class="p-2.5 text-right font-mono">${isWithdraw ? '-' : ''}৳ ${item.amount.toLocaleString()}</td>
                         <td class="p-2.5 text-right font-mono font-bold text-alnawaGreen">${item.cumulative === '-' ? '-' : '৳ ' + item.cumulative.toLocaleString()}</td>
                     </tr>
                 `;
@@ -822,6 +939,7 @@
 
         async function fetchPendingApprovalData() {
             const tbody = document.getElementById('pendingApprovalTableBody');
+            if(!tbody) return;
             const { data: inv } = await supabaseClient.from('investments').select('*').eq('status', 'pending');
             const { data: wit } = await supabaseClient.from('withdrawals').select('*').eq('status', 'pending');
             
@@ -964,6 +1082,49 @@
             document.getElementById('withdrawProgressBox').classList.add('hidden');
             document.getElementById('withdrawSubmitArea').classList.remove('hidden');
             document.getElementById('successModal').classList.remove('hidden');
+        }
+
+        // ADMIN DIRECT SUBMISSIONS
+        async function adminSubmitInvestment(e) {
+            e.preventDefault();
+            const targetUser = document.getElementById('adminSelectUserForInv').value;
+            const compId = parseInt(targetUser.charAt(0)) || 1;
+            const uId = parseInt(targetUser.slice(-3)) || 1;
+
+            await supabaseClient.from('investments').insert([{
+                'User ID': targetUser,
+                company_id: compId,
+                user_id: uId,
+                from_bank: document.getElementById('adminInvFromBank').value,
+                to_bank: document.getElementById('adminInvToBank').value,
+                amount: parseFloat(document.getElementById('adminInvAmount').value),
+                description: document.getElementById('adminInvDesc').value,
+                otp_pin: document.getElementById('adminInvOtp').value.trim(),
+                status: 'pending'
+            }]);
+            document.getElementById('adminInvestForm').reset();
+            alert('Admin investment submitted successfully!');
+        }
+
+        async function adminSubmitWithdrawal(e) {
+            e.preventDefault();
+            const targetUser = document.getElementById('adminSelectUserForWit').value;
+            const compId = parseInt(targetUser.charAt(0)) || 1;
+            const uId = parseInt(targetUser.slice(-3)) || 1;
+
+            await supabaseClient.from('withdrawals').insert([{
+                'User ID': targetUser,
+                company_id: compId,
+                user_id: uId,
+                withdrawal_bank: document.getElementById('adminWitFromBank').value,
+                company_account: document.getElementById('adminWitToBank').value,
+                amount: parseFloat(document.getElementById('adminWitAmount').value),
+                description: document.getElementById('adminWitDesc').value,
+                otp_pin: '1234#',
+                status: 'pending'
+            }]);
+            document.getElementById('adminWithdrawForm').reset();
+            alert('Admin withdrawal submitted successfully!');
         }
 
         function closeSuccessModal() {
