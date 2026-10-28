@@ -358,6 +358,7 @@
                                 <thead class="bg-gray-100 uppercase text-[10px]">
                                     <tr>
                                         <th class="p-2">User ID</th>
+                                        <th class="p-2">Name</th>
                                         <th class="p-2">Mobile Number</th>
                                         <th class="p-2">Latest Password</th>
                                         <th class="p-2">Permissions (Investment / Withdrawal)</th>
@@ -958,6 +959,9 @@
                 const uId = u['User ID'] || 1;
                 const formattedId = `${compId}${String(uId).padStart(3, '0')}`;
                 
+                // ইউজারের নাম ফেচ করার লজিক
+                const userName = u.name || u['Name'] || u['নাম'] || 'N/A';
+                
                 const userPerm = permData ? permData.find(p => p.user_id === formattedId) : null;
                 const invChecked = userPerm ? userPerm.can_invest : true;
                 const witChecked = userPerm ? userPerm.can_withdraw : true;
@@ -965,7 +969,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td class="p-2 font-mono font-bold">${formattedId}</td>
-                       
+                        <td class="p-2 font-bold text-gray-800">${userName}</td>
                         <td class="p-2 font-mono">${u['মোবাইল নাম্বার '] || u['mobile'] || ''}</td>
                         <td class="p-2 font-mono">${u.password || u['Password'] || '1234#'}</td>
                         <td class="p-2 space-x-2">
