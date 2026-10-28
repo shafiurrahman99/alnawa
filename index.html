@@ -154,7 +154,7 @@
                 <div class="bg-gradient-to-r from-emerald-800 via-alnawaNavy to-emerald-900 rounded-xl p-3 shadow-lg text-white">
                     <div class="text-xs font-bold text-amber-300 mb-2" id="navBarTitleText"><i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:</div>
                     
-                    <!-- USER NAV (Dynamic visibility based on permissions) -->
+                    <!-- USER NAV -->
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-2" id="userNavContainer">
                         <label id="navSubmissionLabel" onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer hover:bg-white/20 transition">
                             <input type="radio" name="pageOption" id="radioSubmission" checked class="accent-orange-500">
@@ -174,7 +174,7 @@
                         </label>
                     </div>
 
-                    <!-- ADMIN NAV (Strictly for Admin Only) -->
+                    <!-- ADMIN NAV -->
                     <div class="hidden grid grid-cols-1 sm:grid-cols-5 gap-2" id="adminNavContainer">
                         <label onclick="switchAdminTab('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer hover:bg-white/20 transition">
                             <input type="radio" name="adminPageOption" id="adminRadioPending" checked class="accent-orange-500">
@@ -305,7 +305,7 @@
                     </div>
                 </div>
 
-                <!-- USER SUB-PAGE 4: SINGLE COMBINED SUMMARY REPORT -->
+                <!-- USER SUB-PAGE 4: SUMMARY REPORT -->
                 <div id="subPageSummaryReport" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border">
                         <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2 flex items-center justify-between">
@@ -349,7 +349,7 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 2: USER MANAGEMENT (Permission Checkboxes) -->
+                <!-- ADMIN TAB 2: USER MANAGEMENT -->
                 <div id="adminTabControl" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-red-300">
                         <h3 class="text-sm font-bold text-red-600 mb-3 border-b pb-2">👑 Admin Control Panel (User Management & Permissions)</h3>
@@ -401,7 +401,7 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 4: MASTER USER SUMMARY REPORT (Sorted ASCENDING by সদস্য নং) -->
+                <!-- ADMIN TAB 4: MASTER USER SUMMARY REPORT -->
                 <div id="adminTabMasterSummary" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-indigo-300">
                         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -456,7 +456,7 @@
         </footer>
     </div>
 
-    <!-- MODAL POP-UP 1: ADMIN TOOLBOX / ACTIONS SELECTION -->
+    <!-- MODAL POP-UP 1 -->
     <div id="adminModalTools" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative border-2 border-amber-400">
             <button onclick="closeAdminModalTools()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -479,7 +479,7 @@
         </div>
     </div>
 
-    <!-- MODAL POP-UP 2A: ADMIN INVESTMENT SUBMISSION FORM (Full-screen Modal with Close Button & User ID Dropdown) -->
+    <!-- MODAL POP-UP 2A -->
     <div id="adminInvestmentModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-xl w-full shadow-2xl relative border-2 border-emerald-600 max-h-[90vh] overflow-y-auto">
             <button onclick="closeAdminInvestmentModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 transition">
@@ -526,7 +526,7 @@
         </div>
     </div>
 
-    <!-- MODAL POP-UP 2B: ADMIN WITHDRAWAL FORM -->
+    <!-- MODAL POP-UP 2B -->
     <div id="adminWithdrawalModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-xl w-full shadow-2xl relative border-2 border-blue-500 max-h-[90vh] overflow-y-auto">
             <button onclick="closeAdminWithdrawalModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 transition">
@@ -570,7 +570,7 @@
         </div>
     </div>
 
-    <!-- MODAL POP-UP 3: SQL DELETE QUERY MODAL WINDOW & SINGLE CLICK FEATURE -->
+    <!-- MODAL POP-UP 3 -->
     <div id="sqlDeleteModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl p-6 max-w-3xl w-full shadow-2xl relative border-2 border-red-500 max-h-[90vh] flex flex-col">
             <button onclick="closeSqlDeleteModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -594,7 +594,6 @@
                 </div>
             </div>
 
-            <!-- Single-Click Auto Populate Master Table -->
             <div class="flex-grow overflow-hidden flex flex-col border rounded-xl">
                 <div class="bg-gray-100 p-2 border-b flex justify-between items-center">
                     <span class="text-xs font-bold text-gray-700">Master Records (Single Click Row to Populate Delete Query)</span>
@@ -794,14 +793,13 @@
                     await checkUserPermissionsAndApplyVisibility(fullMergedUserId);
                     switchSubPage('submission');
                 } else {
-                    showLoginError("ভুল পাসওয়ার্ড! নতুন পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
+                    showLoginError("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
                 }
             } else {
                 showLoginError(`ইউজার আইডি (${fullMergedUserId}) পাওয়া যায়নি!`);
             }
         }
 
-        // Dynamic Permission Check: Hide/Show Investment & Withdrawal forms based on Admin Control Checkboxes
         async function checkUserPermissionsAndApplyVisibility(userId) {
             const { data } = await supabaseClient.from('user_permissions').select('*').eq('user_id', userId).maybeSingle();
             const invLabel = document.getElementById('navSubmissionLabel');
@@ -821,7 +819,7 @@
         }
 
         async function renderUserProfile(data) {
-            const mobile = data.mobile || data['মোবাইল নাম্বার '] || 'N/A';
+            const mobile = data.mobile || data['মোবাইল নাম্বার '] || data['Mobile Number'] || 'N/A';
             const nominee = data.nominee || data['নমিনী'] || 'সংরক্ষিত নেই';
             const nomineeMobile = data.nominee_mobile || data['নমিনীর মোবাইল নাম্বার'] || 'সংরক্ষিত নেই';
             
@@ -911,8 +909,6 @@
             else if (target === 'adminMasterSummary') { document.getElementById('adminTabMasterSummary').classList.remove('hidden'); fetchAdminMasterSummaryReport(); }
         }
 
-        
-        // Modal Popups Handlers
         function openAdminModalTools() { document.getElementById('adminModalTools').classList.remove('hidden'); }
         function closeAdminModalTools() { document.getElementById('adminModalTools').classList.add('hidden'); }
 
@@ -949,23 +945,20 @@
             handleLogout();
         }
 
-       async function fetchAdminControlPanel() {
+        async function fetchAdminControlPanel() {
             const tbody = document.getElementById('adminControlTableBody');
-            tbody.innerHTML = <tr><td colspan="5" class="p-3 text-center">Loading...</td></tr>;
+            tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center">Loading...</td></tr>`;
             const { data } = await supabaseClient.from('IND').select('*');
             const { data: permData } = await supabaseClient.from('user_permissions').select('*');
             
             tbody.innerHTML = '';
-            if (!data || data.length === 0) { tbody.innerHTML = <tr><td colspan="5" class="p-3 text-center">No users found</td></tr>; return; }
+            if (!data || data.length === 0) { tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center">No users found</td></tr>`; return; }
             
             data.forEach(u => {
                 const compId = u['Company ID'] || 1;
                 const uId = u['User ID'] || 1;
-                const formattedId = ${compId}${String(uId).padStart(3, '0')};
-                
-                // --- সঠিক করা লাইনটি এখানে বসবে ---
-                <u>const userName = u.name || u['Name'] || u['নাম'] || 'N/A';</u>
-                
+                const formattedId = `${compId}${String(uId).padStart(3, '0')}`;
+                const userName = u.name || u['Name'] || u['নাম'] || 'N/A';
                 const userPerm = permData ? permData.find(p => p.user_id === formattedId) : null;
                 const invChecked = userPerm ? userPerm.can_invest : true;
                 const witChecked = userPerm ? userPerm.can_withdraw : true;
@@ -973,9 +966,9 @@
                 tbody.innerHTML += `
                     <tr>
                         <td class="p-2 font-mono font-bold">${formattedId}</td>
-                        <u><td class="p-2 font-bold text-gray-800">${userName}</td></u>
-                        <td class="p-2 font-mono">${u['মোবাইল নাম্বার '] || ''}</td>
-                        <td class="p-2 font-mono">${u.password || '1234#'}</td>
+                        <td class="p-2 font-bold text-gray-800">${userName}</td>
+                        <td class="p-2 font-mono">${u['মোবাইল নাম্বার '] || u['mobile'] || ''}</td>
+                        <td class="p-2 font-mono">${u.password || u['Password'] || '1234#'}</td>
                         <td class="p-2 space-x-2">
                             <label><input type="checkbox" id="inv_perm_${formattedId}" ${invChecked ? 'checked' : ''}> Investment</label> 
                             <label><input type="checkbox" id="wit_perm_${formattedId}" ${witChecked ? 'checked' : ''}> Withdrawal</label>
@@ -1019,7 +1012,7 @@
                     const uId = user['User ID'] || 1;
                     const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
                     const mobile = user['মোবাইল নাম্বার '] || user['mobile'] || 'N/A';
-                    const passHist = user['password'] || '1234#';
+                    const passHist = user['password'] || user['Password'] || '1234#';
 
                     const userInvs = invData ? invData.filter(i => (i['User ID'] === mergedId || i.user_id == uId)) : [];
                     const userWits = witData ? witData.filter(w => (w['User ID'] === mergedId || w.user_id == uId)) : [];
@@ -1047,7 +1040,6 @@
             }
         }
 
-        // Master User Summary Report strictly sorted ASCENDING by সদস্য নং
         async function fetchAdminMasterSummaryReport() {
             const tbody = document.getElementById('adminMasterSummaryTableBody');
             tbody.innerHTML = `<tr><td colspan="13" class="p-4 text-center">Loading Master Summary Data...</td></tr>`;
@@ -1393,7 +1385,6 @@
             document.getElementById('successModal').classList.remove('hidden');
         }
 
-        // Admin Investment Modal Submission
         async function adminSubmitInvestment(e) {
             e.preventDefault();
             const targetUser = document.getElementById('adminSelectUserForInv').value;
