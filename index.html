@@ -962,7 +962,7 @@
                 const compId = u['Company ID'] || 1;
                 const uId = u['User ID'] || 1;
                 const formattedId = `${compId}${String(uId).padStart(3, '0')}`;
-                
+                <u>const userName = u.name || u[Name] || u['নাম'] || 'N/A';</u>
                 const userPerm = permData ? permData.find(p => p.user_id === formattedId) : null;
                 const invChecked = userPerm ? userPerm.can_invest : true;
                 const witChecked = userPerm ? userPerm.can_withdraw : true;
@@ -970,6 +970,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td class="p-2 font-mono font-bold">${formattedId}</td>
+                        <u><td class="p-2 font-bold text-gray-800">${userName}</td></u>
                         <td class="p-2 font-mono">${u['মোবাইল নাম্বার '] || ''}</td>
                         <td class="p-2 font-mono">${u.password || '1234#'}</td>
                         <td class="p-2 space-x-2">
