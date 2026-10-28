@@ -911,6 +911,7 @@
             else if (target === 'adminMasterSummary') { document.getElementById('adminTabMasterSummary').classList.remove('hidden'); fetchAdminMasterSummaryReport(); }
         }
 
+        
         // Modal Popups Handlers
         function openAdminModalTools() { document.getElementById('adminModalTools').classList.remove('hidden'); }
         function closeAdminModalTools() { document.getElementById('adminModalTools').classList.add('hidden'); }
@@ -948,21 +949,23 @@
             handleLogout();
         }
 
-        // Admin Control Panel with dynamic permission checkboxes
-        async function fetchAdminControlPanel() {
+       async function fetchAdminControlPanel() {
             const tbody = document.getElementById('adminControlTableBody');
-            tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">Loading...</td></tr>`;
+            tbody.innerHTML = <tr><td colspan="5" class="p-3 text-center">Loading...</td></tr>;
             const { data } = await supabaseClient.from('IND').select('*');
             const { data: permData } = await supabaseClient.from('user_permissions').select('*');
             
             tbody.innerHTML = '';
-            if (!data || data.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center">No users found</td></tr>`; return; }
+            if (!data || data.length === 0) { tbody.innerHTML = <tr><td colspan="5" class="p-3 text-center">No users found</td></tr>; return; }
             
             data.forEach(u => {
                 const compId = u['Company ID'] || 1;
                 const uId = u['User ID'] || 1;
-                const formattedId = `${compId}${String(uId).padStart(3, '0')}`;
-                <u>const userName = u.name || u[Name] || u['নাম'] || 'N/A';</u>
+                const formattedId = ${compId}${String(uId).padStart(3, '0')};
+                
+                // --- সঠিক করা লাইনটি এখানে বসবে ---
+                <u>const userName = u.name || u['Name'] || u['নাম'] || 'N/A';</u>
+                
                 const userPerm = permData ? permData.find(p => p.user_id === formattedId) : null;
                 const invChecked = userPerm ? userPerm.can_invest : true;
                 const witChecked = userPerm ? userPerm.can_withdraw : true;
