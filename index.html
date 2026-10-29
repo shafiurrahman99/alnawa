@@ -134,7 +134,7 @@
                     </div>
                 </div>
 
-                <!-- PERSONAL INFO & VALIDITY TIMER CARD (নির্ধারিত ৫টি পয়েন্ট সহ) -->
+                <!-- PERSONAL INFO & VALIDITY TIMER CARD -->
                 <div id="userProfileAndTimerCard" class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="md:col-span-2 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow border flex flex-col justify-center">
                         <div class="overflow-x-auto custom-scrollbar">
@@ -565,7 +565,7 @@
         <footer class="bg-white flex-shrink-0 border-t-2 border-alnawaGreen">
             <div class="grid grid-cols-1 md:grid-cols-12 h-auto text-white font-sans text-xs">
                 <div class="md:col-span-7 bg-alnawaGreen px-4 py-3 flex flex-col justify-center gap-0.5">
-                    <div class="font-bold">১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪টিআই, বন্দর, নারায়ণগঞ্জ।</div>
+                    <div class="font-bold">১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪১১, বন্দর, নারায়ণগঞ্জ।</div>
                     <div class="text-[11px] opacity-90 font-mono">151, Dokin Lokhonkhola, Lokhonkhola-1411, Bandar, Narayanganj.</div>
                 </div>
                 <div class="md:col-span-5 bg-gradient-to-r from-alnawaNavy to-blue-900 px-4 py-3 flex flex-col justify-center items-start md:items-end gap-0.5">
@@ -783,7 +783,6 @@
             errBox.classList.remove('hidden');
         }
 
-        // ইউজার প্রোফাইল টেবিল: নির্দিষ্ট ৫টি পয়েন্ট সঠিক সিরিয়ালে
         async function renderUserProfile(data) {
             const nid = data.nid || data['জাতীয় পরিচয়পত্র'] || data['NID'] || 'সংরক্ষিত নেই';
             const nomineeNid = data.nominee_nid || data['নমিনীর জাতীয় পরিচয়পত্র'] || data['Nominee NID'] || 'সংরক্ষিত নেই';
@@ -843,27 +842,74 @@
             document.getElementById('page1').classList.remove('hidden');
         }
 
+        // ফিক্সড: ইউজার সাব-পেজ নিখুঁতভাবে হাইড ও শো করার লজিক
         function switchSubPage(target) {
-            ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary', 'subPageSummaryReport'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+            const pages = ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary', 'subPageSummaryReport'];
+            pages.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.classList.add('hidden');
             });
-            if (target === 'submission') document.getElementById('subPageSubmission').classList.remove('hidden');
-            else if (target === 'withdrawal') document.getElementById('subPageWithdrawal').classList.remove('hidden');
-            else if (target === 'summary') { document.getElementById('subPageSummary').classList.remove('hidden'); fetchTransactionsFromSupabase(); }
-            else if (target === 'summaryReport') { document.getElementById('subPageSummaryReport').classList.remove('hidden'); fetchDetailedSummaryReport(); }
+
+            if (target === 'submission') {
+                document.getElementById('subPageSubmission').classList.remove('hidden');
+                document.getElementById('radioSubmission').checked = true;
+            } else if (target === 'withdrawal') {
+                document.getElementById('subPageWithdrawal').classList.remove('hidden');
+                document.getElementById('radioWithdrawal').checked = true;
+            } else if (target === 'summary') {
+                document.getElementById('subPageSummary').classList.remove('hidden');
+                document.getElementById('radioSummary').checked = true;
+                fetchTransactionsFromSupabase();
+            } else if (target === 'summaryReport') {
+                document.getElementById('subPageSummaryReport').classList.remove('hidden');
+                document.getElementById('radioSummaryReport').checked = true;
+                fetchDetailedSummaryReport();
+            }
         }
 
+        // ফিক্সড: অ্যাডমিন ট্যাব নিখুঁতভাবে হাইড ও শো করার লজিক
         function switchAdminTab(target) {
             if (!isAdmin) { alert('Access Denied!'); return; }
-            ['adminTabPending', 'adminTabControl', 'adminTabInvestment', 'adminTabWithdrawal', 'adminTabSqlDelete', 'adminTabTransactionSummary'].forEach(id => {
-                document.getElementById(id).classList.add('hidden');
+            
+            const adminTabs = [
+                'adminTabPending', 
+                'adminTabControl', 
+                'adminTabInvestment', 
+                'adminTabWithdrawal', 
+                'adminTabSqlDelete', 
+                'adminTabTransactionSummary'
+            ];
+
+            adminTabs.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.classList.add('hidden');
             });
-            if (target === 'pendingApproval') { document.getElementById('adminTabPending').classList.remove('hidden'); fetchPendingApprovalData(); }
-            else if (target === 'adminControl') { document.getElementById('adminTabControl').classList.remove('hidden'); fetchAdminControlPanel(); }
-            else if (target === 'adminInvestment') { document.getElementById('adminTabInvestment').classList.remove('hidden'); loadAllUserDropdowns(); }
-            else if (target === 'adminWithdrawal') { document.getElementById('adminTabWithdrawal').classList.remove('hidden'); loadAllUserDropdowns(); }
-            else if (target === 'sqlDeleteConsole') { document.getElementById('adminTabSqlDelete').classList.remove('hidden'); fetchAllRecordsForAdminModal(); }
-            else if (target === 'adminTransactionSummary') { document.getElementById('adminTabTransactionSummary').classList.remove('hidden'); fetchAdminAllTransactions(); }
+
+            if (target === 'pendingApproval') {
+                document.getElementById('adminTabPending').classList.remove('hidden');
+                document.getElementById('adminRadioPending').checked = true;
+                fetchPendingApprovalData();
+            } else if (target === 'adminControl') {
+                document.getElementById('adminTabControl').classList.remove('hidden');
+                document.getElementById('adminRadioControl').checked = true;
+                fetchAdminControlPanel();
+            } else if (target === 'adminInvestment') {
+                document.getElementById('adminTabInvestment').classList.remove('hidden');
+                document.getElementById('adminRadioInvest').checked = true;
+                loadAllUserDropdowns();
+            } else if (target === 'adminWithdrawal') {
+                document.getElementById('adminTabWithdrawal').classList.remove('hidden');
+                document.getElementById('adminRadioWithdraw').checked = true;
+                loadAllUserDropdowns();
+            } else if (target === 'sqlDeleteConsole') {
+                document.getElementById('adminTabSqlDelete').classList.remove('hidden');
+                document.getElementById('adminRadioSql').checked = true;
+                fetchAllRecordsForAdminModal();
+            } else if (target === 'adminTransactionSummary') {
+                document.getElementById('adminTabTransactionSummary').classList.remove('hidden');
+                document.getElementById('adminRadioTransSummary').checked = true;
+                fetchAdminAllTransactions();
+            }
         }
 
         function openMobileResetModal() { document.getElementById('mobileResetModal').classList.remove('hidden'); }
