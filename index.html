@@ -134,7 +134,7 @@
                     </div>
                 </div>
 
-                <!-- PERSONAL INFO & VALIDITY TIMER CARD (শুধুমাত্র সাধারণ ইউজারের জন্য দৃশ্যমান) -->
+                <!-- PERSONAL INFO & VALIDITY TIMER CARD (নির্ধারিত ৫টি পয়েন্ট সহ) -->
                 <div id="userProfileAndTimerCard" class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div class="md:col-span-2 bg-white/95 backdrop-blur-md rounded-xl p-3 shadow border flex flex-col justify-center">
                         <div class="overflow-x-auto custom-scrollbar">
@@ -174,7 +174,7 @@
                         </label>
                     </div>
 
-                    <!-- ADMIN NAV (রেডিও বাটন ভিত্তিক সব অপশন মাঝখানে প্রদর্শনের জন্য) -->
+                    <!-- ADMIN NAV -->
                     <div class="hidden grid grid-cols-1 sm:grid-cols-6 gap-2" id="adminNavContainer">
                         <label onclick="switchAdminTab('pendingApproval')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-amber-300 cursor-pointer hover:bg-white/20 transition">
                             <input type="radio" name="adminPageOption" id="adminRadioPending" checked class="accent-orange-500">
@@ -354,7 +354,7 @@
                     </div>
                 </div>
 
-                <!-- ADMIN TAB 2: USER MANAGEMENT (শুধুমাত্র অ্যাডমিনের জন্য) -->
+                <!-- ADMIN TAB 2: USER MANAGEMENT -->
                 <div id="adminTabControl" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-red-300">
                         <h3 class="text-sm font-bold text-red-600 mb-3 border-b pb-2">👑 Admin Control Panel (User Management & Permissions)</h3>
@@ -521,7 +521,7 @@
                     </div>
                 </div>
 
-                <!-- MASTER USER SUMMARY (শুধুমাত্র এডমিনের জন্য নিচে সবসময় ওপেন বা শো হয়ে থাকবে) -->
+                <!-- MASTER USER SUMMARY -->
                 <div id="adminMasterSummarySection" class="hidden space-y-4 fade-in mt-6">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-indigo-300">
                         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -561,11 +561,11 @@
 
         </main>
 
-        <!-- FOOTER (১২ নম্বর পয়েন্ট অনুযায়ী ডিজাইন, পিকচার, কালার ও লেখা হুবহু অপরিবর্তিত রাখা হয়েছে) -->
+        <!-- FOOTER -->
         <footer class="bg-white flex-shrink-0 border-t-2 border-alnawaGreen">
             <div class="grid grid-cols-1 md:grid-cols-12 h-auto text-white font-sans text-xs">
                 <div class="md:col-span-7 bg-alnawaGreen px-4 py-3 flex flex-col justify-center gap-0.5">
-                    <div class="font-bold">১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪১১, বন্দর, নারায়ণগঞ্জ।</div>
+                    <div class="font-bold">১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪টিআই, বন্দর, নারায়ণগঞ্জ।</div>
                     <div class="text-[11px] opacity-90 font-mono">151, Dokin Lokhonkhola, Lokhonkhola-1411, Bandar, Narayanganj.</div>
                 </div>
                 <div class="md:col-span-5 bg-gradient-to-r from-alnawaNavy to-blue-900 px-4 py-3 flex flex-col justify-center items-start md:items-end gap-0.5">
@@ -690,7 +690,6 @@
             const uInput = document.getElementById('usernameInput').value.trim();
             const p = document.getElementById('passwordInput').value.trim();
             
-            // admin সম্পূর্ণ স্বাধীন এবং 1049 সাধারণ ইউজার হিসেবে থাকবে
             if (uInput === "admin") {
                 if (p === "1234#" || p === "1234!") {
                     isAdmin = true;
@@ -706,7 +705,6 @@
                     document.getElementById('adminNavContainer').classList.remove('hidden');
                     document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> Admin Navigation Tabs:`;
 
-                    // মাস্টার ইউজার সামারি শুধুমাত্র এডমিনের জন্য নিচে দৃশ্যমান থাকবে
                     document.getElementById('adminMasterSummarySection').classList.remove('hidden');
                     fetchAdminMasterSummaryReport();
 
@@ -716,7 +714,6 @@
                 }
             }
 
-            // সাধারণ ইউজার অথবা 1049 এর জন্য লগইন প্রসেস
             if (uInput.length >= 4) {
                 loggedInCompanyId = parseInt(uInput.charAt(0)) || 1;
                 loggedInUserId = parseInt(uInput.slice(-3)) || 1;
@@ -747,7 +744,6 @@
                     document.getElementById('userNavContainer').classList.remove('hidden');
                     document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:`;
                     
-                    // সাধারণ ইউজারের জন্য মাস্টার ইউজার সামারি সম্পূর্ণ বন্ধ থাকবে
                     document.getElementById('adminMasterSummarySection').classList.add('hidden');
 
                     document.getElementById('page1').classList.add('hidden');
@@ -787,45 +783,35 @@
             errBox.classList.remove('hidden');
         }
 
+        // ইউজার প্রোফাইল টেবিল: নির্দিষ্ট ৫টি পয়েন্ট সঠিক সিরিয়ালে
         async function renderUserProfile(data) {
+            const nid = data.nid || data['জাতীয় পরিচয়পত্র'] || data['NID'] || 'সংরক্ষিত নেই';
+            const nomineeNid = data.nominee_nid || data['নমিনীর জাতীয় পরিচয়পত্র'] || data['Nominee NID'] || 'সংরক্ষিত নেই';
             const mobile = data.mobile || data['মোবাইল নাম্বার '] || data['Mobile Number'] || 'N/A';
-            const nominee = data.nominee || data['নমিনী'] || 'সংরক্ষিত নেই';
-            const nomineeMobile = data.nominee_mobile || data['নমিনীর মোবাইল নাম্বার'] || 'সংরক্ষিত নেই';
+            const nomineeMobile = data.nominee_mobile || data['নমিনীর মোবাইল নাম্বার'] || data['Wife Mobile'] || 'সংরক্ষিত নেই';
             
             let totalInv = data.total_investment || 0;
-            let totalWit = data.total_withdrawal || 0;
-            let recordCount = 0;
-
             const { data: invs } = await supabaseClient.from('investments').select('amount').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
-            const { data: wits } = await supabaseClient.from('withdrawals').select('amount').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
-
             if (invs) {
                 if(!data.total_investment) totalInv = invs.reduce((s, i) => s + (Number(i.amount) || 0), 0);
-                recordCount += invs.length;
-            }
-            if (wits) {
-                if(!data.total_withdrawal) totalWit = wits.reduce((s, w) => s + (Number(w.amount) || 0), 0);
-                recordCount += wits.length;
             }
 
             document.getElementById('userProfileTableBody').innerHTML = `
                 <tr class="bg-emerald-50/50">
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">১. মোবাইল নাম্বার (Mobile)</td>
-                    <td class="p-2 font-mono font-bold text-gray-800">${mobile}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">২. নমিনী (Nominee)</td>
-                    <td class="p-2 font-bold text-gray-800">${nominee}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">১. জাতীয় পরিচয়পত্র (NID)</td>
+                    <td class="p-2 font-mono font-bold text-gray-800">${nid}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">২. নমিনীর জাতীয় পরিচয়পত্র</td>
+                    <td class="p-2 font-mono font-bold text-gray-800">${nomineeNid}</td>
                 </tr>
                 <tr class="bg-white">
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">৩. নমিনীর মোবাইল (Nominee Mobile)</td>
-                    <td class="p-2 font-mono font-bold text-gray-700">${nomineeMobile}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">৪. মোট ইনভেস্টমেন্ট (Investments+TR)</td>
-                    <td class="p-2 font-mono font-bold text-emerald-700">৳ ${Number(totalInv).toLocaleString()}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">৩. মোবাইল নাম্বার (Mobile)</td>
+                    <td class="p-2 font-mono font-bold text-gray-700">${mobile}</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">৪. নমিনীর মোবাইল (Wife Mobile)</td>
+                    <td class="p-2 font-mono font-bold text-alnawaGreen">${nomineeMobile}</td>
                 </tr>
                 <tr class="bg-emerald-50/30">
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">৫. মোট উইথড্রয়াল (Total Withdrawal)</td>
-                    <td class="p-2 font-mono font-bold text-blue-700">৳ ${Number(totalWit).toLocaleString()}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">৬. ট্রানজেকশন রেকর্ডস (History List)</td>
-                    <td class="p-2 font-mono font-bold text-amber-700">${recordCount} টি লেনদেন</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">৫. মোট ইনভেস্টমেন্ট</td>
+                    <td class="p-2 font-mono font-bold text-emerald-700" colspan="3">৳ ${Number(totalInv).toLocaleString()}</td>
                 </tr>
             `;
             startValidityCountdown(data.validity_date || data['validity_date'] || '2027-12-31');
@@ -1097,7 +1083,7 @@
             } catch (err) { alert("Error executing query: " + err.message); }
         }
 
-        // অ্যাডমিন ট্রানজেকশন সামারি রিপোর্ট (Descending Order - ইনভেস্টমেন্ট ও উইথড্রল উভয় সহ)
+        // অ্যাডমিন ট্রানজেকশন সামারি রিপোর্ট (উইথড্রল সহ)
         async function fetchAdminAllTransactions() {
             const tbody = document.getElementById('adminTransactionTableBody');
             if(!tbody) return;
@@ -1159,6 +1145,7 @@
             });
         }
 
+        // ইউজার ট্রানজেকশন সামারি (উইথড্রল সহ)
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
@@ -1234,6 +1221,7 @@
             document.getElementById('reportWithdraw').innerText = `৳ ${totalWit.toLocaleString()}`;
         }
 
+        // একক সামারি রিপোর্ট (উইথড্রল সহ)
         async function fetchDetailedSummaryReport() {
             const tbody = document.getElementById('detailedSummaryReportBody');
             if(!tbody) return;
@@ -1291,6 +1279,7 @@
             });
         }
 
+        // পেন্ডিং এপ্রুভাল প্যানেল (উইথড্রল সহ)
         async function fetchPendingApprovalData() {
             const tbody = document.getElementById('pendingApprovalTableBody');
             if(!tbody) return;
