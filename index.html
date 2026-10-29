@@ -565,7 +565,7 @@
         <footer class="bg-white flex-shrink-0 border-t-2 border-alnawaGreen">
             <div class="grid grid-cols-1 md:grid-cols-12 h-auto text-white font-sans text-xs">
                 <div class="md:col-span-7 bg-alnawaGreen px-4 py-3 flex flex-col justify-center gap-0.5">
-                    <div class="font-bold">১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪১১, বন্দর, নারায়ণগঞ্জ।</div>
+                    <div class="font-bold">১৫১, দক্ষিণ লক্ষণখোলা, লক্ষণখোলা-১৪৭১, বন্দর, নারায়ণগঞ্জ।</div>
                     <div class="text-[11px] opacity-90 font-mono">151, Dokin Lokhonkhola, Lokhonkhola-1411, Bandar, Narayanganj.</div>
                 </div>
                 <div class="md:col-span-5 bg-gradient-to-r from-alnawaNavy to-blue-900 px-4 py-3 flex flex-col justify-center items-start md:items-end gap-0.5">
@@ -842,12 +842,14 @@
             document.getElementById('page1').classList.remove('hidden');
         }
 
-        // ফিক্সড: ইউজার সাব-পেজ নিখুঁতভাবে হাইড ও শো করার লজিক
+        // ১. নিখুঁত সাব-পেজ হাইড ও শো করার লজিক (ওভারল্যাপ বা স্থির ফর্মের সমস্যা দূর করতে)
         function switchSubPage(target) {
             const pages = ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary', 'subPageSummaryReport'];
             pages.forEach(id => {
                 const el = document.getElementById(id);
-                if(el) el.classList.add('hidden');
+                if(el) {
+                    el.classList.add('hidden');
+                }
             });
 
             if (target === 'submission') {
@@ -867,7 +869,7 @@
             }
         }
 
-        // ফিক্সড: অ্যাডমিন ট্যাব নিখুঁতভাবে হাইড ও শো করার লজিক
+        // নিখুঁত অ্যাডমিন ট্যাব হাইড ও শো করার লজিক
         function switchAdminTab(target) {
             if (!isAdmin) { alert('Access Denied!'); return; }
             
@@ -882,7 +884,9 @@
 
             adminTabs.forEach(id => {
                 const el = document.getElementById(id);
-                if(el) el.classList.add('hidden');
+                if(el) {
+                    el.classList.add('hidden');
+                }
             });
 
             if (target === 'pendingApproval') {
@@ -985,15 +989,16 @@
             alert('User permissions updated successfully!');
         }
 
+        // ৩. মাস্টার ইউজার সামারি রিপোর্ট সঠিকভাবে ফেচ ও রেন্ডার করার ফাংশন
         async function fetchAdminMasterSummaryReport() {
             const tbody = document.getElementById('adminMasterSummaryTableBody');
             if(!tbody) return;
             tbody.innerHTML = `<tr><td colspan="13" class="p-4 text-center">Loading Master Summary Data...</td></tr>`;
 
-            const { data } = await supabaseClient.from('master_user_summary').select('*');
+            const { data, error } = await supabaseClient.from('master_user_summary').select('*');
             tbody.innerHTML = '';
             
-            if (!data || data.length === 0) {
+            if (error || !data || data.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="13" class="p-4 text-center text-gray-500">No records found in master_user_summary.</td></tr>`;
                 return;
             }
@@ -1129,7 +1134,6 @@
             } catch (err) { alert("Error executing query: " + err.message); }
         }
 
-        // অ্যাডমিন ট্রানজেকশন সামারি রিপোর্ট (উইথড্রল সহ)
         async function fetchAdminAllTransactions() {
             const tbody = document.getElementById('adminTransactionTableBody');
             if(!tbody) return;
@@ -1191,7 +1195,6 @@
             });
         }
 
-        // ইউজার ট্রানজেকশন সামারি (উইথড্রল সহ)
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
@@ -1267,7 +1270,6 @@
             document.getElementById('reportWithdraw').innerText = `৳ ${totalWit.toLocaleString()}`;
         }
 
-        // একক সামারি রিপোর্ট (উইথড্রল সহ)
         async function fetchDetailedSummaryReport() {
             const tbody = document.getElementById('detailedSummaryReportBody');
             if(!tbody) return;
@@ -1325,7 +1327,6 @@
             });
         }
 
-        // পেন্ডিং এপ্রুভাল প্যানেল (উইথড্রল সহ)
         async function fetchPendingApprovalData() {
             const tbody = document.getElementById('pendingApprovalTableBody');
             if(!tbody) return;
@@ -1359,7 +1360,7 @@
                         rawDate: new Date(w.created_at || Date.now()), 
                         userId: w['User ID'] || w.user_id || '1001', 
                         desc: w.description || 'Withdrawal', 
-                        otp: w.otp_pin || '1234#', 
+                        otp: '-', 
                         amount: Number(w.amount) 
                     });
                 });
@@ -1396,7 +1397,7 @@
 
         async function commitStatus(dbTable, id, expectedOtp) {
             const status = document.getElementById(`sel_${dbTable}_${id}`).value;
-            if (status === 'approved (+)' && prompt("Enter Secret PIN (OTP):") !== expectedOtp) { alert('Wrong PIN!'); return; }
+            if (dbTable === 'investments' && status === 'approved (+)' && prompt("Enter Secret PIN (OTP):") !== expectedOtp) { alert('Wrong PIN!'); return; }
             await supabaseClient.from(dbTable).update({ status }).eq('id', id);
             alert('Status updated successfully!');
             fetchPendingApprovalData();
@@ -1482,8 +1483,9 @@
             alert('উইথড্রল প্রসেস বাতিল করা হয়েছে।');
         }
 
+        // ২. উইথড্রল ডাটা সুপাবেজে সঠিকভাবে ইনসার্ট করার ফাংশন (ওটিপি বাদ দিয়ে স্কিমার সাথে সামঞ্জস্যপূর্ণ)
         async function completeWithdrawalSubmission() {
-            await supabaseClient.from('withdrawals').insert([{
+            const insertData = {
                 'User ID': fullMergedUserId,
                 company_id: loggedInCompanyId,
                 user_id: loggedInUserId,
@@ -1491,9 +1493,18 @@
                 company_account: document.getElementById('withdrawToBank').value,
                 amount: parseFloat(document.getElementById('withdrawAmount').value),
                 description: document.getElementById('withdrawDesc').value,
-                otp_pin: '1234#', 
                 status: 'pending'
-            }]);
+            };
+
+            const { error } = await supabaseClient.from('withdrawals').insert([insertData]);
+            
+            if (error) {
+                alert('উইথড্রল জমা দিতে সমস্যা হয়েছে: ' + error.message);
+                document.getElementById('withdrawProgressBox').classList.add('hidden');
+                document.getElementById('withdrawSubmitArea').classList.remove('hidden');
+                return;
+            }
+
             document.getElementById('withdrawalForm').reset();
             document.getElementById('withdrawProgressBox').classList.add('hidden');
             document.getElementById('withdrawSubmitArea').classList.remove('hidden');
@@ -1542,7 +1553,6 @@
                 company_account: document.getElementById('adminWitToBank').value,
                 amount: parseFloat(document.getElementById('adminWitAmount').value),
                 description: document.getElementById('adminWitDesc').value,
-                otp_pin: '1234#',
                 status: 'pending'
             }]);
             document.getElementById('adminWithdrawForm').reset();
