@@ -129,8 +129,8 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
+                        <!-- সাধারণ এডমিন প্যানেলে শুধু পাসওয়ার্ড চেঞ্জ বাটন থাকবে, এমডি ভল্ট প্যানেল থাকবে না -->
                         <button id="adminPassChangeHeaderBtn" onclick="openAdminPasswordModal()" class="hidden px-3 py-1.5 bg-gradient-to-r from-alnawaNavy to-blue-800 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড চেঞ্জ</button>
-                        <button id="mdVaultHeaderBtn" onclick="openMdVaultModal()" class="hidden px-3 py-1.5 bg-gradient-to-r from-purple-700 to-indigo-800 text-white text-xs font-bold rounded-lg shadow">এমডি ভল্ট প্যানেল</button>
                         
                         <button id="resetPassBtn" onclick="openMobileResetModal()" class="px-3 py-1.5 bg-gradient-to-r from-alnawaOrange to-amber-500 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড রিসেট</button>
                         <button onclick="handleLogout()" id="logoutBtnText" class="text-xs text-red-600 font-bold px-3 py-1.5 rounded-lg border border-red-200 hover:bg-red-50">লগআউট</button>
@@ -300,7 +300,7 @@
                             <table class="w-full text-left text-xs border-collapse min-w-[850px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">বিবরণ</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">রানিং ব্যালেন্স</th>
+                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">বিবরণ</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">ধারাবাহিক যোগফল (রানিং ব্যালেন্স)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
@@ -496,7 +496,7 @@
                     </div>
                 </div>
 
-                <!-- MASTER USER SUMMARY -->
+                <!-- MASTER USER SUMMARY (এখন শুধু সিস্টেম এডমিন লগইন করলে ডিফল্ট পেজে দেখাবে, রেডিও ট্যাবের সাথে ওভারল্যাপ করবে না) -->
                 <div id="adminMasterSummarySection" class="hidden space-y-4 fade-in mt-6">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-indigo-300">
                         <div class="flex justify-between items-center mb-3 border-b pb-2">
@@ -580,7 +580,7 @@
         </div>
     </div>
 
-    <!-- ADMIN PASSWORD CHANGE MODAL -->
+    <!-- ADMIN PASSWORD CHANGE MODAL (পয়েন্ট ১ অনুযায়ী এমডি মোবাইল নম্বর ফিল্ড সম্পূর্ণ ফাঁকা বা ব্ল্যাংক রাখা হয়েছে) -->
     <div id="adminPasswordModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeAdminPasswordModal()">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
             <button onclick="closeAdminPasswordModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -591,8 +591,8 @@
             </h4>
             <form onsubmit="handleAdminPasswordChange(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block text-[10px] text-gray-500 mb-1">এমডি মোবাইল নম্বর (ক্রস-চেক)</label>
-                    <input type="tel" id="adminCrossMobile" required placeholder="যেমন: 01818589423" class="w-full border p-2 rounded font-mono">
+                    <label class="block text-[10px] text-gray-500 mb-1">এমডি মোবাইল নাম্বারটি লিখুন</label>
+                    <input type="tel" id="adminCrossMobile" required placeholder="এমডি মোবাইল নাম্বারটি লিখুন..." class="w-full border p-2 rounded font-mono">
                 </div>
                 <div>
                     <label class="block text-[10px] text-gray-500 mb-1">পুরাতন পাসওয়ার্ড</label>
@@ -608,42 +608,6 @@
                 </div>
                 <button type="submit" class="w-full py-2.5 bg-alnawaGreen hover:bg-emerald-700 text-white font-bold rounded shadow">পাসওয়ার্ড আপডেট করুন</button>
             </form>
-        </div>
-    </div>
-
-    <!-- MD SECURE VAULT PANEL MODAL -->
-    <div id="mdVaultModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeMdVaultModal()">
-        <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative border-2 border-purple-600">
-            <button onclick="closeMdVaultModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <h4 class="text-sm font-bold text-purple-900 mb-3 flex items-center gap-2 border-b pb-2">
-                <i class="fa-solid fa-shield-halved text-purple-700"></i> এমডি সিক্রেট ভল্ট ও মোবাইল ম্যানেজমেন্ট
-            </h4>
-            
-            <div id="mdVaultAuthDiv" class="space-y-3 text-xs">
-                <p class="text-[11px] text-gray-600">এই প্যানেলটি সম্পূর্ণ সুরক্ষিত। এমডি মাস্টার পাসওয়ার্ড দিয়ে প্রবেশ করুন:</p>
-                <div>
-                    <label class="block text-[10px] text-gray-500 mb-1">মাস্টার পাসওয়ার্ড</label>
-                    <input type="password" id="mdMasterPassInput" placeholder="মাস্টার পাসওয়ার্ড দিন..." class="w-full border p-2 rounded font-mono">
-                </div>
-                <button type="button" onclick="verifyMdMasterLogin()" class="w-full py-2 bg-purple-700 hover:bg-purple-800 text-white font-bold rounded shadow">ভল্ট আনলক করুন</button>
-            </div>
-
-            <div id="mdVaultControlDiv" class="hidden space-y-3 text-xs mt-2">
-                <div class="p-2.5 bg-purple-50 rounded border border-purple-200 text-purple-900 font-semibold">
-                    ✅ এমডি ভল্ট সফলভাবে আনলক হয়েছে।
-                </div>
-                <div>
-                    <label class="block text-[10px] text-gray-500 mb-1">সংরক্ষিত মোবাইল নম্বর (সরাসরি পরিবর্তনযোগ্য)</label>
-                    <input type="tel" id="mdVaultMobileInput" value="01818589423" class="w-full border p-2 rounded font-mono font-bold text-alnawaNavy">
-                </div>
-                <div>
-                    <label class="block text-[10px] text-gray-500 mb-1">নতুন মাস্টার পাসওয়ার্ড (পরিবর্তন করতে চাইলে)</label>
-                    <input type="password" id="mdVaultNewPassInput" placeholder="নতুন মাস্টার পাসওয়ার্ড..." class="w-full border p-2 rounded font-mono">
-                </div>
-                <button type="button" onclick="updateMdVaultData()" class="w-full py-2.5 bg-alnawaGreen hover:bg-emerald-700 text-white font-bold rounded shadow">তথ্য আপডেট করুন</button>
-            </div>
         </div>
     </div>
 
@@ -750,14 +714,13 @@
                     document.getElementById('userProfileAndTimerCard').classList.add('hidden');
                     
                     document.getElementById('adminPassChangeHeaderBtn').classList.remove('hidden');
-                    document.getElementById('mdVaultHeaderBtn').classList.remove('hidden');
 
                     document.getElementById('userNavContainer').classList.add('hidden');
                     document.getElementById('adminNavContainer').classList.remove('hidden');
                     document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> Admin Navigation Tabs:`;
 
-                    document.getElementById('adminMasterSummarySection').classList.remove('hidden');
-                    fetchAdminMasterSummaryReport();
+                    // পয়েন্ট ৩ অনুযায়ী: ডিফল্টভাবে সামারি সেকশন বন্ধ থাকবে, ট্যাব অনুযায়ী নির্দিষ্ট পেজ শো করবে
+                    document.getElementById('adminMasterSummarySection').classList.add('hidden');
 
                     switchAdminTab('pendingApproval');
                     loadAllUserDropdowns();
@@ -793,7 +756,6 @@
                 if (p === dbPass) {
                     isAdmin = false;
                     document.getElementById('adminPassChangeHeaderBtn').classList.add('hidden');
-                    document.getElementById('mdVaultHeaderBtn').classList.add('hidden');
                     document.getElementById('resetPassBtn').classList.remove('hidden');
                     document.getElementById('userProfileAndTimerCard').classList.remove('hidden');
                     document.getElementById('adminNavContainer').classList.add('hidden');
@@ -899,6 +861,7 @@
             document.getElementById('loginForm').reset();
         }
 
+        // পয়েন্ট ৩ অনুযায়ী: রেডিও বাটন বা সাব-পেজ পরিবর্তনে শুধুমাত্র নির্দিষ্ট ফরমটি শো করবে, অন্যটি নয়
         function switchSubPage(target) {
             const pages = ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary'];
             pages.forEach(id => {
@@ -919,6 +882,7 @@
             }
         }
 
+        // পয়েন্ট ৩ অনুযায়ী: এডমিন ট্যাব পরিবর্তনে শুধুমাত্র নির্দিষ্ট ট্যাব বা সেকশনটি শো করবে
         function switchAdminTab(target) {
             if (!isAdmin) { alert('Access Denied!'); return; }
             
@@ -928,7 +892,8 @@
                 'adminTabInvestment', 
                 'adminTabWithdrawal', 
                 'adminTabSqlDelete', 
-                'adminTabTransactionSummary'
+                'adminTabTransactionSummary',
+                'adminMasterSummarySection'
             ];
 
             adminTabs.forEach(id => {
@@ -963,23 +928,12 @@
             }
         }
 
-        // --- ADMIN PASSWORD CHANGE MODAL LOGIC (Dynamic Link with md_secure_vault) ---
+        // --- পয়েন্ট ১ অনুযায়ী: পাসওয়ার্ড পরিবর্তনের সময় মোবাইল নম্বর ফিল্ড ফাঁকা রাখা ও ম্যানুয়াল চেক ---
         async function openAdminPasswordModal() {
-            try {
-                const { data: vaultData } = await supabaseClient
-                    .from('md_secure_vault')
-                    .select('md_mobile')
-                    .eq('master_key', 'md_master')
-                    .maybeSingle();
-
-                if (vaultData && vaultData.md_mobile) {
-                    document.getElementById('adminCrossMobile').value = vaultData.md_mobile;
-                } else {
-                    document.getElementById('adminCrossMobile').value = "01818589423";
-                }
-            } catch (err) {
-                document.getElementById('adminCrossMobile').value = "01818589423";
-            }
+            document.getElementById('adminCrossMobile').value = '';
+            document.getElementById('adminOldPass').value = '';
+            document.getElementById('adminNewPass').value = '';
+            document.getElementById('adminConfirmPass').value = '';
             document.getElementById('adminPasswordModal').classList.remove('hidden');
         }
 
@@ -999,7 +953,6 @@
                 return; 
             }
 
-            // ১. md_secure_vault থেকে এমডির মোবাইল নম্বর ক্রস-চেক
             let allowedMobile = "01818589423"; 
             const { data: vaultData } = await supabaseClient.from('md_secure_vault').select('md_mobile').eq('master_key', 'md_master').maybeSingle();
             if (vaultData && vaultData.md_mobile) {
@@ -1011,7 +964,6 @@
                 return;
             }
 
-            // ২. admin_settings টেবিল থেকে পুরাতন পাসওয়ার্ড যাচাই
             let currentDbPass = "1234#";
             const { data: adminData } = await supabaseClient.from('admin_settings').select('password').eq('admin_id', 'admin').maybeSingle();
             if (adminData && adminData.password) {
@@ -1023,7 +975,6 @@
                 return;
             }
 
-            // ৩. admin_settings টেবিলে নতুন পাসওয়ার্ড আপডেট (পুরোনো পাসওয়ার্ড মুছে যাবে)
             const { error } = await supabaseClient.from('admin_settings').update({ 
                 password: newPass 
             }).eq('admin_id', 'admin');
@@ -1037,57 +988,7 @@
             closeAdminPasswordModal();
             document.getElementById('adminPasswordModal').querySelector('form').reset();
             
-            // ৪. বাধ্যতামূলক লগআউট (যাতে পুরাতন পাসওয়ার্ড দিয়ে আর ঢোকা না যায়)
             handleLogout();
-        }
-
-        // --- MD VAULT PANEL MODAL LOGIC ---
-        function openMdVaultModal() {
-            document.getElementById('mdVaultAuthDiv').classList.remove('hidden');
-            document.getElementById('mdVaultControlDiv').classList.add('hidden');
-            document.getElementById('mdMasterPassInput').value = '';
-            document.getElementById('mdVaultModal').classList.remove('hidden');
-        }
-        function closeMdVaultModal() { document.getElementById('mdVaultModal').classList.add('hidden'); }
-
-        async function verifyMdMasterLogin() {
-            const enteredMasterPass = document.getElementById('mdMasterPassInput').value.trim();
-            let correctMasterPass = "7890#";
-            let correctMobile = "01818589423";
-
-            const { data: vaultData } = await supabaseClient.from('md_secure_vault').select('*').eq('master_key', 'md_master').maybeSingle();
-            if (vaultData) {
-                correctMasterPass = vaultData.md_password || "7890#";
-                correctMobile = vaultData.md_mobile || "01818589423";
-            }
-
-            if (enteredMasterPass === correctMasterPass) {
-                document.getElementById('mdVaultAuthDiv').classList.add('hidden');
-                document.getElementById('mdVaultControlDiv').classList.remove('hidden');
-                document.getElementById('mdVaultMobileInput').value = correctMobile;
-                document.getElementById('mdVaultNewPassInput').value = '';
-            } else {
-                alert('ভুল মাস্টার পাসওয়ার্ড!');
-            }
-        }
-
-        async function updateMdVaultData() {
-            const newMobile = document.getElementById('mdVaultMobileInput').value.trim();
-            const newMasterPass = document.getElementById('mdVaultNewPassInput').value.trim();
-
-            let updateObj = { md_mobile: newMobile };
-            if (newMasterPass) {
-                updateObj.md_password = newMasterPass;
-            }
-
-            const { error } = await supabaseClient.from('md_secure_vault').update(updateObj).eq('master_key', 'md_master');
-            if (error) {
-                alert('ভল্ট ডেটা আপডেট করতে সমস্যা হয়েছে: ' + error.message);
-                return;
-            }
-
-            alert('এমডি সিক্রেট ভল্ট ও মোবাইল নম্বর সফলভাবে আপডেট করা হয়েছে!');
-            closeMdVaultModal();
         }
 
         function openMobileResetModal() { document.getElementById('mobileResetModal').classList.remove('hidden'); }
@@ -1368,6 +1269,7 @@
             });
         }
 
+        // --- পয়েন্ট ৪ অনুযায়ী: ট্রানজেকশন সামারিতে ধারাবাহিক রানিং ব্যালেন্স (Running Balance) লজিক ---
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
@@ -1407,6 +1309,7 @@
                 });
             }
 
+            // প্রাচীন থেকে লেটেস্ট সাজিয়ে ধারাবাহিক যোগফল বা রানিং ব্যালেন্স হিসাব করা
             allTransactions.sort((a, b) => a.rawDate - b.rawDate);
 
             let runningSum = 0, totalApp = 0, totalPend = 0, totalWit = 0;
@@ -1420,6 +1323,7 @@
                 t.cumulative = (t.status === 'approved (+)' || t.status === 'approved') ? runningSum : '-';
             });
 
+            // ডিসপ্লে করার জন্য আবার সর্বশেষ লেনদেন প্রথমে (Descending Order) সাজানো
             allTransactions.sort((a, b) => b.rawDate - a.rawDate);
 
             tbody.innerHTML = '';
