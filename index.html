@@ -129,7 +129,6 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <!-- Admin Password Change Button & MD Vault Button directly in header -->
                         <button id="adminPassChangeHeaderBtn" onclick="openAdminPasswordModal()" class="hidden px-3 py-1.5 bg-gradient-to-r from-alnawaNavy to-blue-800 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড চেঞ্জ</button>
                         <button id="mdVaultHeaderBtn" onclick="openMdVaultModal()" class="hidden px-3 py-1.5 bg-gradient-to-r from-purple-700 to-indigo-800 text-white text-xs font-bold rounded-lg shadow">এমডি ভল্ট প্যানেল</button>
                         
@@ -581,7 +580,7 @@
         </div>
     </div>
 
-    <!-- ADMIN PASSWORD CHANGE MODAL (Header Button Integration with MD Vault Mobile Cross-Check) -->
+    <!-- ADMIN PASSWORD CHANGE MODAL -->
     <div id="adminPasswordModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeAdminPasswordModal()">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
             <button onclick="closeAdminPasswordModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -740,7 +739,7 @@
                     validPass = adminSettings.password;
                 }
 
-                if (p === validPass || p === "1234#" || p === "1234!") {
+                if (p === validPass) {
                     isAdmin = true;
                     fullMergedUserId = uInput;
                     document.getElementById('page1').classList.add('hidden');
@@ -764,7 +763,7 @@
                     loadAllUserDropdowns();
                     return;
                 } else {
-                    showLoginError("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
+                    showLoginError("ভুল পাসওয়ার্ড! আপনার সঠিক নতুন পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
                     return;
                 }
             }
@@ -791,7 +790,7 @@
                 currentUserData = userRecord;
                 const dbPass = userRecord.password || userRecord['Password'] || userRecord['PASSWORD'] || userRecord['pass'] || "1234#";
                 
-                if (p === dbPass || p === "1234#") {
+                if (p === dbPass) {
                     isAdmin = false;
                     document.getElementById('adminPassChangeHeaderBtn').classList.add('hidden');
                     document.getElementById('mdVaultHeaderBtn').classList.add('hidden');
@@ -815,7 +814,7 @@
                     await checkUserPermissionsAndApplyVisibility(fullMergedUserId);
                     switchSubPage('submission');
                 } else {
-                    showLoginError("ভুল পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
+                    showLoginError("ভুল পাসওয়ার্ড! সঠিক নতুন পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
                 }
             } else {
                 showLoginError(`ইউজার আইডি (${fullMergedUserId}) পাওয়া যায়নি!`);
@@ -897,6 +896,7 @@
             if (validityInterval) clearInterval(validityInterval);
             document.getElementById('page2Container').classList.add('hidden');
             document.getElementById('page1').classList.remove('hidden');
+            document.getElementById('loginForm').reset();
         }
 
         function switchSubPage(target) {
@@ -963,9 +963,29 @@
             }
         }
 
-        // --- UPDATED ADMIN PASSWORD CHANGE LOGIC (Linked dynamically with md_secure_vault) ---
-        function openAdminPasswordModal() { document.getElementById('adminPasswordModal').classList.remove('hidden'); }
-        function closeAdminPasswordModal() { document.getElementById('adminPasswordModal').classList.add('hidden'); }
+        // --- ADMIN PASSWORD CHANGE MODAL LOGIC (Dynamic Link with md_secure_vault) ---
+        async function openAdminPasswordModal() {
+            try {
+                const { data: vaultData } = await supabaseClient
+                    .from('md_secure_vault')
+                    .select('md_mobile')
+                    .eq('master_key', 'md_master')
+                    .maybeSingle();
+
+                if (vaultData && vaultData.md_mobile) {
+                    document.getElementById('adminCrossMobile').value = vaultData.md_mobile;
+                } else {
+                    document.getElementById('adminCrossMobile').value = "01818589423";
+                }
+            } catch (err) {
+                document.getElementById('adminCrossMobile').value = "01818589423";
+            }
+            document.getElementById('adminPasswordModal').classList.remove('hidden');
+        }
+
+        function closeAdminPasswordModal() { 
+            document.getElementById('adminPasswordModal').classList.add('hidden'); 
+        }
 
         async function handleAdminPasswordChange(e) {
             e.preventDefault();
@@ -979,7 +999,7 @@
                 return; 
             }
 
-            // ডায়নামিক লিঙ্ক: সরাসরি md_secure_vault টেবিল থেকে এমডির লেটেস্ট মোবাইল নম্বর আনা
+            // ১. md_secure_vault থেকে এমডির মোবাইল নম্বর ক্রস-চেক
             let allowedMobile = "01818589423"; 
             const { data: vaultData } = await supabaseClient.from('md_secure_vault').select('md_mobile').eq('master_key', 'md_master').maybeSingle();
             if (vaultData && vaultData.md_mobile) {
@@ -991,7 +1011,7 @@
                 return;
             }
 
-            // পুরাতন পাসওয়ার্ড যাচাই (admin_settings টেবিল থেকে)
+            // ২. admin_settings টেবিল থেকে পুরাতন পাসওয়ার্ড যাচাই
             let currentDbPass = "1234#";
             const { data: adminData } = await supabaseClient.from('admin_settings').select('password').eq('admin_id', 'admin').maybeSingle();
             if (adminData && adminData.password) {
@@ -1003,16 +1023,22 @@
                 return;
             }
 
-            // admin_settings টেবিলে পাসওয়ার্ড আপডেট
-            const { error } = await supabaseClient.from('admin_settings').update({ password: newPass }).eq('admin_id', 'admin');
+            // ৩. admin_settings টেবিলে নতুন পাসওয়ার্ড আপডেট (পুরোনো পাসওয়ার্ড মুছে যাবে)
+            const { error } = await supabaseClient.from('admin_settings').update({ 
+                password: newPass 
+            }).eq('admin_id', 'admin');
+
             if (error) {
                 alert('পাসওয়ার্ড আপডেট করতে সমস্যা হয়েছে: ' + error.message);
                 return;
             }
 
-            alert('সাধারণ এডমিন পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!');
+            alert('সাধারণ এডমিন পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে! এখন নতুন পাসওয়ার্ড দিয়ে আবার লগইন করুন।');
             closeAdminPasswordModal();
             document.getElementById('adminPasswordModal').querySelector('form').reset();
+            
+            // ৪. বাধ্যতামূলক লগআউট (যাতে পুরাতন পাসওয়ার্ড দিয়ে আর ঢোকা না যায়)
+            handleLogout();
         }
 
         // --- MD VAULT PANEL MODAL LOGIC ---
@@ -1063,7 +1089,6 @@
             alert('এমডি সিক্রেট ভল্ট ও মোবাইল নম্বর সফলভাবে আপডেট করা হয়েছে!');
             closeMdVaultModal();
         }
-        // --------------------------------------------------------
 
         function openMobileResetModal() { document.getElementById('mobileResetModal').classList.remove('hidden'); }
         function closeMobileResetModal() { document.getElementById('mobileResetModal').classList.add('hidden'); }
