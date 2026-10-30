@@ -93,14 +93,14 @@
                         <p class="text-emerald-900 text-lg sm:text-xl font-bold leading-relaxed">আস্সালামুআ'লাইকুম ওয়া রহমাতুল্লাহি ওয়া বারকাতুহু।</p>
                     </div>
                     <h3 class="text-2xl font-bold text-alnawaNavy mb-1">সাইন ইন (Sign In)</h3>
-                    <p class="text-xs text-gray-500 mb-6">আপনার ৪ ডিজিটের ইউজার আইডি ও পাসওয়ার্ড দিন (এডমিন আইডি: admin)</p>
+                    <p class="text-xs text-gray-500 mb-6">আপনার ৪ ডিজিটের ইউজার আইডি ও পাসওয়ার্ড দিন (এডমিন আইডি: admin, এমডি আইডি: md_master)</p>
 
                     <div id="loginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
 
                     <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-left">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">ইউজার আইডি (৪ ডিজিট)</label>
-                            <input type="text" id="usernameInput" value="1001" required placeholder="যেমন: 1001" class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
+                            <label class="block text-xs font-bold text-gray-700 mb-1">ইউজার আইডি / মাস্টার কি</label>
+                            <input type="text" id="usernameInput" value="1001" required placeholder="যেমন: 1001 বা md_master" class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড</label>
@@ -129,8 +129,8 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
-                        <!-- সাধারণ এডমিন প্যানেলে শুধু পাসওয়ার্ড চেঞ্জ বাটন থাকবে, এমডি ভল্ট প্যানেল থাকবে না -->
                         <button id="adminPassChangeHeaderBtn" onclick="openAdminPasswordModal()" class="hidden px-3 py-1.5 bg-gradient-to-r from-alnawaNavy to-blue-800 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড চেঞ্জ</button>
+                        <button id="mdPassChangeHeaderBtn" onclick="openMdPasswordModal()" class="hidden px-3 py-1.5 bg-gradient-to-r from-purple-700 to-indigo-800 text-white text-xs font-bold rounded-lg shadow">এমডি পাসওয়ার্ড ও মোবাইল পরিবর্তন</button>
                         
                         <button id="resetPassBtn" onclick="openMobileResetModal()" class="px-3 py-1.5 bg-gradient-to-r from-alnawaOrange to-amber-500 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড রিসেট</button>
                         <button onclick="handleLogout()" id="logoutBtnText" class="text-xs text-red-600 font-bold px-3 py-1.5 rounded-lg border border-red-200 hover:bg-red-50">লগআউট</button>
@@ -200,10 +200,22 @@
                             <div class="text-xs font-extrabold text-amber-300">Transaction Summary</div>
                         </label>
                     </div>
+
+                    <!-- MD NAV -->
+                    <div class="hidden grid grid-cols-1 sm:grid-cols-2 gap-2" id="mdNavContainer">
+                        <label onclick="switchMdTab('mdDashboard')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-purple-300 cursor-pointer hover:bg-white/20 transition">
+                            <input type="radio" name="mdPageOption" id="mdRadioDash" checked class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-purple-200">MD Dashboard & Master Report</div>
+                        </label>
+                        <label onclick="switchMdTab('mdVaultSettings')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 border border-purple-300 cursor-pointer hover:bg-white/20 transition">
+                            <input type="radio" name="mdPageOption" id="mdRadioVault" class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-purple-200">Vault & Credentials Settings</div>
+                        </label>
+                    </div>
                 </div>
 
                 <!-- USER SUB-PAGE 1: SUBMISSION -->
-                <div id="subPageSubmission" class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border fade-in">
+                <div id="subPageSubmission" class="hidden bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-md border fade-in">
                     <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2 flex items-center gap-2">
                         <i class="fa-solid fa-file-circle-plus text-alnawaGreen"></i> ইনভেস্টমেন্ট জমা ফরম
                     </h3>
@@ -496,14 +508,14 @@
                     </div>
                 </div>
 
-                <!-- MASTER USER SUMMARY (এখন শুধু সিস্টেম এডমিন লগইন করলে ডিফল্ট পেজে দেখাবে, রেডিও ট্যাবের সাথে ওভারল্যাপ করবে না) -->
-                <div id="adminMasterSummarySection" class="hidden space-y-4 fade-in mt-6">
-                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-indigo-300">
+                <!-- MD TAB 1: MASTER SUMMARY REPORT -->
+                <div id="mdTabDashboard" class="hidden space-y-4 fade-in">
+                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-purple-300">
                         <div class="flex justify-between items-center mb-3 border-b pb-2">
                             <h3 class="text-sm font-bold text-alnawaNavy flex items-center gap-2">
-                                <i class="fa-solid fa-users-viewfinder text-indigo-600"></i> Master User Summary Report (Sorted ASCENDING by সদস্য নং)
+                                <i class="fa-solid fa-users-viewfinder text-purple-600"></i> MD Master User Summary Report (Sorted ASCENDING by সদস্য নং)
                             </h3>
-                            <span class="text-[10px] bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded font-bold border border-indigo-300">
+                            <span class="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold border border-purple-300">
                                 Table: master_user_summary
                             </span>
                         </div>
@@ -526,9 +538,33 @@
                                         <th class="p-2 text-right">Total Expense</th>
                                     </tr>
                                 </thead>
-                                <tbody id="adminMasterSummaryTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
+                                <tbody id="mdMasterSummaryTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <!-- MD TAB 2: VAULT CREDENTIALS SETTINGS -->
+                <div id="mdTabVaultSettings" class="hidden space-y-4 fade-in">
+                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-xl border border-purple-400 max-w-xl mx-auto">
+                        <h3 class="text-sm font-bold text-purple-900 mb-4 border-b pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-purple-700"></i> ব্যবস্থাপনা পরিচালক (MD) সিক্রেট ভল্ট ও ক্রেডেনশিয়াল ম্যানেজমেন্ট
+                        </h3>
+                        <form onsubmit="handleMdVaultUpdate(event)" class="space-y-4 text-xs">
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">বর্তমান মাস্টার কি / আইডি</label>
+                                <input type="text" id="mdMasterKeyDisplay" value="md_master" readonly disabled class="w-full bg-gray-100 border p-2.5 rounded font-mono font-bold">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">নতুন মাস্টার পাসওয়ার্ড দিন</label>
+                                <input type="password" id="mdNewMasterPass" required placeholder="নতুন মাস্টার পাসওয়ার্ড..." class="w-full border p-2.5 rounded font-mono">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">নতুন এমডি মোবাইল নম্বর দিন</label>
+                                <input type="tel" id="mdNewMobile" required placeholder="যেমন: 01818589423" class="w-full border p-2.5 rounded font-mono">
+                            </div>
+                            <button type="submit" class="w-full py-3 bg-gradient-to-r from-purple-700 to-indigo-800 hover:opacity-90 text-white font-bold rounded-lg shadow-lg">মাস্টার ক্রেডেনশিয়াল আপডেট করুন</button>
+                        </form>
                     </div>
                 </div>
 
@@ -580,7 +616,7 @@
         </div>
     </div>
 
-    <!-- ADMIN PASSWORD CHANGE MODAL (পয়েন্ট ১ অনুযায়ী এমডি মোবাইল নম্বর ফিল্ড সম্পূর্ণ ফাঁকা বা ব্ল্যাংক রাখা হয়েছে) -->
+    <!-- ADMIN PASSWORD CHANGE MODAL -->
     <div id="adminPasswordModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeAdminPasswordModal()">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
             <button onclick="closeAdminPasswordModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -632,6 +668,7 @@
         let fullMergedUserId = "1001";
         let currentUserData = null;
         let isAdmin = false;
+        let isMd = false;
         let validityInterval = null;
         let investTimer = null, withdrawTimer = null;
 
@@ -696,6 +733,42 @@
             const uInput = document.getElementById('usernameInput').value.trim();
             const p = document.getElementById('passwordInput').value.trim();
             
+            // --- MD LOGIN HANDLING (`md_master`) ---
+            if (uInput === "md_master") {
+                let validMdPass = "7890#";
+                const { data: vaultData } = await supabaseClient.from('md_secure_vault').select('*').eq('master_key', 'md_master').maybeSingle();
+                if (vaultData && vaultData.password) {
+                    validMdPass = vaultData.password;
+                }
+
+                if (p === validMdPass) {
+                    isMd = true;
+                    isAdmin = false;
+                    fullMergedUserId = uInput;
+                    document.getElementById('page1').classList.add('hidden');
+                    document.getElementById('page2Container').classList.remove('hidden');
+                    document.getElementById('currentUserDisplay').innerText = "ব্যবস্থাপনা পরিচালক (MD)";
+                    document.getElementById('userSubTitleRole').innerText = "Alnawa Managing Director Secure Portal";
+                    document.getElementById('resetPassBtn').classList.add('hidden');
+                    document.getElementById('userProfileAndTimerCard').classList.add('hidden');
+                    
+                    document.getElementById('adminPassChangeHeaderBtn').classList.add('hidden');
+                    document.getElementById('mdPassChangeHeaderBtn').classList.remove('hidden');
+
+                    document.getElementById('userNavContainer').classList.add('hidden');
+                    document.getElementById('adminNavContainer').classList.add('hidden');
+                    document.getElementById('mdNavContainer').classList.remove('hidden');
+                    document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> MD Navigation Menu:`;
+
+                    switchMdTab('mdDashboard');
+                    return;
+                } else {
+                    showLoginError("ভুল মাস্টার পাসওয়ার্ড! সঠিক পাসওয়ার্ড দিয়ে চেষ্টা করুন।");
+                    return;
+                }
+            }
+
+            // --- ADMIN LOGIN HANDLING (`admin`) ---
             if (uInput === "admin") {
                 let validPass = "1234#";
                 const { data: adminSettings } = await supabaseClient.from('admin_settings').select('*').eq('admin_id', 'admin').maybeSingle();
@@ -705,6 +778,7 @@
 
                 if (p === validPass) {
                     isAdmin = true;
+                    isMd = false;
                     fullMergedUserId = uInput;
                     document.getElementById('page1').classList.add('hidden');
                     document.getElementById('page2Container').classList.remove('hidden');
@@ -714,13 +788,12 @@
                     document.getElementById('userProfileAndTimerCard').classList.add('hidden');
                     
                     document.getElementById('adminPassChangeHeaderBtn').classList.remove('hidden');
+                    document.getElementById('mdPassChangeHeaderBtn').classList.add('hidden');
 
                     document.getElementById('userNavContainer').classList.add('hidden');
                     document.getElementById('adminNavContainer').classList.remove('hidden');
+                    document.getElementById('mdNavContainer').classList.add('hidden');
                     document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> Admin Navigation Tabs:`;
-
-                    // পয়েন্ট ৩ অনুযায়ী: ডিফল্টভাবে সামারি সেকশন বন্ধ থাকবে, ট্যাব অনুযায়ী নির্দিষ্ট পেজ শো করবে
-                    document.getElementById('adminMasterSummarySection').classList.add('hidden');
 
                     switchAdminTab('pendingApproval');
                     loadAllUserDropdowns();
@@ -731,6 +804,7 @@
                 }
             }
 
+            // --- REGULAR USER LOGIN HANDLING ---
             if (uInput.length >= 4) {
                 loggedInCompanyId = parseInt(uInput.charAt(0)) || 1;
                 loggedInUserId = parseInt(uInput.slice(-3)) || 1;
@@ -755,14 +829,15 @@
                 
                 if (p === dbPass) {
                     isAdmin = false;
+                    isMd = false;
                     document.getElementById('adminPassChangeHeaderBtn').classList.add('hidden');
+                    document.getElementById('mdPassChangeHeaderBtn').classList.add('hidden');
                     document.getElementById('resetPassBtn').classList.remove('hidden');
                     document.getElementById('userProfileAndTimerCard').classList.remove('hidden');
                     document.getElementById('adminNavContainer').classList.add('hidden');
+                    document.getElementById('mdNavContainer').classList.add('hidden');
                     document.getElementById('userNavContainer').classList.remove('hidden');
                     document.getElementById('navBarTitleText').innerHTML = `<i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:`;
-                    
-                    document.getElementById('adminMasterSummarySection').classList.add('hidden');
 
                     document.getElementById('page1').classList.add('hidden');
                     document.getElementById('page2Container').classList.remove('hidden');
@@ -861,7 +936,7 @@
             document.getElementById('loginForm').reset();
         }
 
-        // পয়েন্ট ৩ অনুযায়ী: রেডিও বাটন বা সাব-পেজ পরিবর্তনে শুধুমাত্র নির্দিষ্ট ফরমটি শো করবে, অন্যটি নয়
+        // --- EXCLUSIVE VIEW SWITCHING FOR USER SUB-PAGES ---
         function switchSubPage(target) {
             const pages = ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary'];
             pages.forEach(id => {
@@ -882,7 +957,7 @@
             }
         }
 
-        // পয়েন্ট ৩ অনুযায়ী: এডমিন ট্যাব পরিবর্তনে শুধুমাত্র নির্দিষ্ট ট্যাব বা সেকশনটি শো করবে
+        // --- EXCLUSIVE VIEW SWITCHING FOR ADMIN TABS ---
         function switchAdminTab(target) {
             if (!isAdmin) { alert('Access Denied!'); return; }
             
@@ -892,8 +967,7 @@
                 'adminTabInvestment', 
                 'adminTabWithdrawal', 
                 'adminTabSqlDelete', 
-                'adminTabTransactionSummary',
-                'adminMasterSummarySection'
+                'adminTabTransactionSummary'
             ];
 
             adminTabs.forEach(id => {
@@ -928,7 +1002,26 @@
             }
         }
 
-        // --- পয়েন্ট ১ অনুযায়ী: পাসওয়ার্ড পরিবর্তনের সময় মোবাইল নম্বর ফিল্ড ফাঁকা রাখা ও ম্যানুয়াল চেক ---
+        // --- EXCLUSIVE VIEW SWITCHING FOR MD TABS ---
+        function switchMdTab(target) {
+            if (!isMd) { alert('Access Denied!'); return; }
+
+            const mdTabs = ['mdTabDashboard', 'mdTabVaultSettings'];
+            mdTabs.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) { el.classList.add('hidden'); }
+            });
+
+            if (target === 'mdDashboard') {
+                document.getElementById('mdTabDashboard').classList.remove('hidden');
+                document.getElementById('mdRadioDash').checked = true;
+                fetchMdMasterSummaryReport();
+            } else if (target === 'mdVaultSettings') {
+                document.getElementById('mdTabVaultSettings').classList.remove('hidden');
+                document.getElementById('mdRadioVault').checked = true;
+            }
+        }
+
         async function openAdminPasswordModal() {
             document.getElementById('adminCrossMobile').value = '';
             document.getElementById('adminOldPass').value = '';
@@ -986,8 +1079,30 @@
 
             alert('সাধারণ এডমিন পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে! এখন নতুন পাসওয়ার্ড দিয়ে আবার লগইন করুন।');
             closeAdminPasswordModal();
-            document.getElementById('adminPasswordModal').querySelector('form').reset();
-            
+            handleLogout();
+        }
+
+        function openMdPasswordModal() {
+            switchMdTab('mdVaultSettings');
+        }
+
+        async function handleMdVaultUpdate(e) {
+            e.preventDefault();
+            const newPass = document.getElementById('mdNewMasterPass').value.trim();
+            const newMobile = document.getElementById('mdNewMobile').value.trim();
+
+            const { error } = await supabaseClient.from('md_secure_vault').upsert({
+                master_key: 'md_master',
+                password: newPass,
+                md_mobile: newMobile
+            }, { onConflict: 'master_key' });
+
+            if (error) {
+                alert('এমডি ভল্ট আপডেট করতে সমস্যা হয়েছে: ' + error.message);
+                return;
+            }
+
+            alert('এমডির মাস্টার পাসওয়ার্ড ও মোবাইল নম্বর সফলভাবে আপডেট হয়েছে! নতুন ক্রেডেনশিয়াল দিয়ে পুনরায় লগইন করুন।');
             handleLogout();
         }
 
@@ -1064,8 +1179,8 @@
             alert('User permissions updated successfully!');
         }
 
-        async function fetchAdminMasterSummaryReport() {
-            const tbody = document.getElementById('adminMasterSummaryTableBody');
+        async function fetchMdMasterSummaryReport() {
+            const tbody = document.getElementById('mdMasterSummaryTableBody');
             if(!tbody) return;
             tbody.innerHTML = `<tr><td colspan="13" class="p-4 text-center">Loading Master Summary Data...</td></tr>`;
 
@@ -1099,8 +1214,8 @@
                 const totExp = Number(row.total_expense || (exp2001 + exp26000));
 
                 tbody.innerHTML += `
-                    <tr class="hover:bg-indigo-50/50">
-                        <td class="p-2 font-bold text-center bg-indigo-50 font-mono">${memberNo}</td>
+                    <tr class="hover:bg-purple-50/50">
+                        <td class="p-2 font-bold text-center bg-purple-50 font-mono">${memberNo}</td>
                         <td class="p-2 font-mono font-bold text-alnawaNavy">${masterId}</td>
                         <td class="p-2 font-bold text-gray-800">${name}</td>
                         <td class="p-2 font-mono">${mobile}</td>
@@ -1269,7 +1384,7 @@
             });
         }
 
-        // --- পয়েন্ট ৪ অনুযায়ী: ট্রানজেকশন সামারিতে ধারাবাহিক রানিং ব্যালেন্স (Running Balance) লজিক ---
+        // --- ট্রানজেকশন সামারিতে ধারাবাহিক রানিং ব্যালেন্স (Running Balance) কলাম লজিক ---
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
