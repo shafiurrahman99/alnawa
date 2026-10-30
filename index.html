@@ -581,7 +581,7 @@
         </div>
     </div>
 
-    <!-- ADMIN PASSWORD CHANGE MODAL (Header Button Integration with Mobile Cross-Check, Old, New & Confirm Passwords) -->
+    <!-- ADMIN PASSWORD CHANGE MODAL (Header Button Integration with MD Vault Mobile Cross-Check) -->
     <div id="adminPasswordModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeAdminPasswordModal()">
         <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
             <button onclick="closeAdminPasswordModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -592,8 +592,8 @@
             </h4>
             <form onsubmit="handleAdminPasswordChange(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block text-[10px] text-gray-500 mb-1">মোবাইল নম্বর (ক্রস-চেক)</label>
-                    <input type="tel" id="adminCrossMobile" required placeholder="এডমিনের মোবাইল নম্বর..." class="w-full border p-2 rounded">
+                    <label class="block text-[10px] text-gray-500 mb-1">এমডি মোবাইল নম্বর (ক্রস-চেক)</label>
+                    <input type="tel" id="adminCrossMobile" required placeholder="যেমন: 01818589423" class="w-full border p-2 rounded font-mono">
                 </div>
                 <div>
                     <label class="block text-[10px] text-gray-500 mb-1">পুরাতন পাসওয়ার্ড</label>
@@ -612,7 +612,7 @@
         </div>
     </div>
 
-    <!-- MD SECURE VAULT PANEL MODAL (Protected with Master Password & Mobile 01818589423) -->
+    <!-- MD SECURE VAULT PANEL MODAL -->
     <div id="mdVaultModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeMdVaultModal()">
         <div class="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl relative border-2 border-purple-600">
             <button onclick="closeMdVaultModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
@@ -963,7 +963,7 @@
             }
         }
 
-        // --- ADMIN PASSWORD CHANGE MODAL LOGIC (Mobile Cross-Check, Old, New & Confirm Passwords) ---
+        // --- UPDATED ADMIN PASSWORD CHANGE LOGIC (Linked dynamically with md_secure_vault) ---
         function openAdminPasswordModal() { document.getElementById('adminPasswordModal').classList.remove('hidden'); }
         function closeAdminPasswordModal() { document.getElementById('adminPasswordModal').classList.add('hidden'); }
 
@@ -979,21 +979,21 @@
                 return; 
             }
 
-            // সাধারণ এডমিনের মোবাইল নম্বর ক্রস-চেকের জন্য নির্ধারিত বা ডাটাবেজ থেকে যাচাই
+            // ডায়নামিক লিঙ্ক: সরাসরি md_secure_vault টেবিল থেকে এমডির লেটেস্ট মোবাইল নম্বর আনা
             let allowedMobile = "01818589423"; 
-            const { data: vaultData } = await supabaseClient.from('md_secure_vault').select('*').eq('master_key', 'md_master').maybeSingle();
+            const { data: vaultData } = await supabaseClient.from('md_secure_vault').select('md_mobile').eq('master_key', 'md_master').maybeSingle();
             if (vaultData && vaultData.md_mobile) {
                 allowedMobile = vaultData.md_mobile;
             }
 
             if (mobileInput !== allowedMobile) {
-                alert('মোবাইল নম্বরটি সঠিক নয় বা ক্রস-চেক মেলেনি!');
+                alert('এমডির মোবাইল নম্বরটি সঠিক নয় বা ক্রস-চেক মেলেনি!');
                 return;
             }
 
-            // পুরাতন পাসওয়ার্ড যাচাই
+            // পুরাতন পাসওয়ার্ড যাচাই (admin_settings টেবিল থেকে)
             let currentDbPass = "1234#";
-            const { data: adminData } = await supabaseClient.from('admin_settings').select('*').eq('admin_id', 'admin').maybeSingle();
+            const { data: adminData } = await supabaseClient.from('admin_settings').select('password').eq('admin_id', 'admin').maybeSingle();
             if (adminData && adminData.password) {
                 currentDbPass = adminData.password;
             }
