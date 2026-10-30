@@ -154,8 +154,8 @@
                 <div class="bg-gradient-to-r from-emerald-800 via-alnawaNavy to-emerald-900 rounded-xl p-3 shadow-lg text-white">
                     <div class="text-xs font-bold text-amber-300 mb-2" id="navBarTitleText"><i class="fa-solid fa-sliders"></i> পেজ ও সুবিধা নির্বাচন করুন:</div>
                     
-                    <!-- USER NAV -->
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2" id="userNavContainer">
+                    <!-- USER NAV (Updated: 3 options, Summary Report removed) -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="userNavContainer">
                         <label id="navSubmissionLabel" onclick="switchSubPage('submission')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer hover:bg-white/20 transition">
                             <input type="radio" name="pageOption" id="radioSubmission" checked class="accent-orange-500">
                             <div class="text-xs font-extrabold">ইনভেস্টমেন্ট ফরম</div>
@@ -167,10 +167,6 @@
                         <label onclick="switchSubPage('summary')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer hover:bg-white/20 transition">
                             <input type="radio" name="pageOption" id="radioSummary" class="accent-orange-500">
                             <div class="text-xs font-extrabold">ট্রানজেকশন সামারি</div>
-                        </label>
-                        <label onclick="switchSubPage('summaryReport')" class="flex items-center gap-2 p-2 rounded-lg bg-white/10 cursor-pointer hover:bg-white/20 transition">
-                            <input type="radio" name="pageOption" id="radioSummaryReport" class="accent-orange-500">
-                            <div class="text-xs font-extrabold">সামারি রিপোর্ট</div>
                         </label>
                     </div>
 
@@ -276,7 +272,7 @@
                     </form>
                 </div>
 
-                <!-- USER SUB-PAGE 3: SUMMARY -->
+                <!-- USER SUB-PAGE 3: SUMMARY (Transaction Summary with Description column after Date & Time) -->
                 <div id="subPageSummary" class="hidden space-y-4 fade-in">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div class="bg-white p-3 rounded-xl shadow border-l-4 border-emerald-600">
@@ -298,37 +294,13 @@
                             <span class="text-[10px] text-gray-500 font-normal">সর্বশেষ লেনদেন প্রথমে (Descending Order)</span>
                         </h3>
                         <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[750px]">
+                            <table class="w-full text-left text-xs border-collapse min-w-[850px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">রানিং ব্যালেন্স</th>
+                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">বিবরণ</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">রানিং ব্যালেন্স</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- USER SUB-PAGE 4: SUMMARY REPORT -->
-                <div id="subPageSummaryReport" class="hidden space-y-4 fade-in">
-                    <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border">
-                        <h3 class="text-sm font-bold text-alnawaNavy mb-3 border-b pb-2 flex items-center justify-between">
-                            <span><i class="fa-solid fa-file-invoice-dollar text-alnawaGreen"></i> একক সামারি রিপোর্ট (ইনভেস্টমেন্ট ও উইথড্রল সম্মিলিত)</span>
-                            <span class="text-xs font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-300">Descending Order</span>
-                        </h3>
-                        <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[700px]">
-                                <thead>
-                                    <tr class="bg-emerald-800 text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ ও সময়</th>
-                                        <th class="p-2.5">বিবরণ / খাত</th>
-                                        <th class="p-2.5 text-center">ধরন</th>
-                                        <th class="p-2.5 text-center">স্ট্যাটাস</th>
-                                        <th class="p-2.5 text-right">পরিমাণ (৳)</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="detailedSummaryReportBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
                             </table>
                         </div>
                     </div>
@@ -842,9 +814,9 @@
             document.getElementById('page1').classList.remove('hidden');
         }
 
-        // ১. নিখুঁত সাব-পেজ হাইড ও শো করার লজিক (ওভারল্যাপ বা স্থির ফর্মের সমস্যা দূর করতে)
+        // Updated sub-page switching (Summary Report removed, 3 options active)
         function switchSubPage(target) {
-            const pages = ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary', 'subPageSummaryReport'];
+            const pages = ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary'];
             pages.forEach(id => {
                 const el = document.getElementById(id);
                 if(el) {
@@ -862,14 +834,9 @@
                 document.getElementById('subPageSummary').classList.remove('hidden');
                 document.getElementById('radioSummary').checked = true;
                 fetchTransactionsFromSupabase();
-            } else if (target === 'summaryReport') {
-                document.getElementById('subPageSummaryReport').classList.remove('hidden');
-                document.getElementById('radioSummaryReport').checked = true;
-                fetchDetailedSummaryReport();
             }
         }
 
-        // নিখুঁত অ্যাডমিন ট্যাব হাইড ও শো করার লজিক
         function switchAdminTab(target) {
             if (!isAdmin) { alert('Access Denied!'); return; }
             
@@ -989,7 +956,6 @@
             alert('User permissions updated successfully!');
         }
 
-        // ৩. মাস্টার ইউজার সামারি রিপোর্ট সঠিকভাবে ফেচ ও রেন্ডার করার ফাংশন
         async function fetchAdminMasterSummaryReport() {
             const tbody = document.getElementById('adminMasterSummaryTableBody');
             if(!tbody) return;
@@ -1195,9 +1161,10 @@
             });
         }
 
+        // Updated Transaction Summary fetch function (Description column included right after Date & Time)
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
-            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
 
             const { data: investments } = await supabaseClient.from('investments').select('*').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
             const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
@@ -1208,6 +1175,7 @@
                     allTransactions.push({ 
                         dateTime: String(i.created_at || '').replace('T', ' ').substring(0, 16), 
                         rawDate: new Date(i.created_at || Date.now()), 
+                        desc: i.description || 'ইনভেস্টমেন্ট',
                         fromBank: i.from_bank, 
                         toBank: i.to_bank, 
                         typeLabel: 'ইনভেস্টমেন্ট (+)', 
@@ -1222,6 +1190,7 @@
                     allTransactions.push({ 
                         dateTime: String(w.created_at || '').replace('T', ' ').substring(0, 16), 
                         rawDate: new Date(w.created_at || Date.now()), 
+                        desc: w.description || 'উইথড্রল',
                         fromBank: w.withdrawal_bank, 
                         toBank: w.company_account, 
                         typeLabel: 'উত্তোলিত (-)', 
@@ -1248,13 +1217,14 @@
             allTransactions.sort((a, b) => b.rawDate - a.rawDate);
 
             tbody.innerHTML = '';
-            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; return; }
+            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; return; }
 
             allTransactions.forEach(item => {
                 const isWithdraw = item.type === 'wit';
                 tbody.innerHTML += `
                     <tr class="hover:bg-gray-50">
                         <td class="p-2.5 font-mono text-[10px] text-gray-600">${item.dateTime}</td>
+                        <td class="p-2.5 font-bold text-gray-800">${item.desc}</td>
                         <td class="p-2.5">${item.fromBank}</td>
                         <td class="p-2.5">${item.toBank}</td>
                         <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
@@ -1268,63 +1238,6 @@
             document.getElementById('reportApproved').innerText = `৳ ${totalApp.toLocaleString()}`;
             document.getElementById('reportPending').innerText = `৳ ${totalPend.toLocaleString()}`;
             document.getElementById('reportWithdraw').innerText = `৳ ${totalWit.toLocaleString()}`;
-        }
-
-        async function fetchDetailedSummaryReport() {
-            const tbody = document.getElementById('detailedSummaryReportBody');
-            if(!tbody) return;
-            tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
-
-            const { data: investments } = await supabaseClient.from('investments').select('*').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
-            const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
-
-            let list = [];
-            if (investments) {
-                investments.forEach(i => {
-                    list.push({ 
-                        dateTime: String(i.created_at || '').replace('T', ' ').substring(0, 16), 
-                        rawDate: new Date(i.created_at || Date.now()), 
-                        desc: i.description || 'ইনভেস্টমেন্ট', 
-                        type: 'ইনভেস্টমেন্ট (+)', 
-                        status: i.status || 'pending', 
-                        amount: Number(i.amount) || 0, 
-                        isWit: false 
-                    });
-                });
-            }
-            if (withdrawals) {
-                withdrawals.forEach(w => {
-                    list.push({ 
-                        dateTime: String(w.created_at || '').replace('T', ' ').substring(0, 16), 
-                        rawDate: new Date(w.created_at || Date.now()), 
-                        desc: w.description || 'উইথড্রল', 
-                        type: 'উইথড্রল (-)', 
-                        status: w.status || 'pending', 
-                        amount: Number(w.amount) || 0, 
-                        isWit: true 
-                    });
-                });
-            }
-
-            list.sort((a, b) => b.rawDate - a.rawDate);
-
-            tbody.innerHTML = '';
-            if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-gray-500">কোনো সামারি রেকর্ড পাওয়া যায়নি।</td></tr>`;
-                return;
-            }
-
-            list.forEach(item => {
-                tbody.innerHTML += `
-                    <tr class="hover:bg-gray-50">
-                        <td class="p-2.5 font-mono text-[10px] text-gray-600">${item.dateTime}</td>
-                        <td class="p-2.5 font-bold text-gray-800">${item.desc}</td>
-                        <td class="p-2.5 text-center font-bold ${item.isWit ? 'text-blue-600' : 'text-alnawaGreen'}">${item.type}</td>
-                        <td class="p-2.5 text-center font-semibold">${item.status}</td>
-                        <td class="p-2.5 text-right font-mono font-bold ${item.isWit ? 'text-blue-700' : 'text-emerald-700'}">${item.isWit ? '-' : ''}৳ ${item.amount.toLocaleString()}</td>
-                    </tr>
-                `;
-            });
         }
 
         async function fetchPendingApprovalData() {
@@ -1483,7 +1396,6 @@
             alert('উইথড্রল প্রসেস বাতিল করা হয়েছে।');
         }
 
-        // ২. উইথড্রল ডাটা সুপাবেজে সঠিকভাবে ইনসার্ট করার ফাংশন (ওটিপি বাদ দিয়ে স্কিমার সাথে সামঞ্জস্যপূর্ণ)
         async function completeWithdrawalSubmission() {
             const insertData = {
                 'User ID': fullMergedUserId,
