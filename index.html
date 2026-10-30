@@ -16,6 +16,12 @@
     <!-- Supabase JS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
+    <!-- SheetJS (Excel Export) -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <!-- jsPDF & AutoTable (PDF Export) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    
     <script>
         tailwind.config = {
             theme: {
@@ -304,12 +310,22 @@
                         </div>
                     </div>
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border">
-                        <h3 class="text-xs font-bold text-alnawaNavy mb-3 flex items-center justify-between">
-                            <span><i class="fa-solid fa-list-check text-emerald-600"></i> ট্রানজেকশন সামারি রিপোর্ট</span>
-                            <span class="text-[10px] text-gray-500 font-normal">সর্বশেষ লেনদেন প্রথমে (Descending Order)</span>
-                        </h3>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 border-b pb-2 gap-2">
+                            <h3 class="text-xs font-bold text-alnawaNavy flex items-center gap-2">
+                                <span><i class="fa-solid fa-list-check text-emerald-600"></i> ট্রানজেকশন সামারি রিপোর্ট</span>
+                                <span class="text-[10px] text-gray-500 font-normal">(সর্বশেষ প্রথমে)</span>
+                            </h3>
+                            <div class="flex items-center gap-2">
+                                <button onclick="exportUserSummaryPDF()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded text-[11px] shadow flex items-center gap-1">
+                                    <i class="fa-solid fa-file-pdf"></i> PDF Download
+                                </button>
+                                <button onclick="exportUserSummaryExcel()" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded text-[11px] shadow flex items-center gap-1">
+                                    <i class="fa-solid fa-file-excel"></i> Excel Download
+                                </button>
+                            </div>
+                        </div>
                         <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[850px]">
+                            <table id="userTransactionTable" class="w-full text-left text-xs border-collapse min-w-[850px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
                                         <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">বিবরণ</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">ধারাবাহিক যোগফল (রানিং ব্যালেন্স)</th>
@@ -491,15 +507,25 @@
                 <!-- ADMIN TAB 6: TRANSACTION SUMMARY REPORT -->
                 <div id="adminTabTransactionSummary" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border">
-                        <h3 class="text-xs font-bold text-alnawaNavy mb-3 flex items-center justify-between">
-                            <span><i class="fa-solid fa-list-check text-emerald-600"></i> সকল ট্রানজেকশন সামারি রিপোর্ট (Admin View - Investments & Withdrawals)</span>
-                            <span class="text-[10px] text-gray-500 font-normal">সর্বশেষ লেনদেন প্রথমে (Descending Order)</span>
-                        </h3>
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 border-b pb-2 gap-2">
+                            <h3 class="text-xs font-bold text-alnawaNavy flex items-center gap-2">
+                                <span><i class="fa-solid fa-list-check text-emerald-600"></i> সকল ট্রানজেকশন সামারি রিপোর্ট (Admin View)</span>
+                                <span class="text-[10px] text-gray-500 font-normal">(ধারাবাহিক রানিং ব্যালেন্স সহ)</span>
+                            </h3>
+                            <div class="flex items-center gap-2">
+                                <button onclick="exportAdminSummaryPDF()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded text-[11px] shadow flex items-center gap-1">
+                                    <i class="fa-solid fa-file-pdf"></i> PDF Download
+                                </button>
+                                <button onclick="exportAdminSummaryExcel()" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded text-[11px] shadow flex items-center gap-1">
+                                    <i class="fa-solid fa-file-excel"></i> Excel Download
+                                </button>
+                            </div>
+                        </div>
                         <div class="overflow-x-auto custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse min-w-[750px]">
+                            <table id="adminTransactionTable" class="w-full text-left text-xs border-collapse min-w-[850px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">ইউজার আইডি</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th>
+                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">ইউজার আইডি</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">ধারাবাহিক যোগফল (রানিং ব্যালেন্স)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="adminTransactionTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
@@ -511,16 +537,21 @@
                 <!-- MD TAB 1: MASTER SUMMARY REPORT -->
                 <div id="mdTabDashboard" class="hidden space-y-4 fade-in">
                     <div class="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow border border-purple-300">
-                        <div class="flex justify-between items-center mb-3 border-b pb-2">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 border-b pb-2 gap-2">
                             <h3 class="text-sm font-bold text-alnawaNavy flex items-center gap-2">
-                                <i class="fa-solid fa-users-viewfinder text-purple-600"></i> MD Master User Summary Report (Sorted ASCENDING by সদস্য নং)
+                                <i class="fa-solid fa-users-viewfinder text-purple-600"></i> MD Master User Summary Report
                             </h3>
-                            <span class="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold border border-purple-300">
-                                Table: master_user_summary
-                            </span>
+                            <div class="flex items-center gap-2">
+                                <button onclick="exportMdMasterSummaryPDF()" class="px-3 py-1 bg-red-600 hover:bg-red-700 text-white font-bold rounded text-[11px] shadow flex items-center gap-1">
+                                    <i class="fa-solid fa-file-pdf"></i> PDF Download
+                                </button>
+                                <button onclick="exportMdMasterSummaryExcel()" class="px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded text-[11px] shadow flex items-center gap-1">
+                                    <i class="fa-solid fa-file-excel"></i> Excel Download
+                                </button>
+                            </div>
                         </div>
                         <div class="overflow-x-auto custom-scrollbar max-h-96">
-                            <table class="w-full text-left text-xs border-collapse min-w-[1200px]">
+                            <table id="mdMasterTable" class="w-full text-left text-xs border-collapse min-w-[1200px]">
                                 <thead class="sticky top-0 bg-alnawaNavy text-white text-[10px] uppercase">
                                     <tr>
                                         <th class="p-2">সদস্য নং</th>
@@ -1323,10 +1354,11 @@
             } catch (err) { alert("Error executing query: " + err.message); }
         }
 
+        // --- এডমিন ট্রানজেকশন সামারি (ধারাবাহিক রানিং ব্যালেন্স সহ) ---
         async function fetchAdminAllTransactions() {
             const tbody = document.getElementById('adminTransactionTableBody');
             if(!tbody) return;
-            tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
 
             const { data: investments } = await supabaseClient.from('investments').select('*');
             const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*');
@@ -1363,10 +1395,23 @@
                 });
             }
 
+            // প্রাচীন থেকে লেটেস্ট সাজিয়ে ধারাবাহিক রানিং ব্যালেন্স হিসাব করা
+            allTransactions.sort((a, b) => a.rawDate - b.rawDate);
+
+            let runningSum = 0;
+            allTransactions.forEach(t => {
+                if (t.status === 'approved (+)' || t.status === 'approved') {
+                    if (t.type === 'inv') { runningSum += t.amount; }
+                    else { runningSum -= t.amount; }
+                }
+                t.cumulative = (t.status === 'approved (+)' || t.status === 'approved') ? runningSum : '-';
+            });
+
+            // ডিসপ্লে করার জন্য আবার সর্বশেষ লেনদেন প্রথমে (Descending Order) সাজানো
             allTransactions.sort((a, b) => b.rawDate - a.rawDate);
 
             tbody.innerHTML = '';
-            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; return; }
+            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; return; }
 
             allTransactions.forEach(item => {
                 const isWithdraw = item.type === 'wit';
@@ -1379,12 +1424,13 @@
                         <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
                         <td class="p-2.5 text-center font-semibold">${item.status}</td>
                         <td class="p-2.5 text-right font-mono">${isWithdraw ? '-' : ''}৳ ${item.amount.toLocaleString()}</td>
+                        <td class="p-2.5 text-right font-mono font-bold text-alnawaGreen">${item.cumulative === '-' ? '-' : '৳ ' + item.cumulative.toLocaleString()}</td>
                     </tr>
                 `;
             });
         }
 
-        // --- ট্রানজেকশন সামারিতে ধারাবাহিক রানিং ব্যালেন্স (Running Balance) কলাম লজিক ---
+        // --- ইউজার ট্রানজেকশন সামারি (ধারাবাহিক রানিং ব্যালেন্স সহ) ---
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
@@ -1463,6 +1509,49 @@
             document.getElementById('reportApproved').innerText = `৳ ${totalApp.toLocaleString()}`;
             document.getElementById('reportPending').innerText = `৳ ${totalPend.toLocaleString()}`;
             document.getElementById('reportWithdraw').innerText = `৳ ${totalWit.toLocaleString()}`;
+        }
+
+        // --- PDF ও Excel ডাউনলোড ফাংশনসমূহ ---
+        function exportUserSummaryPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("M/S. Alnawa Company - User Transaction Summary", 14, 15);
+            doc.autoTable({ html: '#userTransactionTable', startY: 20, styles: { fontSize: 8 } });
+            doc.save("user-transaction-summary.pdf");
+        }
+
+        function exportUserSummaryExcel() {
+            const table = document.getElementById('userTransactionTable');
+            const wb = XLSX.utils.table_to_book(table, { sheet: "Transaction Summary" });
+            XLSX.writeFile(wb, "user-transaction-summary.xlsx");
+        }
+
+        function exportAdminSummaryPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("M/S. Alnawa Company - Admin All Transaction Summary", 14, 15);
+            doc.autoTable({ html: '#adminTransactionTable', startY: 20, styles: { fontSize: 8 } });
+            doc.save("admin-transaction-summary.pdf");
+        }
+
+        function exportAdminSummaryExcel() {
+            const table = document.getElementById('adminTransactionTable');
+            const wb = XLSX.utils.table_to_book(table, { sheet: "Admin Summary" });
+            XLSX.writeFile(wb, "admin-transaction-summary.xlsx");
+        }
+
+        function exportMdMasterSummaryPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('landscape');
+            doc.text("M/S. Alnawa Company - MD Master User Summary Report", 14, 15);
+            doc.autoTable({ html: '#mdMasterTable', startY: 20, styles: { fontSize: 6 } });
+            doc.save("md-master-summary.pdf");
+        }
+
+        function exportMdMasterSummaryExcel() {
+            const table = document.getElementById('mdMasterTable');
+            const wb = XLSX.utils.table_to_book(table, { sheet: "Master Summary" });
+            XLSX.writeFile(wb, "md-master-summary.xlsx");
         }
 
         async function fetchPendingApprovalData() {
