@@ -3,38 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল</title>
+    <title>মেসার্স আল নাওয়া কোম্পানী - টেস্ট পোর্টাল</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Rich & Deep Dynamic Gradient Animation */
-        @keyframes deepGradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+        /* Fast & Deep Dynamic Gradient Animation */
+        @keyframes fastDeepGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         body {
-            background: linear-gradient(-45deg, #064e3b, #0f172a, #311042, #1e1b4b, #042f2e);
-            background-size: 400% 400%;
-            animation: deepGradientShift 25s ease infinite;
+            /* গাড় এবং ডিপ কালারের সংমিশ্রণ যা দ্রুত অ্যানিমেট করবে */
+            background: linear-gradient(-45deg, #022c22, #090d16, #2e1065, #172554, #3b0764, #042f2e);
+            background-size: 500% 500%;
+            animation: fastDeepGradient 12s ease infinite; /* খুব দ্রুত এবং মসৃণ শিফট (১২ সেকেন্ড) */
             min-height: 100vh;
             color: #f8fafc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* Pad Glassmorphism Styling */
+        /* Pad Glassmorphism Styling (Matches test.html structure) */
         .official-pad {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.82);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             position: relative;
             overflow: hidden;
         }
@@ -45,9 +40,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 320px;
-            height: 320px;
-            opacity: 0.05;
+            width: 340px;
+            height: 340px;
+            opacity: 0.06;
             pointer-events: none;
             z-index: 0;
         }
@@ -58,15 +53,11 @@
         }
 
         .gold-border {
-            border-color: rgba(234, 179, 8, 0.4);
-        }
-
-        .gold-text {
-            color: #facc15;
+            border-color: rgba(234, 179, 8, 0.5);
         }
     </style>
 </head>
-<body class="flex items-center justify-center p-4 md:p-8">
+<body class="flex items-center justify-center p-3 md:p-6">
 
     <!-- Main Official Pad Container -->
     <div class="official-pad w-full max-w-4xl rounded-2xl p-6 md:p-10 my-auto">
@@ -78,22 +69,22 @@
             <text x="50" y="55" font-size="8" text-anchor="middle" fill="currentColor" font-weight="bold">AL NAWA</text>
         </svg>
 
-        <div class="content-layer space-y-8">
+        <div class="content-layer space-y-6">
             
-            <!-- Header Section -->
-            <header class="border-b border-slate-700/60 pb-6">
+            <!-- Header Section (Exact test.html Header) -->
+            <header class="border-b border-slate-700/80 pb-6">
                 <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
                     
                     <!-- Company Logo & Title -->
                     <div class="flex items-center gap-4">
-                        <div class="w-16 h-16 rounded-full bg-emerald-600/30 border border-emerald-500/50 flex items-center justify-center text-emerald-400 font-bold text-2xl shadow-lg">
+                        <div class="w-16 h-16 rounded-full bg-emerald-700/40 border border-emerald-500/60 flex items-center justify-center text-emerald-300 font-bold text-2xl shadow-xl">
                             AN
                         </div>
                         <div>
                             <h1 class="text-2xl md:text-3xl font-extrabold tracking-wide text-white">
                                 মেসার্স আল নাওয়া কোম্পানী
                             </h1>
-                            <p class="text-xs md:text-sm text-emerald-400 font-medium mt-0.5">
+                            <p class="text-xs md:text-sm text-emerald-400 font-semibold mt-0.5">
                                 ওয়াদায় বদ্ধপরিকর • M/S AL NAWA COMPANY
                             </p>
                         </div>
@@ -101,7 +92,7 @@
 
                     <!-- Official Badge & Link -->
                     <div class="flex flex-col items-center md:items-end gap-2">
-                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border gold-border">
+                        <span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-300 border gold-border shadow-md">
                             Govt Reg No: 84920/2026
                         </span>
                         <a href="https://shafiurrahman99.github.io/alnawa/" target="_blank" class="text-xs text-slate-400 hover:text-emerald-400 transition-colors">
@@ -112,38 +103,29 @@
                 </div>
             </header>
 
-            <!-- Main Content Slot (Injectable Sub-pages / Forms) -->
-            <main id="main-content-slot" class="min-h-[320px] flex flex-col justify-center">
+            <!-- Main Content Slot (এখানে আপনার test.html এর সাব-পেজ, ফর্ম, রেডিও বাটন, রিপোর্ট সামারি বা ড্যাশবোর্ড ডাটা ইনজেক্ট হবে) -->
+            <main id="main-content-slot" class="min-h-[350px] flex flex-col justify-center">
                 
-                <div class="max-w-md mx-auto w-full bg-slate-900/60 p-6 md:p-8 rounded-xl border border-slate-700/50 shadow-inner">
-                    <h2 class="text-xl font-bold text-center mb-6 text-slate-100 border-b border-slate-700 pb-3">
-                        পোর্টাল সাইন ইন
+                <div class="max-w-md mx-auto w-full bg-slate-900/70 p-6 md:p-8 rounded-xl border border-slate-700/80 shadow-2xl">
+                    <h2 class="text-lg font-bold text-center mb-6 text-slate-100 border-b border-slate-700 pb-3">
+                        টেস্ট পোর্টাল ডাটা সেকশন
                     </h2>
                     
-                    <form class="space-y-4" onsubmit="event.preventDefault();">
-                        <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1.5">ইউজার আইডি / অ্যাকাউন্ট নম্বর</label>
-                            <input type="text" placeholder="আপনার আইডি লিখুন" class="w-full px-4 py-2.5 rounded-lg bg-slate-800/80 border border-slate-600 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                    <div class="text-center text-sm text-slate-400 space-y-3">
+                        <p>আপনার `test.html` ফাইলের মূল প্যানেল এবং ইনপুট ফর্মগুলো এখানে বসবে।</p>
+                        <div class="p-3 bg-slate-800/80 rounded border border-slate-700 text-xs text-emerald-300 font-mono">
+                            Status: Ready for Dynamic HTML Injection
                         </div>
-
-                        <div>
-                            <label class="block text-xs font-medium text-slate-300 mb-1.5">সিক্রেট পিন / পাসওয়ার্ড</label>
-                            <input type="password" placeholder="••••••••" class="w-full px-4 py-2.5 rounded-lg bg-slate-800/80 border border-slate-600 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
-                        </div>
-
-                        <button type="submit" class="w-full py-2.5 mt-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition shadow-lg shadow-emerald-900/40">
-                            প্রবেশ করুন
-                        </button>
-                    </form>
+                    </div>
                 </div>
 
             </main>
 
-            <!-- Footer Section -->
-            <footer class="border-t border-slate-700/60 pt-6 mt-8">
+            <!-- Footer Section (Exact test.html Footer) -->
+            <footer class="border-t border-slate-700/80 pt-5 mt-6">
                 <div class="flex flex-col md:flex-row items-center justify-between text-xs text-slate-400 gap-3">
                     <div class="flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
                         <span>বন্দর লেন, নারায়ণগঞ্জ, ঢাকা, বাংলাদেশ</span>
                     </div>
                     <div class="flex items-center gap-4">
