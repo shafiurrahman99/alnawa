@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>মেসার্স আল নাওয়া কোম্পানী - ইনভেস্টমেন্ট পোর্টাল</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Rich & Deep Dynamic Gradient Animation */
+        @keyframes deepGradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            background: linear-gradient(-45deg, #064e3b, #0f172a, #311042, #1e1b4b, #042f2e);
+            background-size: 400% 400%;
+            animation: deepGradientShift 25s ease infinite;
+            min-height: 100vh;
+            color: #f8fafc;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Pad Glassmorphism Styling */
+        .official-pad {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Central Watermark */
+        .pad-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 10;
+        }
+
+        .gold-border {
+            border-color: rgba(234, 179, 8, 0.4);
+        }
+
+        .gold-text {
+            color: #facc15;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4 md:p-8">
+
+    <!-- Main Official Pad Container -->
+    <div class="official-pad w-full max-w-4xl rounded-2xl p-6 md:p-10 my-auto">
+        
+        <!-- Background Watermark Logo -->
+        <svg class="pad-watermark" viewBox="0 0 100 100" fill="currentColor">
+            <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M30 40 L50 20 L70 40 L50 80 Z" stroke="currentColor" stroke-width="2" fill="none"/>
+            <text x="50" y="55" font-size="8" text-anchor="middle" fill="currentColor" font-weight="bold">AL NAWA</text>
+        </svg>
+
+        <div class="content-layer space-y-8">
+            
+            <!-- Header Section -->
+            <header class="border-b border-slate-700/60 pb-6">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+                    
+                    <!-- Company Logo & Title -->
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-full bg-emerald-600/30 border border-emerald-500/50 flex items-center justify-center text-emerald-400 font-bold text-2xl shadow-lg">
+                            AN
+                        </div>
+                        <div>
+                            <h1 class="text-2xl md:text-3xl font-extrabold tracking-wide text-white">
+                                মেসার্স আল নাওয়া কোম্পানী
+                            </h1>
+                            <p class="text-xs md:text-sm text-emerald-400 font-medium mt-0.5">
+                                ওয়াদায় বদ্ধপরিকর • M/S AL NAWA COMPANY
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Official Badge & Link -->
+                    <div class="flex flex-col items-center md:items-end gap-2">
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border gold-border">
+                            Govt Reg No: 84920/2026
+                        </span>
+                        <a href="https://shafiurrahman99.github.io/alnawa/" target="_blank" class="text-xs text-slate-400 hover:text-emerald-400 transition-colors">
+                            shafiurrahman99.github.io/alnawa/
+                        </a>
+                    </div>
+
+                </div>
+            </header>
+
+            <!-- Main Content Slot (Injectable Sub-pages / Forms) -->
+            <main id="main-content-slot" class="min-h-[320px] flex flex-col justify-center">
+                
+                <div class="max-w-md mx-auto w-full bg-slate-900/60 p-6 md:p-8 rounded-xl border border-slate-700/50 shadow-inner">
+                    <h2 class="text-xl font-bold text-center mb-6 text-slate-100 border-b border-slate-700 pb-3">
+                        পোর্টাল সাইন ইন
+                    </h2>
+                    
+                    <form class="space-y-4" onsubmit="event.preventDefault();">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5">ইউজার আইডি / অ্যাকাউন্ট নম্বর</label>
+                            <input type="text" placeholder="আপনার আইডি লিখুন" class="w-full px-4 py-2.5 rounded-lg bg-slate-800/80 border border-slate-600 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1.5">সিক্রেট পিন / পাসওয়ার্ড</label>
+                            <input type="password" placeholder="••••••••" class="w-full px-4 py-2.5 rounded-lg bg-slate-800/80 border border-slate-600 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+                        </div>
+
+                        <button type="submit" class="w-full py-2.5 mt-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm transition shadow-lg shadow-emerald-900/40">
+                            প্রবেশ করুন
+                        </button>
+                    </form>
+                </div>
+
+            </main>
+
+            <!-- Footer Section -->
+            <footer class="border-t border-slate-700/60 pt-6 mt-8">
+                <div class="flex flex-col md:flex-row items-center justify-between text-xs text-slate-400 gap-3">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>বন্দর লেন, নারায়ণগঞ্জ, ঢাকা, বাংলাদেশ</span>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span>ফোন: +880 1700-000000</span>
+                        <span>•</span>
+                        <span>ইমেইল: info@alnawa.com</span>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+</body>
+</html>
