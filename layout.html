@@ -516,31 +516,5 @@
             }
         }
     </script>
-// ফর্ম সাবমিট করার সময় জাভাস্ক্রিপ্ট এভাবে ডাটাবেজে পাঠাবে
-async function handleNewCompanyRegistration(e) {
-    e.preventDefault();
-
-    const companyPayload = {
-        company_id: parseInt(document.getElementById('cId').value),
-        company_name: document.getElementById('cName').value.trim(),
-        company_subtitle: document.getElementById('cSubtitle').value.trim(),
-        reg_no: document.getElementById('cRegNo').value.trim(),
-        website: document.getElementById('cWebsite').value.trim(),
-        secret_pass: document.getElementById('cPass').value.trim(),
-        layout_settings: {
-            logo_url: document.getElementById('cLogo').value.trim(),
-            primary_color: document.getElementById('cPrimaryColor').value.trim(),
-            footer_text: "Advanced Productivity Research, Solutions & Visuality"
-        }
-    };
-
-    // Supabase ডেটাবেজে পাঠানো
-    const { error } = await supabaseClient.from('companies').upsert([companyPayload]);
-    
-    if(!error) {
-        alert("কোম্পানি এবং এর লেআউট সফলভাবে ডেটাবেজে সেভ হয়েছে!");
-    }
-}
-
 </body>
 </html>
