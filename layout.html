@@ -70,22 +70,22 @@
     <div class="w-full max-w-5xl bg-white/95 backdrop-blur-md shadow-2xl rounded-xl border border-gray-400 flex flex-col min-h-[94vh] relative overflow-hidden">
 
         <!-- HEADER (Sigma PhD Institutional Letterhead - PDF Exact Match) -->
-        <header class="bg-white pt-3 px-3 sm:px-6 pb-2 flex-shrink-0 border-b-2 border-sigmaGreen">
+        <header id="mainHeader" class="bg-white pt-3 px-3 sm:px-6 pb-2 flex-shrink-0 border-b-2 border-sigmaGreen">
             <div class="flex flex-row justify-between items-start gap-2">
                 <div class="flex items-center gap-3">
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 border-2 border-sigmaGreen rounded-2xl flex flex-col items-center justify-center p-1 bg-white text-center flex-shrink-0 shadow-sm">
+                    <div id="headerLogoBox" class="w-16 h-16 sm:w-20 sm:h-20 border-2 border-sigmaGreen rounded-2xl flex flex-col items-center justify-center p-1 bg-white text-center flex-shrink-0 shadow-sm">
                         <i class="fa-solid fa-atom text-2xl sm:text-3xl text-sigmaGreen mb-0.5"></i>
                         <span class="text-[10px] font-bold text-sigmaNavy uppercase tracking-tighter leading-none">Sigma PhD</span>
                         <span class="text-[8px] text-gray-600 font-semibold leading-none">Research</span>
                     </div>
                     <div>
-                        <h1 class="text-xl sm:text-3xl font-extrabold text-sigmaNavy tracking-tight leading-none mb-1">Sigma PhD</h1>
-                        <h2 class="text-xs sm:text-sm font-bold text-sigmaGreen italic font-serif leading-none tracking-wide">Advanced Productivity Research, Solutions & Visuality</h2>
+                        <h1 id="headerTitle" class="text-xl sm:text-3xl font-extrabold text-sigmaNavy tracking-tight leading-none mb-1">Sigma PhD</h1>
+                        <h2 id="headerSubtitle" class="text-xs sm:text-sm font-bold text-sigmaGreen italic font-serif leading-none tracking-wide">Advanced Productivity Research, Solutions & Visuality</h2>
                     </div>
                 </div>
                 <div class="text-right hidden sm:block font-mono text-xs">
-                    <div class="font-bold text-sigmaNavy">REG. NO: REG-894520-BD[span_1](start_span)[span_1](end_span)</div>
-                    <div class="text-[11px] text-sigmaGreen italic">www.sigmaphd.com[span_2](start_span)[span_2](end_span)</div>
+                    <div class="font-bold text-sigmaNavy">REG. NO: REG-894520-BD[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span)</div>
+                    <div class="text-[11px] text-sigmaGreen italic">www.sigmaphd.com[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)</div>
                 </div>
             </div>
 
@@ -166,10 +166,10 @@
                     </div>
                 </div>
 
-                <!-- TAB 1: NEW COMPANY REGISTRATION FORM -->
+                <!-- TAB 1: NEW COMPANY REGISTRATION FORM (With Layout Settings) -->
                 <div id="tabRegisterForm" class="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-purple-300 fade-in">
                     <h3 class="text-sm font-bold text-sigmaNavy mb-4 border-b pb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-plus text-sigmaGreen text-base"></i> নতুন কোম্পানি ডাটাবেজে ইম্পোর্ট বা এন্ট্রি ফরম
+                        <i class="fa-solid fa-circle-plus text-sigmaGreen text-base"></i> নতুন কোম্পানি ডাটাবেজে ইম্পোর্ট বা এন্ট্রি ফরম (লেআউট ও প্যাড সেটিংসসহ)
                     </h3>
                     
                     <form id="companyEntryForm" onsubmit="submitNewCompanyData(event)" class="space-y-4 text-xs">
@@ -203,8 +203,27 @@
                             </div>
                         </div>
 
+                        <!-- Layout & Design Customization Fields (JSONB) -->
+                        <div class="p-3 bg-purple-50 border border-purple-200 rounded-lg space-y-3">
+                            <div class="font-bold text-purple-900 border-b pb-1">🎨 প্যাড ও লেআউট ভিজ্যুয়াল সেটিংস (Layout Settings):</div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block font-bold text-gray-700 mb-1">লোগো ইমেজ লিংক (Logo URL)</label>
+                                    <input type="text" id="cLogoUrl" placeholder="https://.../logo.png" class="w-full border p-2 rounded font-mono bg-white">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-gray-700 mb-1">প্রাইমারি কালার কোড</label>
+                                    <input type="text" id="cPrimaryColor" value="#0b843d" class="w-full border p-2 rounded font-mono bg-white">
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-gray-700 mb-1">ফুটার টেক্সট</label>
+                                    <input type="text" id="cFooterText" value="Advanced Productivity Research, Solutions & Visuality" class="w-full border p-2 rounded bg-white">
+                                </div>
+                            </div>
+                        </div>
+
                         <button type="submit" class="w-full py-3 bg-gradient-to-r from-sigmaGreen to-emerald-700 hover:opacity-95 text-white font-bold rounded-lg shadow-lg">
-                            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> ডেটাবেজে নতুন কোম্পানি সংরক্ষণ করুন
+                            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> লেআউটসহ ডেটাবেজে নতুন কোম্পানি সংরক্ষণ করুন
                         </button>
                     </form>
                 </div>
@@ -261,15 +280,15 @@
         </main>
 
         <!-- FOOTER (Sigma PhD Details Exact Match) -->
-        <footer class="bg-white flex-shrink-0 border-t-2 border-sigmaGreen">
+        <footer id="mainFooter" class="bg-white flex-shrink-0 border-t-2 border-sigmaGreen">
             <div class="grid grid-cols-1 md:grid-cols-12 h-auto text-white font-sans text-xs">
-                <div class="md:col-span-7 bg-sigmaGreen px-4 py-3 flex flex-col justify-center gap-0.5">
-                    <div class="font-bold">Advanced Productivity Research, Solutions & Visuality[span_3](start_span)[span_3](end_span)</div>
-                    <div class="text-[11px] opacity-90 font-mono">REG. NO: REG-894520-BD[span_4](start_span)[span_4](end_span)</div>
+                <div class="md:col-span-7 bg-sigmaGreen px-4 py-3 flex flex-col justify-center gap-0.5" id="footerLeftBox">
+                    <div class="font-bold" id="footerTitleText">Advanced Productivity Research, Solutions & Visuality[span_4](start_span)[span_4](end_span)[span_5](start_span)[span_5](end_span)</div>
+                    <div class="text-[11px] opacity-90 font-mono">REG. NO: REG-894520-BD[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span)</div>
                 </div>
                 <div class="md:col-span-5 bg-gradient-to-r from-sigmaNavy to-purple-900 px-4 py-3 flex flex-col justify-center items-start md:items-end gap-0.5">
-                    <div class="font-mono font-bold">Mobile : +880 1818-589423[span_5](start_span)[span_5](end_span)</div>
-                    <div class="font-mono text-amber-300 text-[11px]">E-mail : info@sigmaphd.com[span_6](start_span)[span_6](end_span)</div>
+                    <div class="font-mono font-bold">Mobile : +880 1818-589423[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)</div>
+                    <div class="font-mono text-amber-300 text-[11px]">E-mail : info@sigmaphd.com[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)</div>
                 </div>
             </div>
         </footer>
@@ -311,6 +330,11 @@
         const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // PAGE LOAD: AUTO LOAD COMPANY LAYOUT IF APPLICABLE
+        window.addEventListener('DOMContentLoaded', () => {
+            // Optional: load default company or custom layout from database if needed
+        });
 
         // SUPER ADMIN LOGIN
         async function handleSuperAdminLogin(e) {
@@ -418,7 +442,7 @@
             }
         }
 
-        // SUBMIT NEW COMPANY TO SUPABASE
+        // SUBMIT NEW COMPANY TO SUPABASE (WITH JSONB LAYOUT SETTINGS)
         async function submitNewCompanyData(e) {
             e.preventDefault();
 
@@ -429,6 +453,12 @@
                 reg_no: document.getElementById('cRegNo').value.trim(),
                 website: document.getElementById('cWebsite').value.trim(),
                 secret_pass: document.getElementById('cPass').value.trim(),
+                layout_settings: {
+                    logo_url: document.getElementById('cLogoUrl').value.trim(),
+                    primary_color: document.getElementById('cPrimaryColor').value.trim(),
+                    footer_text: document.getElementById('cFooterText').value.trim(),
+                    theme_mode: "gradual-deep"
+                },
                 status: 'active'
             };
 
@@ -441,7 +471,7 @@
                 return;
             }
 
-            alert(`সফলভাবে (${companyPayload.company_name}) ডেটাবেজে সংযুক্ত হয়েছে!`);
+            alert(`সফলভাবে (${companyPayload.company_name}) এবং এর লেআউট সেটিংস ডেটাবেজে সংরক্ষিত হয়েছে!`);
             document.getElementById('companyEntryForm').reset();
         }
 
@@ -459,19 +489,37 @@
             }
 
             data.forEach(c => {
+                let primaryColor = c.layout_settings?.primary_color || '#0b843d';
                 tbody.innerHTML += `
                     <tr class="hover:bg-gray-50">
                         <td class="p-2.5 font-mono font-bold text-sigmaNavy">${c.company_id}</td>
                         <td class="p-2.5 font-bold text-gray-800">${c.company_name}</td>
                         <td class="p-2.5 font-mono">${c.company_subtitle || '-'}</td>
                         <td class="p-2.5 font-mono text-gray-600">${c.reg_no || '-'}</td>
-                        <td class="p-2.5 font-mono text-sigmaGreen">${c.website || '-'}</td>
+                        <td class="p-2.5 font-mono" style="color: ${primaryColor}">${c.website || '-'}</td>
                     </tr>
                 `;
             });
         }
 
-        // SQL CONSOLE QUERY RUNNER (Using Supabase RPC or Direct Table Operations)
+        // DYNAMICALLY APPLY COMPANY LAYOUT TO UI
+        function applyCompanyLayout(companyData) {
+            if (!companyData || !companyData.layout_settings) return;
+            const settings = companyData.layout_settings;
+
+            // Update Title & Subtitle if needed
+            if (companyData.company_name) {
+                document.getElementById('headerTitle').innerText = companyData.company_name;
+            }
+            if (companyData.company_subtitle) {
+                document.getElementById('headerSubtitle').innerText = companyData.company_subtitle;
+            }
+            if (settings.footer_text) {
+                document.getElementById('footerTitleText').innerText = settings.footer_text;
+            }
+        }
+
+        // SQL CONSOLE QUERY RUNNER
         async function runCustomSqlConsoleQuery() {
             const sqlQuery = document.getElementById('sqlConsoleInput').value.trim();
             const outputBox = document.getElementById('sqlConsoleOutputBox');
@@ -486,14 +534,9 @@
             outputBox.innerText = "Processing...";
 
             try {
-                // Note: Supabase client direct REST API does not allow arbitrary DDL (CREATE TABLE) 
-                // unless executed via Postgres RPC function or Supabase dashboard SQL editor. 
-                // Here we simulate the command response or execute table operations if wrapped in RPC.
-                // For direct table select/insert/update testing:
                 let lowerQuery = sqlQuery.toLowerCase();
                 
                 if (lowerQuery.startsWith('select')) {
-                    // Extract table name roughly for testing
                     let parts = sqlQuery.split(/from\s+/i);
                     if (parts.length > 1) {
                         let tableName = parts[1].trim().split(/\s+/)[0].replace(/;/g, '').replace(/"/g, '');
@@ -506,8 +549,7 @@
                         statusBox.innerText = "Preview limitation notice.";
                     }
                 } else {
-                    // For CREATE TABLE or complex DDL, inform the user to run via Supabase SQL Editor dashboard or RPC function
-                    outputBox.innerText = "SQL Console Note: For CREATE TABLE / DDL queries, please run them directly in your Supabase Dashboard SQL Editor (as shown in your screenshot), or set up a Postgres RPC function.\n\nQuery received:\n" + sqlQuery;
+                    outputBox.innerText = "SQL Console Note: For CREATE TABLE / DDL queries, please run them directly in your Supabase Dashboard SQL Editor, or set up a Postgres RPC function.\n\nQuery received:\n" + sqlQuery;
                     statusBox.innerText = "Query logged / Instruction given.";
                 }
             } catch (err) {
