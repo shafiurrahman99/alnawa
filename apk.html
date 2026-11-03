@@ -97,7 +97,7 @@
                     <div class="mb-4 p-3 bg-gradient-to-r from-sigmaNavy to-sigmaGreen text-white rounded-xl shadow">
                         <i class="fa-solid fa-building-user text-3xl mb-1 text-amber-300"></i>
                         <h3 class="text-lg font-bold">কোম্পানি ইউজার লগইন</h3>
-                        <p class="text-[11px] text-gray-200">কোম্পানি আইডি ও সিক্রেট পাসওয়ার্ড দিয়ে সরাসরি আপনার ফুল HTML লেআউট রান করুন</p>
+                        <p class="text-[11px] text-gray-200">কোম্পানি আইডি ও সিক্রেট পাসওয়ার্ড দিয়ে ডাটাবেজ থেকে সরাসরি আপনার ফুল HTML লেআউট রান করুন</p>
                     </div>
 
                     <div id="companyLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
@@ -133,8 +133,8 @@
         </footer>
     </div>
 
-    <!-- 2. FULLSCREEN DYNAMIC HOLDER (আল নাওয়া বা কোম্পানির আসল HTML এখানে ফুলস্ক্রিনে রান করবে এবং কোনো রিলোড হবে না) -->
-    <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50 overflow-y-auto"></div>
+    <!-- 2. FULLSCREEN SECURE SRCDOC IFRAME HOLDER -->
+    <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50"></div>
 
     <!-- SCRIPT LOGIC -->
     <script>
@@ -194,24 +194,16 @@
                     return;
                 }
 
-                // সিগমা পিএইচডির মূল ফ্রেম চিরতরে হাইড করে ফুলস্ক্রিন হোল্ডার ওপেন করা
+                // সিগমা পিএইচডির মূল ফ্রেম হাইড করা
                 document.getElementById('sigmaMainWrapper').classList.add('hidden');
                 const fullscreenHolder = document.getElementById('fullScreenCompanyHolder');
                 fullscreenHolder.classList.remove('hidden');
-                fullscreenHolder.innerHTML = fullHtml;
 
-                // কোম্পানির সমস্ত ইন্টারঅ্যাক্টিভ JavaScript কোড ও Script Tag রান বা এক্সিকিউট করা
-                const scripts = fullscreenHolder.querySelectorAll("script");
-                scripts.forEach(oldScript => {
-                    const newScript = document.createElement("script");
-                    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                    if (oldScript.src) {
-                        newScript.src = oldScript.src;
-                    } else {
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                    }
-                    oldScript.parentNode.replaceChild(newScript, oldScript);
-                });
+                // srcdoc মেকানিজম ব্যবহার করে আল নাওয়ার ফুল HTML আইফ্রেমের ভেতরে পারফেক্টলি রান করানো
+                fullscreenHolder.innerHTML = `<iframe id="secureCompanyFrame" style="width:100%; height:100%; border:none;" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"></iframe>`;
+                
+                const iframe = document.getElementById('secureCompanyFrame');
+                iframe.srcdoc = fullHtml;
 
             } catch (err) {
                 errBox.innerText = "কানেকশন এরর: " + err.message;
