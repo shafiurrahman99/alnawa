@@ -56,7 +56,8 @@
 </head>
 <body class="flex justify-center items-center p-2 sm:p-4">
 
-    <div class="w-full max-w-5xl bg-white/95 backdrop-blur-md shadow-2xl rounded-xl border border-gray-400 flex flex-col min-h-[94vh] relative overflow-hidden">
+    <!-- 1. SIGMA CENTRAL MAIN WRAPPER (লগইন করার পর এটি সম্পূর্ণ হাইড হয়ে যাবে) -->
+    <div id="sigmaMainWrapper" class="w-full max-w-5xl bg-white/95 backdrop-blur-md shadow-2xl rounded-xl border border-gray-400 flex flex-col min-h-[94vh] relative overflow-hidden">
 
         <!-- DYNAMIC INSTITUTIONAL HEADER -->
         <header id="mainHeader" class="bg-white pt-3 px-3 sm:px-6 pb-2 flex-shrink-0 border-b-2 border-sigmaGreen">
@@ -67,19 +68,19 @@
                         <span class="text-[10px] font-bold text-sigmaNavy uppercase tracking-tighter leading-none">Sigma PhD</span>
                     </div>
                     <div>
-                        <h1 id="headerTitle" class="text-xl sm:text-3xl font-extrabold text-sigmaNavy tracking-tight leading-none mb-1">Sigma PhD</h1>
-                        <h2 id="headerSubtitle" class="text-xs sm:text-sm font-bold text-sigmaGreen italic font-serif leading-none tracking-wide">Advanced Productivity Research, Solutions & Visuality</h2>
+                        <h1 class="text-xl sm:text-3xl font-extrabold text-sigmaNavy tracking-tight leading-none mb-1">Sigma PhD</h1>
+                        <h2 class="text-xs sm:text-sm font-bold text-sigmaGreen italic font-serif leading-none tracking-wide">Advanced Productivity Research, Solutions & Visuality</h2>
                     </div>
                 </div>
                 <div class="text-right hidden sm:block font-mono text-xs">
-                    <div id="headerRegNo" class="font-bold text-sigmaNavy">REG. NO: REG-894520-BD</div>
-                    <div id="headerWebsite" class="text-[11px] text-sigmaGreen italic">www.sigmaphd.com</div>
+                    <div class="font-bold text-sigmaNavy">REG. NO: REG-894520-BD</div>
+                    <div class="text-[11px] text-sigmaGreen italic">www.sigmaphd.com</div>
                 </div>
             </div>
 
             <div class="mt-2.5 flex items-center h-7 font-sans text-[11px] font-bold">
                 <div class="bg-sigmaNavy text-white px-3 sm:px-5 h-full flex items-center poly-badge min-w-[160px] sm:min-w-[210px] shadow">
-                    <span class="text-yellow-300 mr-1.5">পোর্টাল:</span> <span id="portalRoleText">সেন্ট্রাল গেটওয়ে</span>
+                    <span class="text-yellow-300 mr-1.5">পোর্টাল:</span> সেন্ট্রাল গেটওয়ে
                 </div>
                 <div class="bg-gradient-to-r from-sigmaGreen via-emerald-600 to-teal-600 text-white flex-grow h-full flex items-center justify-center px-4 poly-website text-xs font-bold tracking-wider shadow">
                     Universal WebView Cloud Connected Portal
@@ -96,50 +97,33 @@
                     <div class="mb-4 p-3 bg-gradient-to-r from-sigmaNavy to-sigmaGreen text-white rounded-xl shadow">
                         <i class="fa-solid fa-building-user text-3xl mb-1 text-amber-300"></i>
                         <h3 class="text-lg font-bold">কোম্পানি ইউজার লগইন</h3>
-                        <p class="text-[11px] text-gray-200">কোম্পানি আইডি ও পাসওয়ার্ড দিয়ে প্যাড ও পোর্টাল লোড করুন</p>
+                        <p class="text-[11px] text-gray-200">কোম্পানি আইডি ও সিক্রেট পাসওয়ার্ড দিয়ে ডাটাবেজ থেকে সরাসরি আপনার ফুল HTML লেআউট রান করুন</p>
                     </div>
 
                     <div id="companyLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
 
                     <form onsubmit="handleCompanyLogin(event)" class="space-y-4 text-left">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">কোম্পানি আইডি (যেমন: 101)</label>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">কোম্পানি আইডি (যেমন: 101, 110)</label>
                             <input type="number" id="loginCompanyId" required placeholder="কোম্পানি আইডি দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">সিক্রেট পাসওয়ার্ড</label>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">সিক্রেট পাসওয়ার্ড (Secret Password)</label>
                             <input type="password" id="loginCompanyPass" required placeholder="পাসওয়ার্ড দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
-                        <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold rounded-lg shadow-lg hover:opacity-95">লগইন ও প্যাড লোড করুন</button>
+                        <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold rounded-lg shadow-lg hover:opacity-95">লগইন ও ফুল প্যাড রেন্ডার করুন</button>
                     </form>
-                </div>
-            </div>
-
-            <!-- COMPANY DASHBOARD & DYNAMIC HTML RENDER VIEW -->
-            <div id="companyDashboardView" class="hidden space-y-4 fade-in w-full">
-                
-                <div class="bg-white/95 backdrop-blur-md rounded-xl p-3 shadow-md border flex justify-between items-center">
-                    <div>
-                        <span id="welcomeCompanyName" class="font-extrabold text-sigmaNavy text-sm">কোম্পানির ড্যাশবোর্ড</span>
-                        <p class="text-[10px] text-sigmaGreen font-mono">ডাটাবেজ থেকে লেআউট সেটিংস ও কাস্টম HTML সফলভাবে লোড হয়েছে</p>
-                    </div>
-                    <button onclick="handleCompanyLogout()" class="text-xs text-red-600 font-bold px-3 py-1.5 rounded-lg border border-red-200 hover:bg-red-50">লগআউট</button>
-                </div>
-
-                <!-- DYNAMIC CUSTOM HTML CONTAINER FROM `layout_settings` -->
-                <div id="customContentBox" class="bg-white p-5 rounded-xl border shadow-inner min-h-[300px]">
-                    <!-- ডাটাবেজ থেকে আগਤ layout_settings এখানে ইনক্লুড ও রেন্ডার হবে -->
                 </div>
             </div>
 
         </main>
 
-        <!-- DYNAMIC FOOTER -->
-        <footer id="mainFooter" class="bg-white flex-shrink-0 border-t-2 border-sigmaGreen">
+        <!-- FOOTER -->
+        <footer class="bg-white flex-shrink-0 border-t-2 border-sigmaGreen">
             <div class="grid grid-cols-1 md:grid-cols-12 h-auto text-white font-sans text-xs">
-                <div class="md:col-span-7 bg-sigmaGreen px-4 py-3 flex flex-col justify-center gap-0.5" id="footerLeftBox">
-                    <div class="font-bold" id="footerTitleText">Advanced Productivity Research, Solutions & Visuality</div>
-                    <div class="text-[11px] opacity-90 font-mono" id="footerRegText">REG. NO: REG-894520-BD</div>
+                <div class="md:col-span-7 bg-sigmaGreen px-4 py-3 flex flex-col justify-center gap-0.5">
+                    <div class="font-bold">Advanced Productivity Research, Solutions & Visuality</div>
+                    <div class="text-[11px] opacity-90 font-mono">REG. NO: REG-894520-BD</div>
                 </div>
                 <div class="md:col-span-5 bg-gradient-to-r from-sigmaNavy to-purple-900 px-4 py-3 flex flex-col justify-center items-start md:items-end gap-0.5">
                     <div class="font-mono font-bold">Mobile : +880 1818-589423</div>
@@ -149,7 +133,10 @@
         </footer>
     </div>
 
-    <!-- SCRIPT LOGIC -->
+    <!-- 2. FULLSCREEN DYNAMIC HOLDER (কোম্পানির সম্পূর্ণ HTML ও JavaScript সরাসরি এখানে ফুলস্ক্রিনে লোড ও এক্সিকিউট হবে) -->
+    <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50 overflow-y-auto"></div>
+
+    <!-- SCRIPT LOGIC FOR REAL-TIME DATABASE LAYOUT EXECUTION -->
     <script>
         const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
@@ -163,7 +150,7 @@
             const submitBtn = document.getElementById('loginSubmitBtn');
             
             errBox.classList.add('hidden');
-            submitBtn.innerText = "যাচাই করা হচ্ছে...";
+            submitBtn.innerText = "ডাটাবেজ থেকে সম্পূর্ণ কোড লোড হচ্ছে...";
             submitBtn.disabled = true;
 
             try {
@@ -186,92 +173,49 @@
                     return;
                 }
 
-                // SUCCESS: Apply dynamic layout and settings from database
-                applyDynamicLayout(data);
-                
-                document.getElementById('companyLoginView').classList.add('hidden');
-                document.getElementById('companyDashboardView').classList.remove('hidden');
+                // ১. ডাটাবেজের layout_settings কলাম থেকে সম্পূর্ণ HTML এক্সট্র্যাক্ট করা
+                let fullHtml = "";
+                const settings = data.layout_settings;
+
+                if (typeof settings === 'object' && settings !== null) {
+                    fullHtml = settings.full_html || settings.custom_html || (typeof settings === 'string' ? settings : JSON.stringify(settings));
+                } else if (typeof settings === 'string') {
+                    try {
+                        let parsed = JSON.parse(settings);
+                        fullHtml = parsed.full_html || parsed.custom_html || settings;
+                    } catch(ex) {
+                        fullHtml = settings;
+                    }
+                }
+
+                if (!fullHtml || fullHtml.trim() === "") {
+                    errBox.innerText = "এই কোম্পানির layout_settings এ কোনো HTML কোড সংরক্ষিত নেই!";
+                    errBox.classList.remove('hidden');
+                    return;
+                }
+
+                // ২. সিগমা পিএইচডির মূল ফ্রেম চিরতরে হাইড করে ফুলস্ক্রিন হোল্ডার দৃশ্যমান করা
+                document.getElementById('sigmaMainWrapper').classList.add('hidden');
+                const fullscreenHolder = document.getElementById('fullScreenCompanyHolder');
+                fullscreenHolder.classList.remove('hidden');
+                fullscreenHolder.innerHTML = fullHtml;
+
+                // ৩. আল নাওয়ার মতো কোম্পানির সমস্ত ইন্টারঅ্যাক্টিভ JavaScript কোড ও Script Tag সক্রিয় ও রান (Execute) করা
+                const scripts = fullscreenHolder.querySelectorAll("script");
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement("script");
+                    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                });
 
             } catch (err) {
                 errBox.innerText = "কানেকশন এরর: " + err.message;
                 errBox.classList.remove('hidden');
             } finally {
-                submitBtn.innerText = "লগইন ও প্যাড লোড করুন";
+                submitBtn.innerText = "লগইন ও ফুল প্যাড রেন্ডার করুন";
                 submitBtn.disabled = false;
             }
-        }
-
-        function applyDynamicLayout(company) {
-            // Header dynamic bindings (যাতে টেবিল বা অবজেক্ট থেকে প্রপারলি ডেটা নেয়)
-            const cName = company.company_name || "কোম্পানি পোর্টাল";
-            const cSubtitle = company.company_subtitle || 'Advanced Management System';
-            const cReg = company.reg_no || 'REG-894520-BD';
-            const cWeb = company.website || 'www.sigmaphd.com';
-
-            document.getElementById('headerTitle').innerText = cName;
-            document.getElementById('headerSubtitle').innerText = cSubtitle;
-            document.getElementById('headerRegNo').innerText = "REG. NO: " + cReg;
-            document.getElementById('headerWebsite').innerText = cWeb;
-            document.getElementById('portalRoleText').innerText = cName;
-            document.getElementById('welcomeCompanyName').innerText = cName + " - অফিশিয়াল ড্যাশবোর্ড";
-
-            // --- layout_settings ডাইনামিক হ্যান্ডলিং (JSONB বা স্ট্রিং পার্সিং) ---
-            let layoutSettings = company.layout_settings;
-            if (typeof layoutSettings === 'string') {
-                try {
-                    layoutSettings = JSON.parse(layoutSettings);
-                } catch(e) {
-                    layoutSettings = { custom_html: layoutSettings };
-                }
-            }
-
-            const contentBox = document.getElementById('customContentBox');
-            contentBox.innerHTML = ''; // Clear previous
-
-            if (layoutSettings) {
-                // লোগো রেন্ডারিং যদি লেআউট সেটিংসে থাকে
-                if (layoutSettings.logo_html) {
-                    document.getElementById('headerLogoContainer').innerHTML = layoutSettings.logo_html;
-                }
-
-                // ফুল HTML লেআউট বা কাস্টম HTML রেন্ডারিং
-                const htmlPayload = layoutSettings.full_html || layoutSettings.custom_html || "";
-                
-                if (htmlPayload) {
-                    contentBox.innerHTML = htmlPayload;
-
-                    // যদি লেআউট কোডের ভেতর কোনো জাভাস্ক্রিপ্ট থাকে, তা এক্সিকিউট করার ব্যবস্থা
-                    const scripts = contentBox.querySelectorAll("script");
-                    scripts.forEach(oldScript => {
-                        const newScript = document.createElement("script");
-                        Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                        newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                        oldScript.parentNode.replaceChild(newScript, oldScript);
-                    });
-                } else {
-                    contentBox.innerHTML = `
-                        <div class="text-center py-10">
-                            <h2 class="text-xl font-bold text-emerald-800 mb-2">${cName}</h2>
-                            <p class="text-gray-600 text-sm">স্বাগতম! আপনার প্রতিষ্ঠানের লাইভ পোর্টাল সফলভাবে সংযুক্ত হয়েছে। (কোনো কাস্টম HTML লেআউট যুক্ত করা হয়নি)</p>
-                        </div>
-                    `;
-                }
-            } else {
-                contentBox.innerHTML = `
-                    <div class="text-center py-10">
-                        <h2 class="text-xl font-bold text-emerald-800 mb-2">${cName}</h2>
-                        <p class="text-gray-600 text-sm">এই কোম্পানির জন্য কোনো লেআউট সেটিংস ডেটাবেজে পাওয়া যায়নি।</p>
-                    </div>
-                `;
-            }
-        }
-
-        function handleCompanyLogout() {
-            document.getElementById('companyDashboardView').classList.add('hidden');
-            document.getElementById('companyLoginView').classList.remove('hidden');
-            document.getElementById('loginCompanyPass').value = '';
-            document.getElementById('companyLoginError').classList.add('hidden');
-            document.getElementById('customContentBox').innerHTML = '';
         }
     </script>
 </body>
