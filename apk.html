@@ -136,87 +136,9 @@
     <!-- 2. FULLSCREEN SECURE SRCDOC IFRAME HOLDER -->
     <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50"></div>
 
-    <!-- SCRIPT LOGIC -->
+    <!-- OBFUSCATED SCRIPT LOGIC -->
     <script>
-        const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        async function handleCompanyLogin(e) {
-            e.preventDefault();
-            const compIdInput = document.getElementById('loginCompanyId').value.trim();
-            const compPass = document.getElementById('loginCompanyPass').value.trim();
-            const errBox = document.getElementById('companyLoginError');
-            const submitBtn = document.getElementById('loginSubmitBtn');
-            
-            errBox.classList.add('hidden');
-            submitBtn.innerText = "ডাটাবেজ থেকে সম্পূর্ণ কোড লোড হচ্ছে...";
-            submitBtn.disabled = true;
-
-            try {
-                const compId = parseInt(compIdInput, 10);
-                if (isNaN(compId)) {
-                    throw new Error("সঠিক কোম্পানি আইডি প্রদান করুন।");
-                }
-
-                // ১. কোম্পানি ভ্যালিডেশন
-                const { data, error } = await supabaseClient
-                    .from('companies')
-                    .select('*')
-                    .eq('company_id', compId)
-                    .maybeSingle();
-
-                if (error || !data) {
-                    errBox.innerText = "কোম্পানি আইডি ডাটাবেজে পাওয়া যায়নি!";
-                    errBox.classList.remove('hidden');
-                    return;
-                }
-
-                if (String(data.secret_pass).trim() !== String(compPass).trim()) {
-                    errBox.innerText = "সিক্রেট পাসওয়ার্ড ভুল হয়েছে!";
-                    errBox.classList.remove('hidden');
-                    return;
-                }
-
-                // ২. লেআউট সেটিংস থেকে ফুল HTML এক্সট্রাক্ট করা
-                let fullHtml = "";
-                const settings = data.layout_settings;
-
-                if (typeof settings === 'object' && settings !== null) {
-                    fullHtml = settings.full_html || settings.custom_html || (typeof settings === 'string' ? settings : JSON.stringify(settings));
-                } else if (typeof settings === 'string') {
-                    try {
-                        let parsed = JSON.parse(settings);
-                        fullHtml = parsed.full_html || parsed.custom_html || settings;
-                    } catch(ex) {
-                        fullHtml = settings;
-                    }
-                }
-
-                if (!fullHtml || fullHtml.trim() === "") {
-                    errBox.innerText = "এই কোম্পানির layout_settings এ কোনো HTML কোড সংরক্ষিত নেই!";
-                    errBox.classList.remove('hidden');
-                    return;
-                }
-
-                // ৩. মূল গেটওয়ে লুকিয়ে সরাসরি আল নাওয়া / কোম্পানির প্ল্যাটফর্ম ফুলস্ক্রিন রেন্ডার করা
-                document.getElementById('sigmaMainWrapper').classList.add('hidden');
-                const fullscreenHolder = document.getElementById('fullScreenCompanyHolder');
-                fullscreenHolder.classList.remove('hidden');
-
-                fullscreenHolder.innerHTML = `<iframe id="secureCompanyFrame" style="width:100%; height:100%; border:none;" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"></iframe>`;
-                
-                const iframe = document.getElementById('secureCompanyFrame');
-                iframe.srcdoc = fullHtml;
-
-            } catch (err) {
-                errBox.innerText = "কানেকশন এরর: " + err.message;
-                errBox.classList.remove('hidden');
-            } finally {
-                submitBtn.innerText = "লগইন ও ফুল প্যাড রেন্ডার করুন";
-                submitBtn.disabled = false;
-            }
-        }
+        function _0x303b(_0x18a1a3,_0x12c40c){_0x18a1a3=_0x18a1a3-0x1c1;const _0x1c7a84=_0x1c7a();let _0x303b3e=_0x1c7a84[_0x18a1a3];return _0x303b3e;}const _0x1707ef=_0x303b;(function(_0x1102e1,_0x36b048){const _0x310bb2=_0x303b,_0x3a483a=_0x1102e1();while(!![]){try{const _0x367f00=parseInt(_0x310bb2(0x1dc))/0x1+-parseInt(_0x310bb2(0x1cb))/0x2*(parseInt(_0x310bb2(0x1c9))/0x3)+-parseInt(_0x310bb2(0x1e3))/0x4*(parseInt(_0x310bb2(0x1eb))/0x5)+-parseInt(_0x310bb2(0x1d5))/0x6+-parseInt(_0x310bb2(0x1cf))/0x7*(parseInt(_0x310bb2(0x1d8))/0x8)+parseInt(_0x310bb2(0x1ed))/0x9*(-parseInt(_0x310bb2(0x1e7))/0xa)+parseInt(_0x310bb2(0x1cc))/0xb*(parseInt(_0x310bb2(0x1e6))/0xc);if(_0x367f00===_0x36b048)break;else _0x3a483a['push'](_0x3a483a['shift']());}catch(_0x228975){_0x3a483a['push'](_0x3a483a['shift']());}}}(_0x1c7a,0x932f9));const SUPABASE_URL=_0x1707ef(0x1c8),SUPABASE_ANON_KEY=_0x1707ef(0x1df),supabaseClient=supabase[_0x1707ef(0x1c3)](SUPABASE_URL,SUPABASE_ANON_KEY);async function handleCompanyLogin(_0x2f7d3d){const _0x4d5b24=_0x1707ef;_0x2f7d3d['preventDefault']();const _0x296aa2=document[_0x4d5b24(0x1ca)](_0x4d5b24(0x1d7))[_0x4d5b24(0x1d4)][_0x4d5b24(0x1d9)](),_0x36b208=document[_0x4d5b24(0x1ca)](_0x4d5b24(0x1d3))[_0x4d5b24(0x1d4)][_0x4d5b24(0x1d9)](),_0x19a9a3=document[_0x4d5b24(0x1ca)](_0x4d5b24(0x1da)),_0x1eb18e=document[_0x4d5b24(0x1ca)](_0x4d5b24(0x1e1));_0x19a9a3[_0x4d5b24(0x1ce)][_0x4d5b24(0x1e0)](_0x4d5b24(0x1ec)),_0x1eb18e[_0x4d5b24(0x1d1)]=_0x4d5b24(0x1c4),_0x1eb18e[_0x4d5b24(0x1db)]=!![];try{const _0x12c85d=parseInt(_0x296aa2,0xa);if(isNaN(_0x12c85d))throw new Error(_0x4d5b24(0x1c6));const {data:_0x128bca,error:_0x19213d}=await supabaseClient[_0x4d5b24(0x1cd)](_0x4d5b24(0x1ee))[_0x4d5b24(0x1d2)]('*')[_0x4d5b24(0x1e8)](_0x4d5b24(0x1ee),_0x12c85d)[_0x4d5b24(0x1c5)]();if(_0x19213d||!_0x128bca){_0x19a9a3[_0x4d5b24(0x1ea)]=_0x4d5b24(0x1d0),_0x19a9a3[_0x4d5b24(0x1ce)][_0x4d5b24(0x1e0)](_0x4d5b24(0x1ec));return;}if(String(_0x128bca[_0x4d5b24(0x1e4)])[_0x4d5b24(0x1d9)]()!==String(_0x36b208)[_0x4d5b24(0x1d9)]()){_0x19a9a3[_0x4d5b24(0x1ea)]=_0x4d5b24(0x1c7),_0x19a9a3[_0x4d5b24(0x1ce)][_0x4d5b24(0x1e0)](_0x4d5b24(0x1ec));return;}let _0x4d63cd='';const _0x5346cc=_0x128bca[_0x4d5b24(0x1de)];if(typeof _0x5346cc===_0x4d5b24(0x1e2)&&_0x5346cc!==null)_0x4d63cd=_0x5346cc[_0x4d5b24(0x1e9)]||_0x5346cc[_0x4d5b24(0x1ce)]||(typeof _0x5346cc===_0x4d5b24(0x1e2)?_0x5346cc:JSON[_0x4d5b24(0x1c2)](_0x5346cc));else{if(typeof _0x5346cc===_0x4d5b24(0x1e2))try{let _0x3b1c6d=JSON[_0x4d5b24(0x1e5)](_0x5346cc);_0x4d63cd=_0x3b1c6d[_0x4d5b24(0x1e9)]||_0x3b1c6d[_0x4d5b24(0x1ce)]||_0x5346cc;}catch(_0x3b85d9){_0x4d63cd=_0x5346cc;}}if(!_0x4d63cd||_0x4d63cd[_0x4d5b24(0x1d9)]()===''){_0x19a9a3[_0x4d5b24(0x1ea)]=_0x4d5b24(0x1d6),_0x19a9a3[_0x4d5b24(0x1ce)][_0x4d5b24(0x1e0)](_0x4d5b24(0x1ec));return;}document[_0x4d5b24(0x1ca)](_0x4d5b24(0x1ee))[_0x4d5b24(0x1ce)][_0x4d5b24(0x1c1)](_0x4d5b24(0x1ec));const _0x29bb95=document[_0x4d5b24(0x1ca)](_0x4d5b24(0x1ce));_0x29bb95[_0x4d5b24(0x1ce)][_0x4d5b24(0x1c1)](_0x4d5b24(0x1ec));_0x29bb95[_0x4d5b24(0x1df)]=`<iframe id="secureCompanyFrame" style="width:100%; height:100%; border:none;" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"></iframe>`;const _0x2ea5bc=document[_0x4d5b24(0x1ca)](_0x4d5b24(0x1ec));_0x2ea5bc[_0x4d5b24(0x1e2)]=_0x4d63cd;}catch(_0x3344d9){_0x19a9a3[_0x4d5b24(0x1ea)]=_0x4d5b24(0x1dd)+_0x3344d9[_0x4d5b24(0x1ea)],_0x19a9a3[_0x4d5b24(0x1ce)][_0x4d5b24(0x1e0)](_0x4d5b24(0x1ec));}finally{_0x1eb18e[_0x4d5b24(0x1ea)]='লগইন ও ফুল প্যাড রেন্ডার করুন';_0x1eb18e[_0x4d5b24(0x1db)]=![];}}function _0x1c7a(){const _0x4c0f86=['add','stringify','createClient','ডাটাবেজ\x20থেকে\x20সম্পূর্ণ\x20কোড\x20লোড\x20হচ্ছে...','maybeSingle','সঠিক\x20কোম্পানি\x20আইডি\x20প্রদান\x20করুন।','সিক্রেট\x20পাসওয়ার্ড\x20ভুল\x20হয়েছে!','https://zooqqmgncgebglskfnpt.supabase.co','3','getElementById','338870PZzHhC','11kFqZkQ','from','7','কোম্পানি\x20আইডি\x20ডাটাবেজে\x20পাওয়া\x20যায়নি!','innerText','select','loginCompanyPass','value','202812uBtsUf','এই\x20কোম্পানির\x20layout_settings\x20এ\x20কোনো\x20HTML\x20কোড\x20সংরক্ষিত\x20নেই!','loginCompanyId','8','trim','loginMasterId','disabled','3846610YmGqQo','ত্রুটি:\x20','layout_settings','innerHTML','remove','loginSubmitBtn','object','125608HjPqNl','secret_pass','parse','2520VqHhO','30cOifmY','eq','full_html','innerText','155jZlSji','54kOesrW','companies'];_0x1c7a=function(){return _0x4c0f86;};return _0x1c7a();}
     </script>
 </body>
 </html>
