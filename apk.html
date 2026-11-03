@@ -91,41 +91,52 @@
         <!-- MAIN CONTENT AREA -->
         <main class="flex-grow pad-watermark p-3 sm:p-6 flex flex-col justify-start relative">
 
-            <!-- TWO-TIER LOGIN GATEWAY -->
+            <!-- FIRST TIER: COMPANY LOGIN GATEWAY (শুধুমাত্র কোম্পানি আইডি ও পাসওয়ার্ড) -->
             <div id="companyLoginView" class="w-full max-w-md mx-auto fade-in my-auto">
                 <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-emerald-300 text-center">
                     <div class="mb-4 p-3 bg-gradient-to-r from-sigmaNavy to-sigmaGreen text-white rounded-xl shadow">
                         <i class="fa-solid fa-building-user text-3xl mb-1 text-amber-300"></i>
-                        <h3 class="text-lg font-bold">টু-টিয়ার সিকিউরড লগইন পোর্টাল</h3>
-                        <p class="text-[11px] text-gray-200">কোম্পানি ও মাস্টার ইউজার তথ্য দিয়ে সুরক্ষিতভাবে লগইন করুন</p>
+                        <h3 class="text-lg font-bold">কোম্পানি ইউজার লগইন</h3>
+                        <p class="text-[11px] text-gray-200">কোম্পানি আইডি ও সিক্রেট পাসওয়ার্ড দিয়ে ভ্যালিডেশন সম্পূর্ণ করুন</p>
                     </div>
 
                     <div id="companyLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
 
-                    <form onsubmit="handleCompanyLogin(event)" class="space-y-3 text-left">
-                        <!-- First Tier: Company ID & Company Password -->
+                    <form onsubmit="handleCompanyLogin(event)" class="space-y-4 text-left">
                         <div>
                             <label class="block text-xs font-bold text-gray-700 mb-1">কোম্পানি আইডি (যেমন: 101, 110)</label>
                             <input type="number" id="loginCompanyId" required placeholder="কোম্পানি আইডি দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">কোম্পানি সিক্রেট পাসওয়ার্ড (Secret Password)</label>
-                            <input type="password" id="loginCompanyPass" required placeholder="কোম্পানি পাসওয়ার্ড দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
+                            <label class="block text-xs font-bold text-gray-700 mb-1">সিক্রেট পাসওয়ার্ড (Secret Password)</label>
+                            <input type="password" id="loginCompanyPass" required placeholder="পাসওয়ার্ড দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
-                        
-                        <hr class="border-gray-200 my-2">
+                        <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold rounded-lg shadow-lg hover:opacity-95 transition-all">পরবর্তী ধাপ (মাস্টার লগইন)</button>
+                    </form>
+                </div>
+            </div>
 
-                        <!-- Second Tier: Master User ID & Password -->
+            <!-- SECOND TIER: MASTER USER LOGIN GATEWAY (কোম্পানি ভ্যালিড হওয়ার পর এটি দেখাবে) -->
+            <div id="masterUserLoginView" class="hidden w-full max-w-md mx-auto fade-in my-auto">
+                <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-blue-400 text-center">
+                    <div class="mb-4 p-3 bg-gradient-to-r from-sigmaBlue to-sigmaNavy text-white rounded-xl shadow">
+                        <i class="fa-solid fa-user-shield text-3xl mb-1 text-yellow-400"></i>
+                        <h3 class="text-lg font-bold">মাস্টার ইউজার ভ্যালিডেশন</h3>
+                        <p class="text-[11px] text-gray-200">আপনার মাস্টার আইডি ও পাসওয়ার্ড প্রবেশ করিয়ে সিস্টেম রান করুন</p>
+                    </div>
+
+                    <div id="masterLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
+
+                    <form onsubmit="handleMasterUserLogin(event)" class="space-y-4 text-left">
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">মাস্টার আইডি (Master ID)</label>
+                            <label class="block text-xs font-bold text-gray-700 mb-1">মাস্টার আইডি (Master ID / User ID)</label>
                             <input type="text" id="loginMasterId" required placeholder="আপনার মাস্টার আইডি দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-700 mb-1">মাস্টার পাসওয়ার্ড (Password)</label>
-                            <input type="password" id="loginPassword" required placeholder="মাস্টার পাসওয়ার্ড দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
+                            <label class="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড (Master Password)</label>
+                            <input type="password" id="loginMasterPass" required placeholder="পাসওয়ার্ড দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
-
-                        <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold rounded-lg shadow-lg hover:opacity-95 transition-all">লগইন ও ফুল প্যাড রেন্ডার করুন</button>
+                        <button type="submit" id="masterSubmitBtn" class="w-full py-3 bg-gradient-to-r from-blue-700 to-indigo-800 text-white font-bold rounded-lg shadow-lg hover:opacity-95 transition-all">লগইন ও ফুল প্যাড রেন্ডার করুন</button>
                     </form>
                 </div>
             </div>
@@ -156,18 +167,20 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // গ্লোবাল ভেরিয়েবল যা প্রথম ধাপের আইডি ও লেআউট কোড ধরে রাখবে
+        let verifiedCompanyId = null;
+        let cachedFullHtml = "";
+
+        // ১. ফার্স্ট টিয়ার: শুধুমাত্র কোম্পানি আইডি এবং সিক্রেট পাসওয়ার্ড চেক
         async function handleCompanyLogin(e) {
             e.preventDefault();
             const compIdInput = document.getElementById('loginCompanyId').value.trim();
             const compPass = document.getElementById('loginCompanyPass').value.trim();
-            const masterIdInput = document.getElementById('loginMasterId').value.trim();
-            const passwordInput = document.getElementById('loginPassword').value.trim();
-            
             const errBox = document.getElementById('companyLoginError');
             const submitBtn = document.getElementById('loginSubmitBtn');
             
             errBox.classList.add('hidden');
-            submitBtn.innerText = "কোম্পানি যাচাই করা হচ্ছে...";
+            submitBtn.innerText = "কোম্পানি আইডি যাচাই করা হচ্ছে...";
             submitBtn.disabled = true;
 
             try {
@@ -176,51 +189,28 @@
                     throw new Error("সঠিক কোম্পানি আইডি প্রদান করুন।");
                 }
 
-                // Tier 1: Verify Company ID and Secret Password from 'companies' table
-                const { data: compData, error: compError } = await supabaseClient
+                // কোম্পানি ডাটাবেজ থেকে তথ্য আনা
+                const { data, error } = await supabaseClient
                     .from('companies')
                     .select('*')
                     .eq('company_id', compId)
                     .maybeSingle();
 
-                if (compError || !compData) {
+                if (error || !data) {
                     errBox.innerText = "কোম্পানি আইডি ডাটাবেজে পাওয়া যায়নি!";
                     errBox.classList.remove('hidden');
                     return;
                 }
 
-                if (String(compData.secret_pass).trim() !== String(compPass).trim()) {
-                    errBox.innerText = "কোম্পানির সিক্রেট পাসওয়ার্ড ভুল হয়েছে!";
+                if (String(data.secret_pass).trim() !== String(compPass).trim()) {
+                    errBox.innerText = "সিক্রেট পাসওয়ার্ড ভুল হয়েছে!";
                     errBox.classList.remove('hidden');
                     return;
                 }
 
-                submitBtn.innerText = "মাস্টার ইউজার যাচাই হচ্ছে...";
-
-                // Tier 2: Verify Master User via RPC True/False Validation
-                const { data: isValidUser, error: rpcError } = await supabaseClient
-                    .rpc('verify_master_user_login', {
-                        p_company_id: compId,
-                        p_master_id: masterIdInput,
-                        p_password: passwordInput
-                    });
-
-                if (rpcError) {
-                    throw new Error("লগইন যাচাইকরণে সমস্যা: " + rpcError.message);
-                }
-
-                if (!isValidUser) {
-                    errBox.innerText = "মাস্টার আইডি বা পাসওয়ার্ড ভুল হয়েছে!";
-                    errBox.classList.remove('hidden');
-                    return;
-                }
-
-                submitBtn.innerText = "ডাটাবেজ থেকে সম্পূর্ণ কোড লোড হচ্ছে...";
-
-                // Extracting Layout HTML from Company Settings
+                // লেআউট সেটিংস থেকে HTML ক্যাশ করে নেওয়া
                 let fullHtml = "";
-                const settings = compData.layout_settings;
-
+                const settings = data.layout_settings;
                 if (typeof settings === 'object' && settings !== null) {
                     fullHtml = settings.full_html || settings.custom_html || (typeof settings === 'string' ? settings : JSON.stringify(settings));
                 } else if (typeof settings === 'string') {
@@ -238,7 +228,56 @@
                     return;
                 }
 
-                // Hide Main Wrapper & Show Secure Fullscreen Frame
+                // ফার্স্ট টিয়ার সফল হলে ডাটা সেভ করে সেকেন্ড টিয়ার ভিউ দেখানো
+                verifiedCompanyId = compId;
+                cachedFullHtml = fullHtml;
+
+                document.getElementById('companyLoginView').classList.add('hidden');
+                document.getElementById('masterUserLoginView').classList.remove('hidden');
+
+            } catch (err) {
+                errBox.innerText = "কানেকশন এরর: " + err.message;
+                errBox.classList.remove('hidden');
+            } finally {
+                submitBtn.innerText = "পরবর্তী ধাপ (মাস্টার লগইন)";
+                submitBtn.disabled = false;
+            }
+        }
+
+        // ২. সেকেন্ড টিয়ার: মাস্টার ইউজার ভ্যালিডেশন (Supabase RPC - True/False)
+        async function handleMasterUserLogin(e) {
+            e.preventDefault();
+            const masterIdInput = document.getElementById('loginMasterId').value.trim();
+            const passwordInput = document.getElementById('loginMasterPass').value.trim();
+            const errBox = document.getElementById('masterLoginError');
+            const submitBtn = document.getElementById('masterSubmitBtn');
+
+            errBox.classList.add('hidden');
+            submitBtn.innerText = "মাস্টার আইডি যাচাই করা হচ্ছে...";
+            submitBtn.disabled = true;
+
+            try {
+                // RPC কল করে True/False যাচাইকরণ
+                const { data: isValid, error: rpcError } = await supabaseClient
+                    .rpc('verify_master_user_login', {
+                        p_company_id: verifiedCompanyId,
+                        p_master_id: masterIdInput,
+                        p_password: passwordInput
+                    });
+
+                if (rpcError) {
+                    throw new Error("লগইন যাচাইকরণে সমস্যা: " + rpcError.message);
+                }
+
+                if (!isValid) {
+                    errBox.innerText = "মাস্টার আইডি বা পাসওয়ার্ড ভুল হয়েছে!";
+                    errBox.classList.remove('hidden');
+                    return;
+                }
+
+                submitBtn.innerText = "ফুল প্যাড রেন্ডার হচ্ছে...";
+
+                // রেন্ডার মেকানিজম
                 document.getElementById('sigmaMainWrapper').classList.add('hidden');
                 const fullscreenHolder = document.getElementById('fullScreenCompanyHolder');
                 fullscreenHolder.classList.remove('hidden');
@@ -246,7 +285,7 @@
                 fullscreenHolder.innerHTML = `<iframe id="secureCompanyFrame" style="width:100%; height:100%; border:none;" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"></iframe>`;
                 
                 const iframe = document.getElementById('secureCompanyFrame');
-                iframe.srcdoc = fullHtml;
+                iframe.srcdoc = cachedFullHtml;
 
             } catch (err) {
                 errBox.innerText = "ত্রুটি: " + err.message;
