@@ -150,27 +150,41 @@
             const submitBtn = document.getElementById('loginSubmitBtn');
             
             errBox.classList.add('hidden');
-            submitBtn.innerText = "ডাটাবেজ থেকে সম্পূর্ণ কোড লোড হচ্ছে...";
+            submitBtn.innerText = "যাচাই ও ডাটাবেজ থেকে কোড লোড হচ্ছে...";
             submitBtn.disabled = true;
 
             try {
-                const compId = parseInt(compIdInput);
-                const { data, error } = await supabaseClient
-                    .from('companies')
-                    .select('*')
-                    .eq('company_id', compId)
-                    .maybeSingle();
+                const compId = parseInt(compIdInput, 10);
+                if (isNaN(compId)) {
+                    throw new Error("সঠিক কোম্পানি আইডি প্রদান করুন।");
+                }
 
-                if (error || !data) {
-                    errBox.innerText = "কোম্পানি আইডি ডাটাবেজে পাওয়া যায়নি!";
+                // Supabase RPC ফাংশন কল করে সিকিউরড পাসওয়ার্ড ভ্যালিডেশন
+                const { data: isValid, error: rpcError } = await supabaseClient
+                    .rpc('verify_company_login', {
+                        p_company_id: compId,
+                        p_secret_pass: compPass
+                    });
+
+                if (rpcError) {
+                    throw new Error("লগইন যাচাইকরণে সমস্যা: " + rpcError.message);
+                }
+
+                if (!isValid) {
+                    errBox.innerText = "কোম্পানি আইডি অথবা সিক্রেট পাসওয়ার্ড ভুল হয়েছে!";
                     errBox.classList.remove('hidden');
                     return;
                 }
 
-                if (String(data.secret_pass).trim() !== String(compPass).trim()) {
-                    errBox.innerText = "সিক্রেট পাসওয়ার্ড ভুল হয়েছে!";
-                    errBox.classList.remove('hidden');
-                    return;
+                // পাসওয়ার্ড সঠিক হলে এবার লেআউট সেটিংস বা ফুল HTML ফেচ করা
+                const { data, error } = await supabaseClient
+                    .from('companies')
+                    .select('layout_settings')
+                    .eq('company_id', compId)
+                    .single();
+
+                if (error || !data) {
+                    throw new Error("কোম্পানির লেআউট ডেটা পাওয়া যায়নি!");
                 }
 
                 // ডাটাবেজের layout_settings থেকে ফুল HTML এক্সট্রাক্ট করা
