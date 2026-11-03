@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sigma PhD - Central Universal WebView Portal</title>
+    <title>Sigma PhD - Central Universal Gateway Portal</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -42,44 +42,69 @@
             background: linear-gradient(-45deg, #0d1b2a, #1b263b, #0b843d, #1a237e, #2b0938, #0f172a);
             background-size: 400% 400%;
             animation: gradualDeepShift 10s ease infinite;
-            margin: 0; padding: 0; min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
         }
         @keyframes gradualDeepShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+        .pad-watermark {
+            background-color: rgba(255, 255, 255, 0.96);
+            background-image: radial-gradient(circle, rgba(11, 132, 61, 0.03) 0%, rgba(26, 35, 126, 0.05) 100%);
+            background-repeat: no-repeat; background-position: center 50%; background-size: 420px 420px;
+        }
+        .poly-badge { clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%); }
+        .poly-website { clip-path: polygon(10% 0, 100% 0, 92% 100%, 0 100%); }
         .fade-in { animation: fadeIn 0.3s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .custom-scrollbar::-webkit-scrollbar { height: 6px; width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #0b843d; border-radius: 3px; }
     </style>
 </head>
-<body class="flex justify-center items-center p-0 sm:p-2">
+<body class="flex justify-center items-center p-2 sm:p-4">
 
     <!-- MAIN WRAPPER CONTAINER -->
-    <div id="sigmaMainWrapper" class="w-full max-w-6xl bg-white/95 backdrop-blur-md shadow-2xl rounded-xl border border-gray-400 flex flex-col min-h-[96vh] relative overflow-hidden">
+    <div id="sigmaMainWrapper" class="w-full max-w-5xl bg-white/95 backdrop-blur-md shadow-2xl rounded-xl border border-gray-400 flex flex-col min-h-[94vh] relative overflow-hidden">
 
-        <!-- SIGMA CENTRAL HEADER (কোম্পানি লোড হলে এটি গায়েব হয়ে যাবে) -->
-        <header id="sigmaHeader" class="bg-white pt-3 px-3 sm:px-6 pb-2 flex-shrink-0 border-b-2 border-sigmaGreen">
+        <!-- HEADER (Sigma PhD Institutional Letterhead) -->
+        <header id="mainHeader" class="bg-white pt-3 px-3 sm:px-6 pb-2 flex-shrink-0 border-b-2 border-sigmaGreen">
             <div class="flex flex-row justify-between items-start gap-2">
                 <div class="flex items-center gap-3">
-                    <div class="w-16 h-16 sm:w-20 sm:h-20 border-2 border-sigmaGreen rounded-2xl flex flex-col items-center justify-center p-1 bg-white text-center flex-shrink-0 shadow-sm">
+                    <div id="headerLogoBox" class="w-16 h-16 sm:w-20 sm:h-20 border-2 border-sigmaGreen rounded-2xl flex flex-col items-center justify-center p-1 bg-white text-center flex-shrink-0 shadow-sm">
                         <i class="fa-solid fa-atom text-2xl sm:text-3xl text-sigmaGreen mb-0.5"></i>
                         <span class="text-[10px] font-bold text-sigmaNavy uppercase tracking-tighter leading-none">Sigma PhD</span>
+                        <span class="text-[8px] text-gray-600 font-semibold leading-none">Research</span>
                     </div>
                     <div>
-                        <h1 class="text-xl sm:text-3xl font-extrabold text-sigmaNavy tracking-tight leading-none mb-1">Sigma PhD</h1>
-                        <h2 class="text-xs sm:text-sm font-bold text-sigmaGreen italic font-serif leading-none tracking-wide">Central Multi-Company Universal Portal</h2>
+                        <h1 id="headerTitle" class="text-xl sm:text-3xl font-extrabold text-sigmaNavy tracking-tight leading-none mb-1">Sigma PhD</h1>
+                        <h2 id="headerSubtitle" class="text-xs sm:text-sm font-bold text-sigmaGreen italic font-serif leading-none tracking-wide">Advanced Productivity Research, Solutions & Visuality</h2>
                     </div>
+                </div>
+                <div class="text-right hidden sm:block font-mono text-xs">
+                    <div class="font-bold text-sigmaNavy">REG. NO: REG-894520-BD</div>
+                    <div class="text-[11px] text-sigmaGreen italic">www.sigmaphd.com</div>
+                </div>
+            </div>
+
+            <div class="mt-2.5 flex items-center h-7 font-sans text-[11px] font-bold">
+                <div class="bg-sigmaNavy text-white px-3 sm:px-5 h-full flex items-center poly-badge min-w-[160px] sm:min-w-[210px] shadow">
+                    <span class="text-yellow-300 mr-1.5">পোর্টাল মোড:</span> ইউনিভার্সাল গেটওয়ে
+                </div>
+                <div class="bg-gradient-to-r from-sigmaGreen via-emerald-600 to-teal-600 text-white flex-grow h-full flex items-center justify-center px-4 poly-website text-xs font-bold tracking-wider shadow">
+                    Central Company WebView Cloud Connected Portal
                 </div>
             </div>
         </header>
 
-        <!-- MAIN GATEWAY AREA -->
-        <main id="sigmaMainBody" class="flex-grow p-3 sm:p-6 flex flex-col justify-start relative">
+        <!-- MAIN CONTENT AREA -->
+        <main class="flex-grow pad-watermark p-3 sm:p-6 flex flex-col justify-start relative">
 
-            <!-- GATEWAY SELECTION VIEW -->
+            <!-- 1. INITIAL GATEWAY SELECTION VIEW -->
             <div id="gatewaySelectionView" class="w-full max-w-md mx-auto fade-in my-auto space-y-4">
-                <div class="bg-white p-6 rounded-2xl shadow-2xl border border-purple-300 text-center">
+                <div class="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-2xl border border-purple-300 text-center">
                     <div class="mb-4 p-3 bg-gradient-to-r from-sigmaNavy to-purple-900 text-white rounded-xl shadow">
                         <i class="fa-solid fa-atom text-3xl mb-1 text-amber-300"></i>
                         <h3 class="text-lg font-bold">সিগমা পিএইচডি সেন্ট্রাল পোর্টাল</h3>
@@ -97,9 +122,9 @@
                 </div>
             </div>
 
-            <!-- COMPANY LOGIN VIEW -->
+            <!-- 2. COMPANY LOGIN VIEW -->
             <div id="companyLoginView" class="hidden w-full max-w-md mx-auto fade-in my-auto">
-                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-emerald-300 text-center">
+                <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-emerald-300 text-center">
                     <div class="flex justify-between items-center mb-3">
                         <button onclick="backToGateway()" class="text-xs text-sigmaNavy font-bold hover:underline"><i class="fa-solid fa-arrow-left"></i> ব্যাক</button>
                         <span class="text-xs font-bold text-emerald-700 font-mono">3-Column Database Auth</span>
@@ -108,6 +133,7 @@
                     <div class="mb-4 p-3 bg-gradient-to-r from-sigmaNavy to-sigmaGreen text-white rounded-xl shadow">
                         <i class="fa-solid fa-key text-3xl mb-1 text-amber-300"></i>
                         <h3 class="text-lg font-bold">কোম্পানি আইডি ও পাসওয়ার্ড লগইন</h3>
+                        <p class="text-[11px] text-gray-200">আইডি ও পাসওয়ার্ড দিয়ে ডাটাবেজ থেকে ফুল HTML লেআউট লোড করুন</p>
                     </div>
 
                     <div id="companyLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
@@ -126,19 +152,21 @@
                 </div>
             </div>
 
-            <!-- SUPER ADMIN LOGIN VIEW -->
+            <!-- 3. SUPER ADMIN LOGIN VIEW -->
             <div id="superAdminLoginView" class="hidden w-full max-w-md mx-auto fade-in my-auto">
-                <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-2xl border border-purple-300 text-center">
+                <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-purple-300 text-center">
                     <div class="flex justify-between items-center mb-3">
                         <button onclick="backToGateway()" class="text-xs text-sigmaNavy font-bold hover:underline"><i class="fa-solid fa-arrow-left"></i> ব্যাক</button>
+                        <span class="text-xs font-bold text-purple-700 font-mono">Master Vault Auth</span>
                     </div>
 
                     <div class="mb-4 p-3 bg-gradient-to-r from-sigmaNavy to-purple-900 text-white rounded-xl shadow">
                         <i class="fa-solid fa-user-shield text-3xl mb-1 text-amber-300"></i>
-                        <h3 class="text-lg font-bold">সুপার এডমিন লগইন</h3>
+                        <h3 class="text-lg font-bold">সুপার এডমিন লগইন (Super Admin)</h3>
+                        <p class="text-[11px] text-gray-200">নতুন কোম্পানি এন্ট্রি ও লেআউট ম্যানেজমেন্টের জন্য লগইন করুন</p>
                     </div>
 
-                    <div id="superAdminLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border text-left"></div>
+                    <div id="adminLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
 
                     <form onsubmit="handleSuperAdminLogin(event)" class="space-y-4 text-left">
                         <div>
@@ -149,42 +177,178 @@
                             <label class="block text-xs font-bold text-gray-700 mb-1">পাসওয়ার্ড</label>
                             <input type="password" id="superAdminPass" value="sigma789#" required placeholder="পাসওয়ার্ড দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
-                        <button type="submit" id="superAdminLoginBtn" class="w-full py-3 bg-gradient-to-r from-purple-700 to-indigo-800 text-white font-bold rounded-lg shadow-lg">লগইন করুন</button>
+                        <button type="submit" id="superAdminLoginBtn" class="w-full py-3 bg-gradient-to-r from-purple-700 to-indigo-800 text-white font-bold rounded-lg shadow-lg hover:opacity-95">লগইন করুন</button>
                     </form>
                 </div>
             </div>
 
-            <!-- SUPER ADMIN DASHBOARD PANEL -->
+            <!-- 4. SUPER ADMIN DASHBOARD & MANAGEMENT PANEL -->
             <div id="superAdminDashboard" class="hidden space-y-4 fade-in w-full">
-                <div class="bg-white rounded-xl p-3 shadow border flex justify-between items-center">
-                    <span class="font-extrabold text-sigmaNavy text-sm">সুপার এডমিন মাস্টার কন্ট্রোল</span>
-                    <button onclick="handleAdminLogout()" class="text-xs text-red-600 font-bold px-3 py-1 rounded border border-red-200">লগআউট</button>
-                </div>
-                <!-- 3-Column Company Registration Form -->
-                <div class="bg-white rounded-xl p-4 border shadow">
-                    <h3 class="text-xs font-bold mb-3 border-b pb-1">নতুন কোম্পানি এন্ট্রি (company_id, secret_pass, layout_settings)</h3>
-                    <form onsubmit="submitNewCompanyData(event)" class="space-y-3 text-xs">
-                        <div class="grid grid-cols-2 gap-2">
-                            <input type="number" id="cId" required placeholder="Company ID (101)" class="border p-2 rounded">
-                            <input type="text" id="cPass" required placeholder="Secret Pass" class="border p-2 rounded">
+                
+                <div class="bg-white/95 backdrop-blur-md rounded-xl p-3 shadow-md border flex flex-col sm:flex-row justify-between items-center gap-3">
+                    <div class="flex items-center gap-2">
+                        <div class="w-9 h-9 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-crown"></i>
                         </div>
-                        <textarea id="cLayoutHtml" rows="5" required placeholder="Paste Full Company HTML Layout here..." class="w-full border p-2 rounded font-mono"></textarea>
-                        <button type="submit" class="px-4 py-2 bg-sigmaGreen text-white font-bold rounded">সংরক্ষণ করুন</button>
+                        <div>
+                            <span class="font-extrabold text-sigmaNavy text-sm">সুপার এডমিন মাস্টার কন্ট্রোল</span>
+                            <p class="text-[10px] text-gray-500">Sigma PhD 3-Column Database Manager</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="openAdminPasswordModal()" class="px-3 py-1.5 bg-gradient-to-r from-sigmaNavy to-blue-800 text-white text-xs font-bold rounded-lg shadow">পাসওয়ার্ড পরিবর্তন</button>
+                        <button onclick="handleAdminLogout()" class="text-xs text-red-600 font-bold px-3 py-1.5 rounded-lg border border-red-200 hover:bg-red-50">লগআউট</button>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-sigmaNavy via-sigmaBlue to-sigmaPurple rounded-xl p-3 shadow-lg text-white">
+                    <div class="text-xs font-bold text-amber-300 mb-2"><i class="fa-solid fa-bars-progress"></i> নেভিগেশন টুলস:</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <label onclick="switchAdminNav('registerForm')" class="flex items-center gap-2 p-2.5 rounded-lg bg-white/10 border border-purple-300 cursor-pointer hover:bg-white/20 transition">
+                            <input type="radio" name="adminNavOpt" id="radioReg" checked class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-purple-200"><i class="fa-solid fa-building-circle-arrow-right"></i> নতুন কোম্পানি এন্ট্রি ফরম</div>
+                        </label>
+                        <label onclick="switchAdminNav('companyList')" class="flex items-center gap-2 p-2.5 rounded-lg bg-white/10 border border-purple-300 cursor-pointer hover:bg-white/20 transition">
+                            <input type="radio" name="adminNavOpt" id="radioList" class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-purple-200"><i class="fa-solid fa-list-check"></i> কোম্পানির তালিকা</div>
+                        </label>
+                        <label onclick="switchAdminNav('sqlConsole')" class="flex items-center gap-2 p-2.5 rounded-lg bg-white/10 border border-purple-300 cursor-pointer hover:bg-white/20 transition">
+                            <input type="radio" name="adminNavOpt" id="radioSql" class="accent-orange-500">
+                            <div class="text-xs font-extrabold text-amber-300"><i class="fa-solid fa-terminal"></i> PostgreSQL SQL Editor</div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- TAB 1: NEW COMPANY REGISTRATION FORM -->
+                <div id="tabRegisterForm" class="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-purple-300 fade-in">
+                    <h3 class="text-sm font-bold text-sigmaNavy mb-4 border-b pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-plus text-sigmaGreen text-base"></i> নতুন কোম্পানি এন্ট্রি ফরম (৩-কলাম বিশিষ্ট ডেটাবেজ)
+                    </h3>
+                    
+                    <form id="companyEntryForm" onsubmit="submitNewCompanyData(event)" class="space-y-4 text-xs">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">কোম্পানি আইডি (`company_id`) - যেমন: 101, 110</label>
+                                <input type="number" id="cId" required placeholder="101" class="w-full border p-2.5 rounded font-mono font-bold bg-gray-50">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">সিক্রেট পাসওয়ার্ড (`secret_pass`)</label>
+                                <input type="text" id="cPass" required value="101pass" placeholder="পাসওয়ার্ড দিন..." class="w-full border p-2.5 rounded font-mono">
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl space-y-3 shadow-sm">
+                            <div class="font-extrabold text-purple-900 border-b border-purple-200 pb-1 flex items-center gap-2">
+                                <i class="fa-solid fa-code text-purple-700"></i> লেআউট সেটিংস (`layout_settings` - সম্পূর্ণ HTML কোড):
+                            </div>
+                            <div>
+                                <label class="block font-bold text-gray-700 mb-1">সম্পূর্ণ এইচটিএমএল কোড (Full HTML Code for this Company)</label>
+                                <textarea id="cLayoutHtml" rows="6" required placeholder='<!DOCTYPE html><html>...আপনার কোম্পানির ফুল এইচটিএমএল কোড এখানে পেস্ট করুন...</html>' class="w-full border p-3 rounded font-mono bg-white text-xs"></textarea>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-gradient-to-r from-sigmaGreen to-emerald-700 hover:opacity-95 text-white font-bold rounded-lg shadow-lg">
+                            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> ডেটাবেজে নতুন কোম্পানি সংরক্ষণ করুন
+                        </button>
                     </form>
                 </div>
+
+                <!-- TAB 2: REGISTERED COMPANIES LIST -->
+                <div id="tabCompanyList" class="hidden bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-purple-300 fade-in">
+                    <h3 class="text-sm font-bold text-sigmaNavy mb-3 border-b pb-2 flex items-center justify-between">
+                        <span><i class="fa-solid fa-building text-sigmaBlue"></i> ডেটাবেজে নিবন্ধিত সকল কোম্পানির তালিকা (3 Columns)</span>
+                        <button onclick="fetchAllCompanies()" class="px-3 py-1 bg-sigmaNavy text-white rounded text-[11px] font-bold"><i class="fa-solid fa-rotate"></i> রিফ্রেশ</button>
+                    </h3>
+                    <div class="overflow-x-auto custom-scrollbar">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-sigmaNavy text-white uppercase text-[10px]">
+                                <tr>
+                                    <th class="p-2.5">Company ID</th>
+                                    <th class="p-2.5">Secret Pass</th>
+                                    <th class="p-2.5">Layout Settings (HTML Payload Status)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="companyTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- TAB 3: POSTGRESQL SQL EDITOR CONSOLE -->
+                <div id="tabSqlConsole" class="hidden bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-amber-400 fade-in">
+                    <h3 class="text-sm font-bold text-sigmaNavy mb-2 border-b pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-terminal text-amber-600"></i> PostgreSQL SQL Editor Console
+                    </h3>
+                    <p class="text-[11px] text-gray-500 mb-3">এখানে যেকোনো Postgres SQL কুয়েরি লিখে রান করুন।</p>
+                    
+                    <div class="space-y-3 mb-4">
+                        <textarea id="sqlConsoleInput" rows="4" placeholder="যেমন: SELECT * FROM public.companies;" 
+                                  class="w-full bg-gray-900 border border-gray-700 rounded-lg p-3 text-xs font-mono text-emerald-400 focus:outline-none"></textarea>
+                        <div class="flex justify-between items-center">
+                            <span id="sqlConsoleStatus" class="text-[11px] font-semibold text-amber-600">Ready to execute query.</span>
+                            <div class="flex gap-2">
+                                <button onclick="document.getElementById('sqlConsoleInput').value=''" class="px-3 py-1.5 bg-gray-500 hover:bg-gray-600 text-white font-bold text-xs rounded shadow">Clear</button>
+                                <button onclick="runCustomSqlConsoleQuery()" class="px-5 py-1.5 bg-gradient-to-r from-emerald-600 to-green-700 hover:opacity-90 text-white font-bold text-xs rounded shadow flex items-center gap-1.5">
+                                    <i class="fa-solid fa-play"></i> Run Query
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-gray-50 border rounded-lg text-xs font-mono text-gray-700 max-h-40 overflow-y-auto" id="sqlConsoleOutputBox">
+                        Output results will appear here...
+                    </div>
+                </div>
+
             </div>
 
         </main>
 
-        <!-- SIGMA FOOTER (কোম্পানি লোড হলে এটি গায়েব হয়ে যাবে) -->
-        <footer id="sigmaFooter" class="bg-white border-t-2 border-sigmaGreen py-2 px-4 text-center text-xs font-mono">
-            Sigma PhD Central Management & Visuality Platform &copy; 2026
+        <!-- FOOTER -->
+        <footer id="mainFooter" class="bg-white flex-shrink-0 border-t-2 border-sigmaGreen">
+            <div class="grid grid-cols-1 md:grid-cols-12 h-auto text-white font-sans text-xs">
+                <div class="md:col-span-7 bg-sigmaGreen px-4 py-3 flex flex-col justify-center gap-0.5" id="footerLeftBox">
+                    <div class="font-bold" id="footerTitleText">Advanced Productivity Research, Solutions & Visuality</div>
+                    <div class="text-[11px] opacity-90 font-mono">REG. NO: REG-894520-BD</div>
+                </div>
+                <div class="md:col-span-5 bg-gradient-to-r from-sigmaNavy to-purple-900 px-4 py-3 flex flex-col justify-center items-start md:items-end gap-0.5">
+                    <div class="font-mono font-bold">Mobile : +880 1818-589423</div>
+                    <div class="font-mono text-amber-300 text-[11px]">E-mail : info@sigmaphd.com</div>
+                </div>
+            </div>
         </footer>
     </div>
 
-    <!-- PURE FULLSCREEN HOLDER FOR LOADED COMPANY HTML -->
-    <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50 overflow-y-auto">
-        <!-- কোম্পানী পেজটি স্ক্রিনজুড়ে একদম নেটিভ অ্যাপের মতো রেন্ডার হবে -->
+    <!-- FULLSCREEN DYNAMIC HOLDER FOR LOADED COMPANY HTML (সিগমা হেডার/ফুটার টোটালি হাইড করে কোম্পানি পেজ রেন্ডার করার জন্য) -->
+    <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50 overflow-y-auto"></div>
+
+    <!-- ADMIN PASSWORD CHANGE MODAL -->
+    <div id="adminPasswordModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4" onclick="if(event.target === this) closeAdminPasswordModal()">
+        <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl relative">
+            <button onclick="closeAdminPasswordModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-700 font-bold text-lg px-2 py-1">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h4 class="text-sm font-bold text-sigmaNavy mb-3 flex items-center gap-2">
+                <i class="fa-solid fa-key text-sigmaGreen"></i> সুপার এডমিন পাসওয়ার্ড পরিবর্তন
+            </h4>
+            <form onsubmit="handleAdminPasswordChange(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-[10px] text-gray-500 mb-1">এডমিন মোবাইল নাম্বার</label>
+                    <input type="tel" id="adminVerifyMobile" required placeholder="যেমন: +8801818589423" class="w-full border p-2 rounded font-mono">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-500 mb-1">পুরাতন পাসওয়ার্ড</label>
+                    <input type="password" id="adminOldPass" required placeholder="পুরাতন পাসওয়ার্ড..." class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-500 mb-1">নতুন পাসওয়ার্ড</label>
+                    <input type="password" id="adminNewPass" required placeholder="নতুন পাসওয়ার্ড..." class="w-full border p-2 rounded">
+                </div>
+                <div>
+                    <label class="block text-[10px] text-gray-500 mb-1">কনফার্ম পাসওয়ার্ড</label>
+                    <input type="password" id="adminConfirmPass" required placeholder="পুনরায় নতুন পাসওয়ার্ড..." class="w-full border p-2 rounded">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-sigmaGreen hover:bg-emerald-700 text-white font-bold rounded shadow">পাসওয়ার্ড আপডেট করুন</button>
+            </form>
+        </div>
     </div>
 
     <!-- JAVASCRIPT LOGIC -->
@@ -209,7 +373,7 @@
             document.getElementById('gatewaySelectionView').classList.remove('hidden');
         }
 
-        // --- COMPANY LOGIN & FULLSCREEN HTML RENDER ---
+        // --- COMPANY LOGIN & FULLSCREEN RENDER (FIXED & MATCHING 3-COLUMN SCHEMA) ---
         async function handleCompanyLogin(e) {
             e.preventDefault();
             const compIdInput = document.getElementById('loginCompanyId').value.trim();
@@ -239,15 +403,17 @@
                     return;
                 }
 
+                // Extrapolate layout HTML from layout_settings JSONB column
                 let fullHtml = "";
-                if (typeof data.layout_settings === 'object' && data.layout_settings !== null) {
-                    fullHtml = data.layout_settings.full_html || data.layout_settings.custom_html || "";
-                } else if (typeof data.layout_settings === 'string') {
+                const settings = data.layout_settings;
+                if (typeof settings === 'object' && settings !== null) {
+                    fullHtml = settings.full_html || settings.custom_html || "";
+                } else if (typeof settings === 'string') {
                     try {
-                        let parsed = JSON.parse(data.layout_settings);
-                        fullHtml = parsed.full_html || parsed.custom_html || data.layout_settings;
+                        let parsed = JSON.parse(settings);
+                        fullHtml = parsed.full_html || parsed.custom_html || settings;
                     } catch(ex) {
-                        fullHtml = data.layout_settings;
+                        fullHtml = settings;
                     }
                 }
 
@@ -256,15 +422,13 @@
                     return;
                 }
 
-                // HIDE SIGMA WRAPPER AND SHOW FULLSCREEN COMPANY HOLDER
+                // HIDE SIGMA WRAPPER & RENDER FULLSCREEN COMPANY LAYOUT
                 document.getElementById('sigmaMainWrapper').classList.add('hidden');
                 const fullscreenHolder = document.getElementById('fullScreenCompanyHolder');
                 fullscreenHolder.classList.remove('hidden');
-
-                // DYNAMIC INJECTION
                 fullscreenHolder.innerHTML = fullHtml;
 
-                // RE-EVALUATE SCRIPTS
+                // Execute embedded scripts safely
                 const scripts = fullscreenHolder.querySelectorAll("script");
                 scripts.forEach(oldScript => {
                     const newScript = document.createElement("script");
@@ -287,14 +451,19 @@
             errBox.classList.remove('hidden');
         }
 
-        // --- SUPER ADMIN LOGIN LOGIC ---
+        // --- SUPER ADMIN LOGIN ---
         async function handleSuperAdminLogin(e) {
             e.preventDefault();
             const id = document.getElementById('superAdminId').value.trim();
             const pass = document.getElementById('superAdminPass').value.trim();
-            const errBox = document.getElementById('superAdminLoginError');
+            const errBox = document.getElementById('adminLoginError');
+            const submitBtn = document.getElementById('superAdminLoginBtn');
             
             if(errBox) errBox.classList.add('hidden');
+            if(submitBtn) {
+                submitBtn.innerText = "লগইন হচ্ছে...";
+                submitBtn.disabled = true;
+            }
 
             let validAdminId = "sigmaphd";
             let validPass = "sigma789#";
@@ -310,11 +479,16 @@
             if (id === validAdminId && pass === validPass) {
                 document.getElementById('superAdminLoginView').classList.add('hidden');
                 document.getElementById('superAdminDashboard').classList.remove('hidden');
+                switchAdminNav('registerForm');
             } else {
                 if(errBox) {
                     errBox.innerText = "ভুল সুপার এডমিন আইডি বা পাসওয়ার্ড!";
                     errBox.classList.remove('hidden');
                 }
+            }
+            if(submitBtn) {
+                submitBtn.innerText = "লগইন করুন";
+                submitBtn.disabled = false;
             }
         }
 
@@ -323,25 +497,173 @@
             document.getElementById('superAdminLoginView').classList.remove('hidden');
         }
 
+        // PASSWORD CHANGE MODAL & LOGIC
+        function openAdminPasswordModal() {
+            document.getElementById('adminVerifyMobile').value = '';
+            document.getElementById('adminOldPass').value = '';
+            document.getElementById('adminNewPass').value = '';
+            document.getElementById('adminConfirmPass').value = '';
+            document.getElementById('adminPasswordModal').classList.remove('hidden');
+        }
+
+        function closeAdminPasswordModal() {
+            document.getElementById('adminPasswordModal').classList.add('hidden');
+        }
+
+        async function handleAdminPasswordChange(e) {
+            e.preventDefault();
+            const mobileInput = document.getElementById('adminVerifyMobile').value.trim();
+            const oldPass = document.getElementById('adminOldPass').value.trim();
+            const newPass = document.getElementById('adminNewPass').value.trim();
+            const confirmPass = document.getElementById('adminConfirmPass').value.trim();
+
+            if (newPass !== confirmPass) {
+                alert('নতুন পাসওয়ার্ড এবং কনফার্ম পাসওয়ার্ড এক নয়!');
+                return;
+            }
+
+            const { data: vaultData } = await supabaseClient.from('super_admin_vault').select('*').eq('admin_key', 'master_super').maybeSingle();
+            if (!vaultData) {
+                alert('সুপার এডমিন ডেটাবেজ রেকর্ড পাওয়া যায়নি!');
+                return;
+            }
+
+            if (mobileInput !== vaultData.admin_mobile) {
+                alert('এডমিন মোবাইল নম্বরটি সঠিক নয় বা সত্যয়ন মেলেনি!');
+                return;
+            }
+
+            if (oldPass !== vaultData.password) {
+                alert('পুরাতন পাসওয়ার্ড ভুল হয়েছে!');
+                return;
+            }
+
+            const { error } = await supabaseClient.from('super_admin_vault').update({
+                password: newPass
+            }).eq('admin_key', 'master_super');
+
+            if (error) {
+                alert('পাসওয়ার্ড আপডেট করতে সমস্যা হয়েছে: ' + error.message);
+                return;
+            }
+
+            alert('সুপার এডমিন পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে! এখন নতুন পাসওয়ার্ড দিয়ে আবার লগইন করুন।');
+            closeAdminPasswordModal();
+            handleAdminLogout();
+        }
+
+        // NAV TABS SWITCHING
+        function switchAdminNav(target) {
+            document.getElementById('tabRegisterForm').classList.add('hidden');
+            document.getElementById('tabCompanyList').classList.add('hidden');
+            document.getElementById('tabSqlConsole').classList.add('hidden');
+
+            if (target === 'registerForm') {
+                document.getElementById('tabRegisterForm').classList.remove('hidden');
+                document.getElementById('radioReg').checked = true;
+            } else if (target === 'companyList') {
+                document.getElementById('tabCompanyList').classList.remove('hidden');
+                document.getElementById('radioList').checked = true;
+                fetchAllCompanies();
+            } else if (target === 'sqlConsole') {
+                document.getElementById('tabSqlConsole').classList.remove('hidden');
+                document.getElementById('radioSql').checked = true;
+            }
+        }
+
+        // --- SUBMIT NEW COMPANY TO 3-COLUMN SUPABASE SCHEMA ---
         async function submitNewCompanyData(e) {
             e.preventDefault();
+
             const cId = parseInt(document.getElementById('cId').value);
             const cPass = document.getElementById('cPass').value.trim();
             const cLayoutHtml = document.getElementById('cLayoutHtml').value.trim();
 
+            const companyPayload = {
+                company_id: cId,
+                secret_pass: cPass,
+                layout_settings: {
+                    full_html: cLayoutHtml
+                }
+            };
+
             const { error } = await supabaseClient
                 .from('companies')
-                .upsert([{
-                    company_id: cId,
-                    secret_pass: cPass,
-                    layout_settings: { full_html: cLayoutHtml }
-                }], { onConflict: 'company_id' });
+                .upsert([companyPayload], { onConflict: 'company_id' });
 
             if (error) {
-                alert("কোম্পানি এন্ট্রি সমস্যা: " + error.message);
+                alert("কোম্পানি এন্ট্রি করতে সমস্যা হয়েছে: " + error.message);
                 return;
             }
+
             alert(`কোম্পানি আইডি (${cId}) সফলভাবে ৩-কলাম বিশিষ্ট ডেটাবেজে সংরক্ষিত হয়েছে!`);
+            document.getElementById('companyEntryForm').reset();
+        }
+
+        // --- FETCH ALL REGISTERED COMPANIES ---
+        async function fetchAllCompanies() {
+            const tbody = document.getElementById('companyTableBody');
+            tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center">লোড হচ্ছে...</td></tr>`;
+
+            const { data, error } = await supabaseClient.from('companies').select('*').order('company_id', { ascending: true });
+            tbody.innerHTML = '';
+
+            if (error || !data || data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-gray-500">কোনো কোম্পানি পাওয়া যায়নি।</td></tr>`;
+                return;
+            }
+
+            data.forEach(c => {
+                let htmlSnippet = JSON.stringify(c.layout_settings || {});
+                if (htmlSnippet.length > 60) htmlSnippet = htmlSnippet.substring(0, 60) + "...";
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-gray-50">
+                        <td class="p-2.5 font-mono font-bold text-sigmaNavy">${c.company_id}</td>
+                        <td class="p-2.5 font-mono text-sigmaGreen">${c.secret_pass}</td>
+                        <td class="p-2.5 font-mono text-gray-600 text-[10px]">${htmlSnippet}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        // SQL CONSOLE QUERY RUNNER
+        async function runCustomSqlConsoleQuery() {
+            const sqlQuery = document.getElementById('sqlConsoleInput').value.trim();
+            const outputBox = document.getElementById('sqlConsoleOutputBox');
+            const statusBox = document.getElementById('sqlConsoleStatus');
+
+            if (!sqlQuery) {
+                alert('দয়া করে কোনো SQL কুয়েরি লিখুন!');
+                return;
+            }
+
+            statusBox.innerText = "Executing query...";
+            outputBox.innerText = "Processing...";
+
+            try {
+                let lowerQuery = sqlQuery.toLowerCase();
+                
+                if (lowerQuery.startsWith('select')) {
+                    let parts = sqlQuery.split(/from\s+/i);
+                    if (parts.length > 1) {
+                        let tableName = parts[1].trim().split(/\s+/)[0].replace(/;/g, '').replace(/"/g, '');
+                        const { data, error } = await supabaseClient.from(tableName).select('*').limit(20);
+                        if (error) throw error;
+                        outputBox.innerText = JSON.stringify(data, null, 2);
+                        statusBox.innerText = "Query executed successfully (SELECT).";
+                    } else {
+                        outputBox.innerText = "Query format needs a valid FROM table clause.";
+                        statusBox.innerText = "Preview limitation notice.";
+                    }
+                } else {
+                    outputBox.innerText = "SQL Console Note: For DDL/DML queries, please run them directly in your Supabase Dashboard SQL Editor.\n\nQuery received:\n" + sqlQuery;
+                    statusBox.innerText = "Query logged.";
+                }
+            } catch (err) {
+                outputBox.innerText = "Error: " + err.message;
+                statusBox.innerText = "Execution failed.";
+            }
         }
     </script>
 </body>
