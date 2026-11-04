@@ -325,7 +325,7 @@
                             <table id="userTransactionTable" class="w-full text-left text-xs border-collapse min-w-[850px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">বিবরণ</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">ধারাবাহিক যোগফল (রানিং ব্যালেন্স)</th>
+                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5">বিবরণ</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">ধারাবাহিক যোগফল (রানিং ব্যালেন্স)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="transactionTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
@@ -522,7 +522,7 @@
                             <table id="adminTransactionTable" class="w-full text-left text-xs border-collapse min-w-[850px]">
                                 <thead>
                                     <tr class="bg-alnawaNavy text-white uppercase text-[10px]">
-                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">ইউজার আইডি</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">ধারাবাহিক যোগফল (রানিং ব্যালেন্স)</th>
+                                        <th class="p-2.5">তারিখ ও সময়</th><th class="p-2.5">ইউজার আইডি</th><th class="p-2.5">প্রেরক ব্যাংক</th><th class="p-2.5">গ্রহণকারী ব্যাংক</th><th class="p-2.5 text-center">লেনদেনের ধরন</th><th class="p-2.5 text-center">স্ট্যাটাস</th><th class="p-2.5">বিবরণ</th><th class="p-2.5 text-right">পরিমাণ</th><th class="p-2.5 text-right">ধারাবাহিক যোগফল (রানিং ব্যালেন্স)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="adminTransactionTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
@@ -734,7 +734,7 @@
 
             if (data && data.length > 0) {
                 data.forEach(u => {
-                    const mId = u.user_id || u['User ID'] || '1001';
+                    const mId = u.user_id || '1001';
                     const name = u.name || u['নাম'] || 'User';
                     const opt = `<option value="${mId}">${mId} - ${name}</option>`;
                     if (witSel) witSel.innerHTML += opt;
@@ -744,10 +744,10 @@
                 const { data: fallbackData } = await supabaseClient.from('IND').select('*');
                 if (fallbackData) {
                     fallbackData.forEach(u => {
-                        const compId = u['Company ID'] || u.company_id || 1;
-                        const uId = u['User ID'] || u.user_id || 1;
+                        const compId = u.company_id || u['Company ID'] || 1;
+                        const uId = u.user_id || u['User ID'] || 1;
                         const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
-                        const opt = `<option value="${mergedId}">${mergedId} - ${u['Name'] || 'User'}</option>`;
+                        const opt = `<option value="${mergedId}">${mergedId} - ${u.name || u['Name'] || u['নাম'] || 'User'}</option>`;
                         if (witSel) witSel.innerHTML += opt;
                         if (invSel) invSel.innerHTML += opt;
                     });
@@ -847,7 +847,7 @@
             if (masterData) {
                 userRecord = masterData;
             } else {
-                const { data: indData } = await supabaseClient.from('IND').select('*').eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId).maybeSingle();
+                const { data: indData } = await supabaseClient.from('IND').select('*').eq('company_id', loggedInCompanyId).eq('user_id', loggedInUserId).maybeSingle();
                 userRecord = indData;
             }
 
@@ -911,7 +911,7 @@
             const nomineeMobile = data.nominee_mobile || data['নমিনীর মোবাইল নাম্বার'] || data['Wife Mobile'] || 'সংরক্ষিত নেই';
             
             let totalInv = data.total_investment || 0;
-            const { data: invs } = await supabaseClient.from('investments').select('amount').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
+            const { data: invs } = await supabaseClient.from('investments').select('amount').or(`user_id.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
             if (invs) {
                 if(!data.total_investment) totalInv = invs.reduce((s, i) => s + (Number(i.amount) || 0), 0);
             }
@@ -1148,7 +1148,7 @@
             const registeredMobile = currentUserData.mobile || currentUserData['মোবাইল নাম্বার '] || currentUserData['mobile'];
             if (mobileInput !== registeredMobile) { alert('মোবাইল নম্বরটি সঠিক নয়!'); return; }
 
-            const { error } = await supabaseClient.from('IND').update({ password: newPass }).eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId);
+            const { error } = await supabaseClient.from('IND').update({ password: newPass }).eq('company_id', loggedInCompanyId).eq('user_id', loggedInUserId);
             await supabaseClient.from('master_user_summary').update({ password: newPass }).eq('user_id', fullMergedUserId);
             
             if (error) { alert('পাসওয়ার্ড আপডেট করতে সমস্যা হয়েছে: ' + error.message); return; }
@@ -1168,8 +1168,8 @@
             if (!data || data.length === 0) { tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center">No users found</td></tr>`; return; }
             
             data.forEach(u => {
-                const compId = u['Company ID'] || u.company_id || 1;
-                const uId = u['User ID'] || u.user_id || 1;
+                const compId = u.company_id || u['Company ID'] || 1;
+                const uId = u.user_id || u['User ID'] || 1;
                 const formattedId = `${compId}${String(uId).padStart(3, '0')}`;
                 const userName = u.name || u['Name'] || u['নাম'] || 'N/A';
                 
@@ -1228,7 +1228,7 @@
 
             data.forEach(row => {
                 const memberNo = row.member_no || row['সদস্য নং'] || '-';
-                const masterId = row.user_id || row['User ID'] || '-';
+                const masterId = row.user_id || '-';
                 const name = row.name || row['নাম'] || '-';
                 const mobile = row.mobile || row['মোবাইল নাম্বার'] || '-';
                 const nid = row.nid || row['জাতীয় পরিচয়পত্র'] || '-';
@@ -1272,7 +1272,7 @@
                 let combined = [];
                 if (investments) {
                     investments.forEach(i => {
-                        const uId = i['User ID'] || i.user_id || '1001';
+                        const uId = i.user_id || '1001';
                         combined.push({ 
                             table: 'investments', 
                             id: i.id, 
@@ -1286,7 +1286,7 @@
                 }
                 if (withdrawals) {
                     withdrawals.forEach(w => {
-                        const uId = w['User ID'] || w.user_id || '1001';
+                        const uId = w.user_id || '1001';
                         combined.push({ 
                             table: 'withdrawals', 
                             id: w.id, 
@@ -1355,7 +1355,7 @@
         async function fetchAdminAllTransactions() {
             const tbody = document.getElementById('adminTransactionTableBody');
             if(!tbody) return;
-            tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
 
             const { data: investments } = await supabaseClient.from('investments').select('*');
             const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*');
@@ -1366,11 +1366,12 @@
                     allTransactions.push({ 
                         dateTime: String(i.created_at || '').replace('T', ' ').substring(0, 16), 
                         rawDate: new Date(i.created_at || Date.now()), 
-                        userId: i['User ID'] || i.user_id || '1001',
+                        userId: i.user_id || '1001',
                         fromBank: i.from_bank, 
                         toBank: i.to_bank, 
                         typeLabel: 'ইনভেস্টমেন্ট (+)', 
                         status: i.status || 'pending', 
+                        desc: i.description || 'ইনভেস্টমেন্ট',
                         amount: Number(i.amount) || 0, 
                         type: 'inv' 
                     });
@@ -1381,11 +1382,12 @@
                     allTransactions.push({ 
                         dateTime: String(w.created_at || '').replace('T', ' ').substring(0, 16), 
                         rawDate: new Date(w.created_at || Date.now()), 
-                        userId: w['User ID'] || w.user_id || '1001',
+                        userId: w.user_id || '1001',
                         fromBank: w.withdrawal_bank, 
                         toBank: w.company_account, 
                         typeLabel: 'উত্তোলিত (-)', 
                         status: w.status || 'pending', 
+                        desc: w.description || 'উইথড্রল',
                         amount: Number(w.amount) || 0, 
                         type: 'wit' 
                     });
@@ -1408,7 +1410,7 @@
             allTransactions.sort((a, b) => b.rawDate - a.rawDate);
 
             tbody.innerHTML = '';
-            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; return; }
+            if (allTransactions.length === 0) { tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center">কোনো ট্রানজেকশন নেই।</td></tr>`; return; }
 
             allTransactions.forEach(item => {
                 const isWithdraw = item.type === 'wit';
@@ -1420,6 +1422,7 @@
                         <td class="p-2.5">${item.toBank}</td>
                         <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
                         <td class="p-2.5 text-center font-semibold">${item.status}</td>
+                        <td class="p-2.5 text-gray-800">${item.desc}</td>
                         <td class="p-2.5 text-right font-mono">${isWithdraw ? '-' : ''}৳ ${item.amount.toLocaleString()}</td>
                         <td class="p-2.5 text-right font-mono font-bold text-alnawaGreen">${item.cumulative === '-' ? '-' : '৳ ' + item.cumulative.toLocaleString()}</td>
                     </tr>
@@ -1432,8 +1435,8 @@
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
 
-            const { data: investments } = await supabaseClient.from('investments').select('*').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
-            const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').or(`User ID.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
+            const { data: investments } = await supabaseClient.from('investments').select('*').or(`user_id.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
+            const { data: withdrawals } = await supabaseClient.from('withdrawals').select('*').or(`user_id.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
 
             let allTransactions = [];
             if (investments) {
@@ -1492,11 +1495,11 @@
                 tbody.innerHTML += `
                     <tr class="hover:bg-gray-50">
                         <td class="p-2.5 font-mono text-[10px] text-gray-600">${item.dateTime}</td>
-                        <td class="p-2.5 font-bold text-gray-800">${item.desc}</td>
                         <td class="p-2.5">${item.fromBank}</td>
                         <td class="p-2.5">${item.toBank}</td>
                         <td class="p-2.5 text-center font-bold ${isWithdraw ? 'text-blue-600' : 'text-alnawaGreen'}">${item.typeLabel}</td>
                         <td class="p-2.5 text-center font-semibold">${item.status}</td>
+                        <td class="p-2.5 font-bold text-gray-800">${item.desc}</td>
                         <td class="p-2.5 text-right font-mono">${isWithdraw ? '-' : ''}৳ ${item.amount.toLocaleString()}</td>
                         <td class="p-2.5 text-right font-mono font-bold text-alnawaGreen">${item.cumulative === '-' ? '-' : '৳ ' + item.cumulative.toLocaleString()}</td>
                     </tr>
@@ -1567,7 +1570,7 @@
                         typeLabel: 'Investment', 
                         dateTime: String(i.created_at || '').replace('T', ' ').substring(0, 16), 
                         rawDate: new Date(i.created_at || Date.now()), 
-                        userId: i['User ID'] || i.user_id || '1001', 
+                        userId: i.user_id || '1001', 
                         desc: i.description || 'Investment', 
                         otp: i.otp_pin || '1234#', 
                         amount: Number(i.amount) 
@@ -1582,7 +1585,7 @@
                         typeLabel: 'Withdrawal', 
                         dateTime: String(w.created_at || '').replace('T', ' ').substring(0, 16), 
                         rawDate: new Date(w.created_at || Date.now()), 
-                        userId: w['User ID'] || w.user_id || '1001', 
+                        userId: w.user_id || '1001', 
                         desc: w.description || 'Withdrawal', 
                         otp: '-', 
                         amount: Number(w.amount) 
@@ -1660,9 +1663,8 @@
 
         async function completeInvestmentSubmission() {
             await supabaseClient.from('investments').insert([{
-                'User ID': fullMergedUserId,
                 company_id: loggedInCompanyId,
-                user_id: loggedInUserId,
+                user_id: fullMergedUserId,
                 from_bank: document.getElementById('fromBank').value,
                 to_bank: document.getElementById('toBank').value,
                 amount: parseFloat(document.getElementById('investAmount').value),
@@ -1709,9 +1711,8 @@
 
         async function completeWithdrawalSubmission() {
             const insertData = {
-                'User ID': fullMergedUserId,
                 company_id: loggedInCompanyId,
-                user_id: loggedInUserId,
+                user_id: fullMergedUserId,
                 withdrawal_bank: document.getElementById('withdrawFromBank').value,
                 company_account: document.getElementById('withdrawToBank').value,
                 amount: parseFloat(document.getElementById('withdrawAmount').value),
@@ -1744,9 +1745,8 @@
             }
 
             await supabaseClient.from('investments').insert([{
-                'User ID': targetUser,
                 company_id: compId,
-                user_id: uId,
+                user_id: targetUser,
                 from_bank: document.getElementById('adminInvFromBank').value,
                 to_bank: document.getElementById('adminInvToBank').value,
                 amount: parseFloat(document.getElementById('adminInvAmount').value),
@@ -1769,9 +1769,8 @@
             }
 
             await supabaseClient.from('withdrawals').insert([{
-                'User ID': targetUser,
                 company_id: compId,
-                user_id: uId,
+                user_id: targetUser,
                 withdrawal_bank: document.getElementById('adminWitFromBank').value,
                 company_account: document.getElementById('adminWitToBank').value,
                 amount: parseFloat(document.getElementById('adminWitAmount').value),
