@@ -136,7 +136,7 @@
     <!-- 2. FULLSCREEN SECURE SRCDOC IFRAME HOLDER -->
     <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50"></div>
 
-    <!-- DEBUGGABLE JAVASCRIPT LOGIC -->
+    <!-- FIXED & CORRECTED JAVASCRIPT LOGIC -->
     <script>
         const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkzMjk0MjksImV4cCI6MjA0NDkwOTQyOX0...'; // আপনার সঠিক অ্যানন কী এখানে বসানো আছে
@@ -195,7 +195,7 @@
                 fullHolder.innerHTML = `<iframe id="secureCompanyFrame" style="width:100%; height:100%; border:none;" sandbox="allow-scripts allow-forms allow-same-origin allow-popups"></iframe>`;
                 document.getElementById('secureCompanyFrame').srcdoc = htmlContent;
 
-            } => (err) { // catch block fixed
+            } catch (err) {
                 console.error("Login Error:", err);
                 errorDiv.innerText = 'ত্রুটি: ' + err.message;
                 errorDiv.classList.remove('hidden');
