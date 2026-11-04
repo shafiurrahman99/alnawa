@@ -136,10 +136,10 @@
     <!-- 2. FULLSCREEN SECURE SRCDOC IFRAME HOLDER -->
     <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50"></div>
 
-    <!-- FIXED & CORRECTED JAVASCRIPT LOGIC -->
+    <!-- FINAL INTEGRATED JAVASCRIPT LOGIC -->
     <script>
         const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkzMjk0MjksImV4cCI6MjA0NDkwOTQyOX0...'; // আপনার সঠিক অ্যানন কী এখানে বসানো আছে
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
 
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -161,15 +161,11 @@
                     throw new Error('সঠিক কোম্পানি আইডি প্রদান করুন।');
                 }
 
-                console.log("Searching for Company ID:", companyIdNum);
-
                 const { data, error } = await supabaseClient
                     .from('companies')
                     .select('*')
                     .eq('company_id', companyIdNum)
                     .maybeSingle();
-
-                console.log("Supabase Response - Data:", data, "Error:", error);
 
                 if (error) {
                     throw new Error('ডেটাবেজ কুয়েরি এরর: ' + error.message);
