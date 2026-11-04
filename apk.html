@@ -136,7 +136,7 @@
     <!-- 2. FULLSCREEN SECURE SRCDOC IFRAME HOLDER -->
     <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50"></div>
 
-    <!-- FINAL INTEGRATED JAVASCRIPT LOGIC -->
+    <!-- ROBUST JAVASCRIPT LOGIC -->
     <script>
         const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI5NDMyODMsImV4cCI6MjEwODUxOTI4M30.j-mFeZCsEqraXnZsGPyZLsvIthAweeY2a3ge9wazLzo';
@@ -179,8 +179,22 @@
                     throw new Error('সিক্রেট পাসওয়ার্ড ভুল হয়েছে!');
                 }
 
-                const htmlContent = data.layout_settings?.full_html || '';
-                if (!htmlContent.trim()) {
+                // Robust extraction of full_html whether layout_settings is object or string
+                let htmlContent = '';
+                let rawSettings = data.layout_settings;
+
+                if (typeof rawSettings === 'string') {
+                    try {
+                        const parsed = JSON.parse(rawSettings);
+                        htmlContent = parsed.full_html || rawSettings;
+                    } catch (e) {
+                        htmlContent = rawSettings;
+                    }
+                } else if (typeof rawSettings === 'object' && rawSettings !== null) {
+                    htmlContent = rawSettings.full_html || '';
+                }
+
+                if (!htmlContent || !htmlContent.trim()) {
                     throw new Error('এই কোম্পানির layout_settings এ কোনো HTML কোড সংরক্ষিত নেই!');
                 }
 
