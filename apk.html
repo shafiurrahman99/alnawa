@@ -136,11 +136,11 @@
     <!-- 2. FULLSCREEN SECURE SRCDOC IFRAME HOLDER -->
     <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50"></div>
 
-    <!-- CLEAN & SECURE JAVASCRIPT LOGIC -->
+    <!-- CLEAN & CORRECTED JAVASCRIPT LOGIC -->
     <script>
         // Supabase Credentials
         const SUPABASE_URL = 'https://zooqqmgncgebglskfnpt.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkzMjk0MjksImV4cCI6MjA0NDkwOTQyOX0.YOUR_ACTUAL_KEY_HERE'; // আপনার সঠিক কী এখানে ব্যবহার করুন
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3FxbWduY2dlYmdsc2tmbnB0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkzMjk0MjksImV4cCI6MjA0NDkwOTQyOX0...'; // আপনার সঠিক অ্যানন কী এখানে বসানো আছে
 
         // Initialize Supabase Client safely
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -164,11 +164,11 @@
                     throw new Error('সঠিক কোম্পানি আইডি প্রদান করুন।');
                 }
 
-                // Query Supabase table 'companies'
+                // Query Supabase table 'companies' using correct 'company_id' column
                 const { data, error } = await supabaseClient
                     .from('companies')
                     .select('*')
-                    .eq('id', companyIdNum)
+                    .eq('company_id', companyIdNum)
                     .maybeSingle();
 
                 if (error || !data) {
@@ -180,9 +180,10 @@
                     throw new Error('সিক্রেট পাসওয়ার্ড ভুল হয়েছে!');
                 }
 
-                const htmlContent = data.full_html || '';
+                // Extract full_html from layout_settings JSONB column safely
+                const htmlContent = data.layout_settings?.full_html || '';
                 if (!htmlContent.trim()) {
-                    throw new Error('এই কোম্পানির জন্য কোনো HTML কোড সংরক্ষিত নেই!');
+                    throw new Error('এই কোম্পানির layout_settings এ কোনো HTML কোড সংরক্ষিত নেই!');
                 }
 
                 // Hide Main Layout & Render Fullscreen iFrame
