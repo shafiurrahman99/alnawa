@@ -552,7 +552,7 @@
                                 <thead class="sticky top-0 bg-alnawaNavy text-white text-[10px] uppercase">
                                     <tr>
                                         <th class="p-2">সদস্য নং</th>
-                                        <th class="p-2">মাস্টার আইডি</th>
+                                        <th class="p-2">ইউজার আইডি</th>
                                         <th class="p-2">নাম</th>
                                         <th class="p-2">মোবাইল নাম্বার</th>
                                         <th class="p-2">জাতীয় পরিচয়পত্র</th>
@@ -734,7 +734,7 @@
 
             if (data && data.length > 0) {
                 data.forEach(u => {
-                    const mId = u.master_id || u['User ID'] || '1001';
+                    const mId = u.user_id || u['User ID'] || '1001';
                     const name = u.name || u['নাম'] || 'User';
                     const opt = `<option value="${mId}">${mId} - ${name}</option>`;
                     if (witSel) witSel.innerHTML += opt;
@@ -744,8 +744,8 @@
                 const { data: fallbackData } = await supabaseClient.from('IND').select('*');
                 if (fallbackData) {
                     fallbackData.forEach(u => {
-                        const compId = u['Company ID'] || 1;
-                        const uId = u['User ID'] || 1;
+                        const compId = u['Company ID'] || u.company_id || 1;
+                        const uId = u['User ID'] || u.user_id || 1;
                         const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
                         const opt = `<option value="${mergedId}">${mergedId} - ${u['Name'] || 'User'}</option>`;
                         if (witSel) witSel.innerHTML += opt;
@@ -843,7 +843,7 @@
             fullMergedUserId = uInput;
 
             let userRecord = null;
-            const { data: masterData } = await supabaseClient.from('master_user_summary').select('*').eq('master_id', fullMergedUserId).maybeSingle();
+            const { data: masterData } = await supabaseClient.from('master_user_summary').select('*').eq('user_id', fullMergedUserId).maybeSingle();
             if (masterData) {
                 userRecord = masterData;
             } else {
@@ -1149,7 +1149,7 @@
             if (mobileInput !== registeredMobile) { alert('মোবাইল নম্বরটি সঠিক নয়!'); return; }
 
             const { error } = await supabaseClient.from('IND').update({ password: newPass }).eq('Company ID', loggedInCompanyId).eq('User ID', loggedInUserId);
-            await supabaseClient.from('master_user_summary').update({ password: newPass }).eq('master_id', fullMergedUserId);
+            await supabaseClient.from('master_user_summary').update({ password: newPass }).eq('user_id', fullMergedUserId);
             
             if (error) { alert('পাসওয়ার্ড আপডেট করতে সমস্যা হয়েছে: ' + error.message); return; }
 
@@ -1168,8 +1168,8 @@
             if (!data || data.length === 0) { tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center">No users found</td></tr>`; return; }
             
             data.forEach(u => {
-                const compId = u['Company ID'] || 1;
-                const uId = u['User ID'] || 1;
+                const compId = u['Company ID'] || u.company_id || 1;
+                const uId = u['User ID'] || u.user_id || 1;
                 const formattedId = `${compId}${String(uId).padStart(3, '0')}`;
                 const userName = u.name || u['Name'] || u['নাম'] || 'N/A';
                 
@@ -1228,7 +1228,7 @@
 
             data.forEach(row => {
                 const memberNo = row.member_no || row['সদস্য নং'] || '-';
-                const masterId = row.master_id || row['User ID'] || '-';
+                const masterId = row.user_id || row['User ID'] || '-';
                 const name = row.name || row['নাম'] || '-';
                 const mobile = row.mobile || row['মোবাইল নাম্বার'] || '-';
                 const nid = row.nid || row['জাতীয় পরিচয়পত্র'] || '-';
