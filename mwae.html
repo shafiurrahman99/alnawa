@@ -1,0 +1,1109 @@
+```html
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Develop App - Web Application</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between p-4 sm:p-6">
+
+    <!-- APP CONTAINER -->
+    <div class="max-w-6xl mx-auto w-full space-y-6 my-auto">
+
+        <!-- ALERT / MESSAGE BOX SYSTEM -->
+        <div id="systemAlert" class="hidden max-w-md mx-auto p-4 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-xs text-center font-bold shadow-lg transition">
+            <span id="systemAlertMsg"></span>
+        </div>
+
+        <!-- PAGE 1: LOGIN BLOCK -->
+        <div id="page1View" class="fade-in w-full max-w-md mx-auto relative pt-6">
+            <div class="bg-slate-900 rounded-3xl border border-slate-800 p-6 sm:p-7 shadow-2xl relative overflow-hidden space-y-6">
+                <div class="relative z-10 space-y-6">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                        <div>
+                            <h2 class="text-base font-bold text-white tracking-wide">My Develop App</h2>
+                            <p class="text-[11px] text-slate-400">Sign-in to system</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xs font-black italic tracking-wider bg-gradient-to-r from-amber-400 via-rose-400 to-emerald-400 bg-clip-text text-transparent drop-shadow-sm font-sans block">
+                                Sigma PhD™
+                            </span>
+                            <span class="text-[9px] text-slate-500 font-mono font-semibold uppercase tracking-widest block">Official</span>
+                        </div>
+                    </div>
+
+                    <form onsubmit="handleLogin(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1">User ID</label>
+                            <input type="text" id="inputUserId" value="SIGMA-USER-101" required class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-2xl text-xs font-mono text-emerald-300 focus:outline-none focus:border-emerald-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1">Password</label>
+                            <input type="password" id="inputPassword" value="123456" required class="w-full px-4 py-3 bg-slate-950 border border-slate-800 rounded-2xl text-xs font-mono text-emerald-300 focus:outline-none focus:border-emerald-500 transition">
+                        </div>
+                        <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-extrabold text-xs rounded-2xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
+                            <span>Enter System</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <div class="pt-2 text-center border-t border-slate-800/80">
+                        <button type="button" onclick="showAlert('Please contact the admin for a new ID.')" class="text-xs text-amber-400 hover:text-amber-300 font-bold flex items-center justify-center gap-1.5 mx-auto">
+                            <i class="fa-solid fa-key text-amber-500"></i>
+                            <span>Don't have a User ID? Buy a new license</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PUBLIC OPEN-SOURCE CHAT/DIALOG BOX ON TIER 1 -->
+            <div class="mt-6 bg-slate-900 rounded-3xl border border-slate-800 p-5 shadow-xl space-y-3">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-2.5">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-ping"></span>
+                        <h3 class="text-xs font-bold text-white">Open Source Public Dialog & AI Bot (Live Assistant)</h3>
+                    </div>
+                    <span class="text-[9px] text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-800/60 font-mono">24/7 AI Voice Active</span>
+                </div>
+
+                <div id="tier1PublicChatBox" class="bg-slate-950 p-3 rounded-2xl border border-slate-800 h-44 overflow-y-auto space-y-2.5 text-xs">
+                    <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800/80">
+                        <div class="flex justify-between text-[10px] text-amber-400 font-bold mb-0.5">
+                            <span>🤖 Open Source AI Bot</span>
+                            <div class="flex items-center gap-1.5">
+                                <button onclick="speakText('Welcome! I am the open-source AI assistant. Feel free to ask or speak about app features, income-expenses, or loans.')" class="text-slate-400 hover:text-emerald-400 text-xs" title="Listen">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </button>
+                                <span class="text-slate-500 font-normal">Now</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-300">Welcome! I am the open-source AI assistant. Feel free to ask or speak about app features, income-expenses, or loans!</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <input type="text" id="tier1PublicMsgInput" placeholder="Ask AI bot or speak..." class="flex-1 px-3.5 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none focus:border-emerald-500" onkeypress="if(event.key==='Enter') sendTier1PublicMsg()">
+                    <button onclick="startVoiceRecognition('tier1PublicMsgInput')" class="w-9 h-9 bg-slate-950 hover:bg-slate-800 border border-slate-800 text-rose-400 rounded-xl flex items-center justify-center transition shadow" title="Voice Input">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    <button onclick="sendTier1PublicMsg()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl transition flex items-center gap-1">
+                        <span>Send</span>
+                        <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: MAIN SYSTEM MODULES & TABS -->
+        <div id="page2View" class="hidden fade-in space-y-6 w-full">
+
+            <!-- TOP BAR -->
+            <div class="flex justify-between items-center bg-slate-900 p-3.5 px-5 rounded-2xl border border-slate-800">
+                <div class="flex items-center gap-2.5">
+                    <button onclick="showAlert('Device limit updated.')" class="w-8 h-8 bg-slate-950 hover:bg-slate-800 text-emerald-400 rounded-xl flex items-center justify-center font-bold text-xs transition border border-slate-800 shadow" title="Add Device">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </button>
+                    <div class="leading-tight">
+                        <span id="devCountText" class="text-xs font-bold text-white block">1 Device Active</span>
+                        <span class="text-[10px] text-slate-400 font-semibold block">(Max 2)</span>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center gap-2">
+                    <button onclick="switchTab('dashboard')" id="tabDashBtn" class="px-3.5 py-1.5 bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl transition">Dashboard</button>
+                    <button onclick="switchTab('formBuilder')" id="tabFormBtn" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition">Custom Form Builder (SQL)</button>
+                    <button onclick="switchTab('chat')" id="tabChatBtn" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition relative">
+                        <span>My Chat</span>
+                        <span class="w-2 h-2 bg-emerald-400 rounded-full inline-block ml-1 animate-pulse"></span>
+                    </button>
+                    <button onclick="switchTab('security')" id="tabSecBtn" class="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition">Security & Data Transfer</button>
+                    <button onclick="handleLogout()" class="px-3.5 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-800/50 font-bold text-xs rounded-xl transition flex items-center gap-1.5">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </button>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-400 block leading-none font-bold">Balance (+Cashback)</span>
+                        <span id="displayBalancePage2" class="text-emerald-400 font-bold font-mono text-base">৳ 2100.00</span>
+                    </div>
+                    <div class="flex gap-1.5">
+                        <button onclick="openRechargeModal()" class="w-8 h-8 bg-emerald-600 hover:bg-emerald-500 text-slate-950 rounded-xl flex items-center justify-center font-black text-xs transition shadow" title="Recharge Balance">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 1: DASHBOARD VIEW -->
+            <div id="tabDashboardView" class="space-y-6">
+
+                <!-- MONTHLY FINANCIAL STATEMENT WITH GRAND TOTAL SUMMARY -->
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-chart-line text-emerald-400"></i>
+                            <span>Monthly Financial Summary (Income, Expense, Loans & Cash/Bank Balance)</span>
+                        </h3>
+                        <div class="flex gap-2">
+                            <button onclick="openBankSetupModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold text-xs rounded-xl transition flex items-center gap-1 border border-slate-700">
+                                <i class="fa-solid fa-building-columns"></i>
+                                <span id="bankSetupBtnText">Bank Setup (Freeze)</span>
+                            </button>
+                            <button onclick="openIncomeEntryModal()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl transition flex items-center gap-1">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>New Income Entry</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-950 border-b border-slate-800 text-slate-400">
+                                    <th class="p-3">Month</th>
+                                    <th class="p-3">Total Income (৳)</th>
+                                    <th class="p-3">Total Expense (৳)</th>
+                                    <th class="p-3 text-amber-400">Total Receivable (৳)</th>
+                                    <th class="p-3 text-rose-400">Total Payable (৳)</th>
+                                    <th class="p-3 text-emerald-400">Net Surplus (৳)</th>
+                                    <th class="p-3 text-center">Fund Adjustment</th>
+                                    <th class="p-3">Cash in Hand (৳)</th>
+                                    <th class="p-3" id="thBank1">Bank 1 (৳)</th>
+                                    <th class="p-3" id="thBank2">Bank 2 (৳)</th>
+                                    <th class="p-3" id="thBank3">Bank 3 (৳)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-800/60 font-mono">
+                                <!-- 2026 GRAND TOTAL ROW (PLACED RIGHT AT THE TOP UNDER HEADER) -->
+                                <tr class="bg-emerald-950/40 border-b-2 border-emerald-500/40 font-bold">
+                                    <td class="p-3 font-sans text-amber-400 flex items-center gap-1">
+                                        <i class="fa-solid fa-calculator text-xs"></i>
+                                        <span>2026</span>
+                                    </td>
+                                    <td id="grandTotalIncome" class="p-3 text-emerald-400 font-bold">৳ 55,508.00</td>
+                                    <td id="grandTotalExpense" class="p-3 text-rose-400 font-bold">৳ 23,308.00</td>
+                                    <td id="grandTotalPao" class="p-3 text-amber-400 font-bold">৳ 3,000.00</td>
+                                    <td id="grandTotalRin" class="p-3 text-rose-400 font-bold">৳ 2,000.00</td>
+                                    <td id="grandTotalBalance" class="p-3 text-emerald-300 font-bold bg-emerald-950/40 font-mono">৳ 32,200.00</td>
+                                    <td class="p-3 text-center text-slate-500 text-[10px] font-sans">Grand Summary</td>
+                                    <td id="valCashTotal" class="p-3 text-emerald-300 font-bold">৳ 10,200.00</td>
+                                    <td id="valBank1Total" class="p-3 text-sky-400 font-bold">৳ 10,000.00</td>
+                                    <td id="valBank2Total" class="p-3 text-sky-400 font-bold">৳ 8,000.00</td>
+                                    <td id="valBank3Total" class="p-3 text-sky-400 font-bold">৳ 4,000.00</td>
+                                </tr>
+                                <!-- MONTHLY ROWS BELOW WITH ROW-WISE FUND ADJUSTMENT BUTTONS -->
+                                <tr class="hover:bg-slate-950 transition">
+                                    <td class="p-3 font-sans font-bold text-slate-300">November 2026</td>
+                                    <td class="p-3 text-emerald-400 font-bold" id="rowNovInc">৳ 25,508.00</td>
+                                    <td class="p-3 text-rose-400 font-bold" id="rowNovExp">৳ 8,308.00</td>
+                                    <td class="p-3 text-amber-400 font-bold" id="rowNovPao">৳ 3,000.00</td>
+                                    <td class="p-3 text-rose-400 font-bold" id="rowNovRin">৳ 2,000.00</td>
+                                    <td class="p-3 text-emerald-300 font-bold" id="rowNovNet">৳ 17,200.00</td>
+                                    <td class="p-3 text-center">
+                                        <button onclick="openFundDistModal('November 2026')" class="px-2 py-0.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold font-sans text-[10px] rounded transition flex items-center justify-center gap-1 mx-auto shadow">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <span>Edit Fund</span>
+                                        </button>
+                                    </td>
+                                    <td class="p-3 text-slate-300">৳ 5,200.00</td>
+                                    <td class="p-3 text-sky-400">৳ 5,000.00</td>
+                                    <td class="p-3 text-sky-400">৳ 4,000.00</td>
+                                    <td class="p-3 text-sky-400">৳ 3,000.00</td>
+                                </tr>
+                                <tr class="hover:bg-slate-950 transition">
+                                    <td class="p-3 font-sans font-bold text-slate-400">October 2026</td>
+                                    <td class="p-3 text-emerald-400/80">৳ 15,000.00</td>
+                                    <td class="p-3 text-rose-400/80">৳ 7,500.00</td>
+                                    <td class="p-3 text-slate-400">৳ 0.00</td>
+                                    <td class="p-3 text-slate-400">৳ 0.00</td>
+                                    <td class="p-3 text-emerald-300/80">৳ 7,500.00</td>
+                                    <td class="p-3 text-center">
+                                        <button onclick="openFundDistModal('October 2026')" class="px-2 py-0.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold font-sans text-[10px] rounded transition flex items-center justify-center gap-1 mx-auto shadow">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <span>Edit Fund</span>
+                                        </button>
+                                    </td>
+                                    <td class="p-3 text-slate-400">৳ 2,500.00</td>
+                                    <td class="p-3 text-sky-400/80">৳ 2,500.00</td>
+                                    <td class="p-3 text-sky-400/80">৳ 1,500.00</td>
+                                    <td class="p-3 text-sky-400/80">৳ 1,000.00</td>
+                                </tr>
+                                <tr class="hover:bg-slate-950 transition">
+                                    <td class="p-3 font-sans font-bold text-slate-400">September 2026</td>
+                                    <td class="p-3 text-emerald-400/80">৳ 15,000.00</td>
+                                    <td class="p-3 text-rose-400/80">৳ 7,500.00</td>
+                                    <td class="p-3 text-slate-400">৳ 0.00</td>
+                                    <td class="p-3 text-slate-400">৳ 0.00</td>
+                                    <td class="p-3 text-emerald-300/80">৳ 7,500.00</td>
+                                    <td class="p-3 text-center">
+                                        <button onclick="openFundDistModal('September 2026')" class="px-2 py-0.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold font-sans text-[10px] rounded transition flex items-center justify-center gap-1 mx-auto shadow">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                            <span>Edit Fund</span>
+                                        </button>
+                                    </td>
+                                    <td class="p-3 text-slate-400">৳ 2,500.00</td>
+                                    <td class="p-3 text-sky-400/80">৳ 2,500.00</td>
+                                    <td class="p-3 text-sky-400/80">৳ 1,500.00</td>
+                                    <td class="p-3 text-sky-400/80">৳ 1,000.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- LOAN DASHBOARD PANEL -->
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-hand-holding-dollar text-amber-400"></i>
+                            <span>Loan Accounts (Given & Taken Loans)</span>
+                        </h3>
+                        <button onclick="openLoanEntryModal()" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>New Loan Entry</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- GIVEN LOANS (PABO) -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                                <h4 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-amber-400"></i>
+                                    <span>Loans Given (Receivable)</span>
+                                </h4>
+                                <span id="givenTotalBadge" class="font-mono text-xs text-emerald-400 font-bold">Receivable: ৳ 3,000</span>
+                            </div>
+                            <div id="loanGivenList" class="space-y-2 text-xs text-slate-300">
+                                <!-- RENDERED DYNAMICALLY -->
+                            </div>
+                        </div>
+
+                        <!-- TAKEN LOANS (DEBO) -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-3">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                                <h4 class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-arrow-down-left-and-up-right-to-center text-rose-400"></i>
+                                    <span>Loans Taken (Payable)</span>
+                                </h4>
+                                <span id="takenTotalBadge" class="font-mono text-xs text-rose-400 font-bold">Payable: ৳ 2,000</span>
+                            </div>
+                            <div id="loanTakenList" class="space-y-2 text-xs text-slate-300">
+                                <!-- RENDERED DYNAMICALLY -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DAILY EXPENSE LOG -->
+                <div class="bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="border-b border-slate-800 pb-3 flex justify-between items-center">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-cart-shopping text-indigo-400"></i>
+                            <span>Daily Expense Log</span>
+                        </h3>
+                        <button onclick="openMarketEntryModal()" class="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>New Expense Entry</span>
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-950 border-b border-slate-800 text-slate-400">
+                                    <th class="p-3">Date</th>
+                                    <th class="p-3">Expense Details / Item</th>
+                                    <th class="p-3">Total Expense (৳)</th>
+                                    <th class="p-3 text-right">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="marketLogTableBody" class="divide-y divide-slate-800/60 font-mono">
+                                <tr class="bg-slate-900/50 hover:bg-slate-950 transition">
+                                    <td class="p-3 font-sans font-bold text-indigo-400">05/11/2020</td>
+                                    <td class="p-3 font-sans text-slate-200">Fish, Meat & Vegetables</td>
+                                    <td class="p-3 text-rose-400 font-bold">৳ 1,450.00</td>
+                                    <td class="p-3 text-right text-emerald-400 font-sans">Paid</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 2: SQL FORM BUILDER -->
+            <div id="tabFormBuilderView" class="hidden bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-6">
+                <div class="border-b border-slate-800 pb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-database text-emerald-400"></i>
+                        <span>Create Custom Column & Form with SQL Query</span>
+                    </h3>
+                </div>
+                <div class="space-y-4">
+                    <textarea id="sqlQueryInput" rows="3" class="w-full p-3 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-emerald-400 focus:outline-none">ALTER TABLE custom_accounts ADD COLUMN store_deposit INT DEFAULT 0;</textarea>
+                    <button onclick="showAlert('Code executed successfully!')" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl transition">Run Code (৳10)</button>
+                </div>
+            </div>
+
+            <!-- TAB 3: CHAT -->
+            <div id="tabChatView" class="hidden bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-4">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <h3 class="text-sm font-bold text-white">My Chat & Open Forum</h3>
+                </div>
+                <div id="chatMessageBox" class="bg-slate-950 p-4 rounded-xl border border-slate-800 h-64 overflow-y-auto space-y-3 font-sans text-xs">
+                    <div class="bg-emerald-950/40 p-3 rounded-xl border border-emerald-500/30">
+                        <p class="text-slate-200">Welcome to Open Forum! Post your query or message.</p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" id="chatInput" placeholder="Write message..." class="flex-1 px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none">
+                    <button onclick="sendChatMessage()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl">Send</button>
+                </div>
+            </div>
+
+            <!-- TAB 4: SECURITY & DATA TRANSFER -->
+            <div id="tabSecurityView" class="hidden bg-slate-900 p-5 rounded-2xl border border-slate-800 space-y-6">
+                <div class="border-b border-slate-800 pb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-emerald-400"></i>
+                        <span>Security & Multi-Device Data Transfer</span>
+                    </h3>
+                </div>
+
+                <!-- DATA BACKUP & RESTORE SECTION -->
+                <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+                    <h4 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                        <span>Data Backup & Restore across devices</span>
+                    </h4>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        To transfer all your accounts from one device to another, click **"Download Data Backup"** to save the file. Uploading this file on a new device will restore all data instantly.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="exportAppData()" class="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl transition flex items-center gap-2">
+                            <i class="fa-solid fa-download"></i>
+                            <span>Download Data Backup</span>
+                        </button>
+                        <label class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl transition flex items-center gap-2 cursor-pointer">
+                            <i class="fa-solid fa-upload"></i>
+                            <span>Upload Backup File (Restore)</span>
+                            <input type="file" id="importFileInput" accept=".json" onchange="importAppData(event)" class="hidden">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="max-w-md space-y-3 pt-2">
+                    <h4 class="text-xs font-bold text-slate-300">Change Password</h4>
+                    <input type="password" id="oldPassInput" placeholder="Old Password" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none">
+                    <input type="password" id="newPassInput" placeholder="New Password" class="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200 focus:outline-none">
+                    <button onclick="showAlert('Password saved successfully!')" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl">Save Password</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- MODAL 1: INCOME ENTRY MODAL -->
+    <div id="incomeEntryModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2">New Income Entry</h3>
+            <div class="space-y-3">
+                <input type="date" id="incDateInput" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-emerald-400">
+                <input type="text" id="incDescInput" placeholder="Income description" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200">
+                <input type="number" id="incAmountInput" placeholder="Amount (৳)" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-emerald-400">
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button onclick="saveIncomeEntry()" class="flex-1 py-2.5 bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl">Save</button>
+                <button onclick="closeModal('incomeEntryModal')" class="px-4 py-2.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: LOAN ENTRY MODAL -->
+    <div id="loanEntryModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2">Add New Loan Entry</h3>
+            <div class="space-y-3">
+                <input type="date" id="loanDateInput" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-amber-400">
+                <input type="text" id="loanPersonInput" placeholder="Person Name / Details" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200">
+                <input type="number" id="loanAmountInput" placeholder="Amount (৳)" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-amber-400">
+                <select id="loanTypeSelect" onchange="toggleLoanSourceSelect()" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200">
+                    <option value="pabo">Receivable (Loan Given)</option>
+                    <option value="debo">Payable (Loan Taken)</option>
+                </select>
+                <!-- SOURCE ACCOUNT SELECTION FOR GIVING LOAN -->
+                <div id="loanSourceDiv" class="space-y-1">
+                    <label class="text-[10px] text-amber-400 font-bold block">Deduction Source Account:</label>
+                    <select id="loanSourceSelect" class="w-full px-4 py-2 bg-slate-950 border border-amber-800/60 rounded-xl text-xs text-amber-300 font-bold">
+                        <option value="cash">Cash</option>
+                        <option value="bank1" id="optBank1">Bank 1</option>
+                        <option value="bank2" id="optBank2">Bank 2</option>
+                        <option value="bank3" id="optBank3">Bank 3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button onclick="saveLoanEntry()" class="flex-1 py-2.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-xl">Save</button>
+                <button onclick="closeModal('loanEntryModal')" class="px-4 py-2.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: MARKET ENTRY MODAL -->
+    <div id="marketEntryModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl max-w-sm w-full space-y-4 shadow-2xl">
+            <h3 class="text-sm font-bold text-white border-b border-slate-800 pb-2">New Expense Entry</h3>
+            <div class="space-y-3">
+                <input type="date" id="mktDateInput" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-indigo-400">
+                <input type="text" id="mktDescInput" placeholder="Expense description (e.g., Grocery, Utility)" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200">
+                <input type="number" id="mktAmountInput" placeholder="Amount (৳)" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-indigo-400">
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button onclick="saveMarketEntry()" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold text-xs rounded-xl">Save</button>
+                <button onclick="closeModal('marketEntryModal')" class="px-4 py-2.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: BANK SETUP & LOCK MODAL -->
+    <div id="bankSetupModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl max-w-sm w-full space-y-4 shadow-2xl">
+            <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
+                <h3 class="text-sm font-bold text-white">Bank Account Setup (Lock Option)</h3>
+                <span id="lockStatusBadge" class="text-[9px] text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded-full border border-amber-800/60">Unlocked</span>
+            </div>
+            <p class="text-[10px] text-slate-400">Once names are saved and frozen, they cannot be modified later.</p>
+            <div class="space-y-3">
+                <div>
+                    <label class="text-[10px] text-slate-400 block mb-1">1st Bank Name</label>
+                    <input type="text" id="bank1NameInput" placeholder="e.g., Dutch-Bangla Bank" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200">
+                </div>
+                <div>
+                    <label class="text-[10px] text-slate-400 block mb-1">2nd Bank Name</label>
+                    <input type="text" id="bank2NameInput" placeholder="e.g., Islami Bank" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200">
+                </div>
+                <div>
+                    <label class="text-[10px] text-slate-400 block mb-1">3rd Bank Name</label>
+                    <input type="text" id="bank3NameInput" placeholder="e.g., BRAC Bank" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs text-slate-200">
+                </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="saveBankSetupBtn" onclick="saveBankSetup()" class="flex-1 py-2.5 bg-amber-500 text-slate-950 font-bold text-xs rounded-xl">Save & Freeze Permanently</button>
+                <button onclick="closeModal('bankSetupModal')" class="px-4 py-2.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: FUND DISTRIBUTION EDIT MODAL -->
+    <div id="fundDistModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl max-w-sm w-full space-y-4 shadow-2xl">
+            <div class="border-b border-slate-800 pb-2 flex justify-between items-center">
+                <h3 class="text-sm font-bold text-white">Fund Adjustment</h3>
+                <span id="selectedMonthBadge" class="text-[10px] text-indigo-400 bg-indigo-950/60 px-2.5 py-0.5 rounded-full border border-indigo-800/60 font-sans font-bold">November 2026</span>
+            </div>
+            
+            <!-- TOP FIXED TOTAL NET BALANCE SUMMARY -->
+            <div class="bg-slate-950 p-3 rounded-2xl border border-emerald-500/30 flex justify-between items-center">
+                <span class="text-xs text-slate-400 font-bold">Monthly Net Surplus:</span>
+                <span id="modalNetBalanceDisplay" class="text-emerald-400 font-mono font-black text-sm">৳ 17,200.00</span>
+            </div>
+
+            <div class="space-y-3">
+                <div>
+                    <label class="text-[10px] text-emerald-400 font-bold block mb-1">Cash Deposit (৳)</label>
+                    <input type="number" id="cashAmountInput" oninput="autoCalculateBank3()" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-emerald-400">
+                </div>
+                <div>
+                    <label id="lblBank1Input" class="text-[10px] text-sky-400 font-bold block mb-1">Bank 1 Deposit (৳)</label>
+                    <input type="number" id="bank1AmountInput" oninput="autoCalculateBank3()" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-sky-400">
+                </div>
+                <div>
+                    <label id="lblBank2Input" class="text-[10px] text-sky-400 font-bold block mb-1">Bank 2 Deposit (৳)</label>
+                    <input type="number" id="bank2AmountInput" oninput="autoCalculateBank3()" class="w-full px-4 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-mono text-sky-400">
+                </div>
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <label id="lblBank3Input" class="text-[10px] text-slate-400 font-bold">Bank 3 (Automatic Balance)</label>
+                        <span class="text-[9px] text-amber-400 bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-800/40">Auto</span>
+                    </div>
+                    <input type="number" id="bank3AmountInput" readonly class="w-full px-4 py-2 bg-slate-950/80 border border-slate-800/80 rounded-xl text-xs font-mono text-slate-400 cursor-not-allowed">
+                </div>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button onclick="saveFundDistribution()" class="flex-1 py-2.5 bg-indigo-600 text-white font-bold text-xs rounded-xl">Save Fund</button>
+                <button onclick="closeModal('fundDistModal')" class="px-4 py-2.5 bg-slate-800 text-slate-300 font-bold text-xs rounded-xl">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        let novIncome = 25508;
+        let octIncome = 15000;
+        let sepIncome = 15000;
+
+        let novExpense = 8308;
+        let octExpense = 7500;
+        let sepExpense = 7500;
+
+        let bankNames = {
+            bank1: "Bank 1",
+            bank2: "Bank 2",
+            bank3: "Bank 3",
+            isLocked: false
+        };
+
+        let accountBalances = {
+            cash: 10200,
+            bank1: 10000,
+            bank2: 8000,
+            bank3: 5000
+        };
+
+        let loanItems = [
+            { id: 1, date: '10/11', person: 'Mr. Rofiq', amount: 3000, type: 'pabo', status: 'due' },
+            { id: 2, date: '12/11', person: 'Karim Bhai', amount: 2000, type: 'debo', status: 'due' }
+        ];
+
+        // EXPORT DATA FUNCTION FOR TRANSFERRING ACROSS DEVICES
+        function exportAppData() {
+            const backupData = {
+                novIncome, octIncome, sepIncome,
+                novExpense, octExpense, sepExpense,
+                bankNames,
+                accountBalances,
+                loanItems
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", `my_develop_app_backup_${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(dlAnchorElem);
+            dlAnchorElem.click();
+            dlAnchorElem.remove();
+            showAlert("Your backup file has been downloaded successfully!");
+        }
+
+        // IMPORT DATA FUNCTION FOR RESTORING ON A NEW DEVICE
+        function importAppData(event) {
+            const fileReader = new FileReader();
+            fileReader.onload = function(e) {
+                try {
+                    const parsedData = JSON.parse(e.target.result);
+                    if (parsedData.bankNames && parsedData.accountBalances && parsedData.loanItems) {
+                        novIncome = parsedData.novIncome || 0;
+                        octIncome = parsedData.octIncome || 0;
+                        sepIncome = parsedData.sepIncome || 0;
+                        novExpense = parsedData.novExpense || 0;
+                        octExpense = parsedData.octExpense || 0;
+                        sepExpense = parsedData.sepExpense || 0;
+                        bankNames = parsedData.bankNames;
+                        accountBalances = parsedData.accountBalances;
+                        loanItems = parsedData.loanItems;
+
+                        updateBankLabelsUI();
+                        renderLoans();
+                        updateGrandTotals();
+                        showAlert("Congratulations! Your backup data restored successfully.");
+                    } else {
+                        showAlert("Invalid backup file selected!");
+                    }
+                } catch (err) {
+                    showAlert("Could not read file. Please select a valid JSON backup file.");
+                }
+            };
+            if(event.target.files[0]) {
+                fileReader.readAsText(event.target.files[0]);
+            }
+        }
+
+        function showAlert(msg) {
+            const alertBox = document.getElementById('systemAlert');
+            document.getElementById('systemAlertMsg').innerText = msg;
+            alertBox.classList.remove('hidden');
+            setTimeout(() => { alertBox.classList.add('hidden'); }, 3500);
+        }
+
+        function handleLogin(e) {
+            if(e) e.preventDefault();
+            document.getElementById('page1View').classList.add('hidden');
+            document.getElementById('page2View').classList.remove('hidden');
+            showAlert("Login successful! Welcome to Dashboard.");
+        }
+
+        function handleLogout() {
+            document.getElementById('page2View').classList.add('hidden');
+            document.getElementById('page1View').classList.remove('hidden');
+            showAlert("Returned to Login Page.");
+        }
+
+        function switchTab(tabName) {
+            document.getElementById('tabDashboardView').classList.add('hidden');
+            document.getElementById('tabFormBuilderView').classList.add('hidden');
+            document.getElementById('tabChatView').classList.add('hidden');
+            document.getElementById('tabSecurityView').classList.add('hidden');
+
+            document.getElementById('tabDashBtn').className = "px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition";
+            document.getElementById('tabFormBtn').className = "px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition";
+            document.getElementById('tabChatBtn').className = "px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition relative";
+            document.getElementById('tabSecBtn').className = "px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs rounded-xl transition";
+
+            if (tabName === 'dashboard') {
+                document.getElementById('tabDashboardView').classList.remove('hidden');
+                document.getElementById('tabDashBtn').className = "px-3.5 py-1.5 bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl transition";
+            } else if (tabName === 'formBuilder') {
+                document.getElementById('tabFormBuilderView').classList.remove('hidden');
+                document.getElementById('tabFormBtn').className = "px-3.5 py-1.5 bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl transition";
+            } else if (tabName === 'chat') {
+                document.getElementById('tabChatView').classList.remove('hidden');
+                document.getElementById('tabChatBtn').className = "px-3.5 py-1.5 bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl transition relative";
+            } else if (tabName === 'security') {
+                document.getElementById('tabSecurityView').classList.remove('hidden');
+                document.getElementById('tabSecBtn').className = "px-3.5 py-1.5 bg-emerald-600 text-slate-950 font-bold text-xs rounded-xl transition";
+            }
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function openIncomeEntryModal() { document.getElementById('incomeEntryModal').classList.remove('hidden'); }
+        function openLoanEntryModal() { document.getElementById('loanEntryModal').classList.remove('hidden'); }
+        function openMarketEntryModal() { document.getElementById('marketEntryModal').classList.remove('hidden'); }
+        function openRechargeModal() { showAlert('Recharge panel launching soon.'); }
+
+        function renderLoans() {
+            const givenList = document.getElementById('loanGivenList');
+            const takenList = document.getElementById('loanTakenList');
+            
+            givenList.innerHTML = '';
+            takenList.innerHTML = '';
+
+            let pendingPabo = 0;
+            let pendingDebo = 0;
+
+            loanItems.forEach(item => {
+                const colorClass = item.type === 'pabo' ? 'text-amber-400' : 'text-rose-400';
+                const isPaid = item.status === 'paid';
+
+                if (!isPaid) {
+                    if (item.type === 'pabo') pendingPabo += item.amount;
+                    if (item.type === 'debo') pendingDebo += item.amount;
+                }
+
+                const todayStr = new Date().toISOString().split('T')[0];
+
+                const html = `
+                    <div class="bg-slate-900 p-3 rounded-xl border ${isPaid ? 'border-emerald-500/40 opacity-65' : 'border-slate-800'} space-y-2 fade-in">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] text-slate-500 font-mono">${item.date}</span>
+                                <span class="font-bold text-slate-200">${item.person}</span>
+                                <span class="${colorClass} font-mono font-bold">৳ ${item.amount.toLocaleString('en-US')}</span>
+                            </div>
+                            ${isPaid ? `
+                                <div class="text-right">
+                                    <span class="text-emerald-400 text-[10px] font-bold px-2 py-0.5 bg-slate-950 rounded-lg border border-emerald-500/30">
+                                        ${item.type === 'pabo' ? 'Received ✓' : 'Settled ✓'}
+                                    </span>
+                                    <span class="block text-[9px] text-slate-400 mt-0.5">${item.returnDate || ''}</span>
+                                </div>
+                            ` : `
+                                <div class="flex items-center gap-1.5">
+                                    <select id="loanStatus_${item.id}" onchange="toggleExtraFeeInput(${item.id})" class="px-2 py-1 bg-slate-950 border border-slate-800 rounded-lg text-[10px] text-slate-200 focus:outline-none">
+                                        <option value="due">Due</option>
+                                        <option value="paid">${item.type === 'pabo' ? 'Received' : 'Paid'}</option>
+                                    </select>
+                                    <button onclick="saveLoanStatus(${item.id})" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-slate-950 font-bold text-[10px] rounded-lg transition">
+                                        Save
+                                    </button>
+                                </div>
+                            `}
+                        </div>
+
+                        ${!isPaid ? `
+                            <div id="extraFeeRow_${item.id}" class="hidden flex items-center gap-2 pt-2 border-t border-slate-800/60">
+                                <div class="flex-1">
+                                    <label class="text-[9px] text-slate-400 block">Return/Settlement Date</label>
+                                    <input type="date" id="returnDate_${item.id}" value="${todayStr}" class="w-full px-2 py-1 bg-slate-950 border border-slate-800 rounded-lg text-[10px] text-emerald-400 font-mono">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-[9px] ${item.type === 'pabo' ? 'text-emerald-400' : 'text-amber-400'} block">
+                                        ${item.type === 'pabo' ? 'Extra Profit/Fee (Add to Income)' : 'Extra Charge/Fee (Add to Expense)'}
+                                    </label>
+                                    <input type="number" id="extraCharge_${item.id}" placeholder="e.g. 200" value="0" class="w-full px-2 py-1 bg-slate-950 border border-slate-800 rounded-lg text-[10px] ${item.type === 'pabo' ? 'text-emerald-400' : 'text-rose-400'} font-mono">
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+
+                if (item.type === 'pabo') {
+                    givenList.innerHTML += html;
+                } else {
+                    takenList.innerHTML += html;
+                }
+            });
+
+            document.getElementById('givenTotalBadge').innerText = `Receivable: ৳ ${pendingPabo.toLocaleString('en-US')}`;
+            document.getElementById('takenTotalBadge').innerText = `Payable: ৳ ${pendingDebo.toLocaleString('en-US')}`;
+
+            updateGrandTotals();
+        }
+
+        function toggleExtraFeeInput(id) {
+            const statusVal = document.getElementById(`loanStatus_${id}`).value;
+            const extraRow = document.getElementById(`extraFeeRow_${id}`);
+            if(extraRow) {
+                if (statusVal === 'paid') {
+                    extraRow.classList.remove('hidden');
+                } else {
+                    extraRow.classList.add('hidden');
+                }
+            }
+        }
+
+        function saveLoanStatus(id) {
+            const item = loanItems.find(l => l.id === id);
+            if (!item) return;
+
+            const statusVal = document.getElementById(`loanStatus_${id}`).value;
+            if (statusVal === 'paid') {
+                const retDate = document.getElementById(`returnDate_${id}`).value;
+                const extraCharge = parseFloat(document.getElementById(`extraCharge_${id}`).value) || 0;
+
+                item.status = 'paid';
+                item.returnDate = retDate;
+                item.extraCharge = extraCharge;
+
+                if (item.type === 'pabo') {
+                    novIncome += (item.amount + extraCharge);
+                    accountBalances.cash += (item.amount + extraCharge);
+                    showAlert(`৳ ${item.amount + extraCharge} added to income and cash balance!`);
+                } else {
+                    if (extraCharge > 0) {
+                        novExpense += extraCharge;
+                        showAlert(`Extra ৳ ${extraCharge} added to expense and loan settled!`);
+                    } else {
+                        showAlert(`Loan status updated to settled.`);
+                    }
+                }
+            }
+            renderLoans();
+        }
+
+        function openBankSetupModal() {
+            document.getElementById('bank1NameInput').value = bankNames.bank1;
+            document.getElementById('bank2NameInput').value = bankNames.bank2;
+            document.getElementById('bank3NameInput').value = bankNames.bank3;
+
+            if (bankNames.isLocked) {
+                document.getElementById('bank1NameInput').disabled = true;
+                document.getElementById('bank2NameInput').disabled = true;
+                document.getElementById('bank3NameInput').disabled = true;
+                document.getElementById('saveBankSetupBtn').disabled = true;
+                document.getElementById('saveBankSetupBtn').className = "flex-1 py-2.5 bg-slate-800 text-slate-500 font-bold text-xs rounded-xl cursor-not-allowed";
+                document.getElementById('lockStatusBadge').innerText = "Locked";
+                document.getElementById('lockStatusBadge').className = "text-[9px] text-rose-400 bg-rose-950/60 px-2 py-0.5 rounded-full border border-rose-800/60";
+            }
+            document.getElementById('bankSetupModal').classList.remove('hidden');
+        }
+
+        function saveBankSetup() {
+            if (bankNames.isLocked) return;
+
+            const b1 = document.getElementById('bank1NameInput').value.trim();
+            const b2 = document.getElementById('bank2NameInput').value.trim();
+            const b3 = document.getElementById('bank3NameInput').value.trim();
+
+            if (b1) bankNames.bank1 = b1;
+            if (b2) bankNames.bank2 = b2;
+            if (b3) bankNames.bank3 = b3;
+
+            bankNames.isLocked = true;
+            updateBankLabelsUI();
+            closeModal('bankSetupModal');
+            showAlert("Bank account names have been frozen permanently!");
+        }
+
+        function updateBankLabelsUI() {
+            document.getElementById('thBank1').innerText = bankNames.bank1 + ' (৳)';
+            document.getElementById('thBank2').innerText = bankNames.bank2 + ' (৳)';
+            document.getElementById('thBank3').innerText = bankNames.bank3 + ' (৳)';
+
+            document.getElementById('optBank1').innerText = bankNames.bank1;
+            document.getElementById('optBank2').innerText = bankNames.bank2;
+            document.getElementById('optBank3').innerText = bankNames.bank3;
+
+            document.getElementById('lblBank1Input').innerText = bankNames.bank1 + ' Deposit (৳)';
+            document.getElementById('lblBank2Input').innerText = bankNames.bank2 + ' Deposit (৳)';
+            document.getElementById('lblBank3Input').innerText = bankNames.bank3 + ' Deposit (৳)';
+
+            if (bankNames.isLocked) {
+                document.getElementById('bankSetupBtnText').innerText = "Bank Names (Locked)";
+            }
+        }
+
+        function openFundDistModal(monthTitle = 'November 2026') {
+            document.getElementById('selectedMonthBadge').innerText = monthTitle;
+            const totalAccountsSum = accountBalances.cash + accountBalances.bank1 + accountBalances.bank2 + accountBalances.bank3;
+            document.getElementById('modalNetBalanceDisplay').innerText = `৳ ${totalAccountsSum.toLocaleString('en-US')}.00`;
+            
+            document.getElementById('cashAmountInput').value = accountBalances.cash;
+            document.getElementById('bank1AmountInput').value = accountBalances.bank1;
+            document.getElementById('bank2AmountInput').value = accountBalances.bank2;
+            document.getElementById('bank3AmountInput').value = accountBalances.bank3;
+            
+            document.getElementById('fundDistModal').classList.remove('hidden');
+        }
+
+        function autoCalculateBank3() {
+            const totalSum = accountBalances.cash + accountBalances.bank1 + accountBalances.bank2 + accountBalances.bank3;
+            const c = parseFloat(document.getElementById('cashAmountInput').value) || 0;
+            const b1 = parseFloat(document.getElementById('bank1AmountInput').value) || 0;
+            const b2 = parseFloat(document.getElementById('bank2AmountInput').value) || 0;
+            
+            const rem = totalSum - (c + b1 + b2);
+            document.getElementById('bank3AmountInput').value = rem >= 0 ? rem : 0;
+        }
+
+        function saveFundDistribution() {
+            accountBalances.cash = parseFloat(document.getElementById('cashAmountInput').value) || 0;
+            accountBalances.bank1 = parseFloat(document.getElementById('bank1AmountInput').value) || 0;
+            accountBalances.bank2 = parseFloat(document.getElementById('bank2AmountInput').value) || 0;
+            accountBalances.bank3 = parseFloat(document.getElementById('bank3AmountInput').value) || 0;
+
+            updateGrandTotals();
+            closeModal('fundDistModal');
+            showAlert("Cash and bank balances updated!");
+        }
+
+        function toggleLoanSourceSelect() {
+            const type = document.getElementById('loanTypeSelect').value;
+            const srcDiv = document.getElementById('loanSourceDiv');
+            if (type === 'pabo') {
+                srcDiv.classList.remove('hidden');
+            } else {
+                srcDiv.classList.add('hidden');
+            }
+        }
+
+        function saveLoanEntry() {
+            const date = document.getElementById('loanDateInput').value || 'Today';
+            const person = document.getElementById('loanPersonInput').value.trim();
+            const amount = parseFloat(document.getElementById('loanAmountInput').value) || 0;
+            const type = document.getElementById('loanTypeSelect').value;
+            const sourceAcc = document.getElementById('loanSourceSelect').value;
+
+            if(!person || amount <= 0) {
+                showAlert("Please enter valid name and amount!");
+                return;
+            }
+
+            if (type === 'pabo') {
+                const accName = sourceAcc === 'cash' ? 'Cash' : bankNames[sourceAcc];
+                if (accountBalances[sourceAcc] < amount) {
+                    showAlert(`⚠️ Warning: Insufficient balance in ${accName}! Cannot issue loan.`);
+                    return;
+                }
+                accountBalances[sourceAcc] -= amount;
+            }
+
+            const formattedDate = date.split('-').reverse().join('/').slice(0,5);
+            loanItems.unshift({
+                id: Date.now(),
+                date: formattedDate,
+                person: person,
+                amount: amount,
+                type: type,
+                status: 'due'
+            });
+
+            closeModal('loanEntryModal');
+            document.getElementById('loanPersonInput').value = '';
+            document.getElementById('loanAmountInput').value = '';
+            renderLoans();
+            showAlert(`New loan entry saved! ${type === 'pabo' ? '৳' + amount + ' deducted from ' + (sourceAcc === 'cash' ? 'Cash' : bankNames[sourceAcc]) + '.' : ''}`);
+        }
+
+        function saveIncomeEntry() {
+            const amount = parseFloat(document.getElementById('incAmountInput').value) || 0;
+            if (amount > 0) {
+                novIncome += amount;
+                accountBalances.cash += amount;
+                updateGrandTotals();
+                closeModal('incomeEntryModal');
+                showAlert(`৳ ${amount} added to income and cash balance!`);
+            }
+        }
+
+        function saveMarketEntry() {
+            const amount = parseFloat(document.getElementById('mktAmountInput').value) || 0;
+            const desc = document.getElementById('mktDescInput').value.trim() || 'Daily Expense';
+            if (amount > 0) {
+                novExpense += amount;
+                if(accountBalances.cash >= amount) accountBalances.cash -= amount;
+                
+                const table = document.getElementById('marketLogTableBody');
+                const row = document.createElement('tr');
+                row.className = "bg-slate-900/50 hover:bg-slate-950 transition";
+                row.innerHTML = `
+                    <td class="p-3 font-sans font-bold text-indigo-400">Today</td>
+                    <td class="p-3 font-sans text-slate-200">${desc}</td>
+                    <td class="p-3 text-rose-400 font-bold">৳ ${amount.toLocaleString('en-US')}.00</td>
+                    <td class="p-3 text-right text-emerald-400 font-sans">Paid</td>
+                `;
+                table.prepend(row);
+
+                updateGrandTotals();
+                closeModal('marketEntryModal');
+                showAlert(`৳ ${amount} added to daily expenses!`);
+            }
+        }
+
+        function sendTier1PublicMsg() {
+            const input = document.getElementById('tier1PublicMsgInput');
+            const txt = input.value.trim();
+            if(!txt) return;
+
+            const box = document.getElementById('tier1PublicChatBox');
+            box.innerHTML += `
+                <div class="bg-emerald-950/40 p-2.5 rounded-xl border border-emerald-500/30">
+                    <div class="flex justify-between text-[10px] text-emerald-400 font-bold mb-0.5">
+                        <span>👤 Visitor (You)</span>
+                        <span class="text-slate-500 font-normal">Now</span>
+                    </div>
+                    <p class="text-slate-200">${txt}</p>
+                </div>
+            `;
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
+
+            setTimeout(() => {
+                let reply = "Thank you for asking! For app-related queries, please sign in to the system.";
+                const lower = txt.toLowerCase();
+                if(lower.includes("loan") || lower.includes("due") || lower.includes("payable") || lower.includes("receivable")) {
+                    reply = "You can manage receivables and payables with custom bank/cash options in the Loans Panel.";
+                } else if(lower.includes("bank") || lower.includes("cash")) {
+                    reply = "On the Dashboard, you can freeze 3 custom bank names and adjust your total funds.";
+                }
+                box.innerHTML += `
+                    <div class="bg-slate-900 p-2.5 rounded-xl border border-slate-800/80">
+                        <div class="flex justify-between text-[10px] text-amber-400 font-bold mb-0.5">
+                            <span>🤖 Open Source AI Bot</span>
+                            <div class="flex items-center gap-1">
+                                <button onclick="speakText('${reply}')" class="text-slate-400 hover:text-emerald-400 text-xs">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-slate-300">${reply}</p>
+                    </div>
+                `;
+                box.scrollTop = box.scrollHeight;
+                speakText(reply);
+            }, 800);
+        }
+
+        function startVoiceRecognition(inputId) {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showAlert('Voice input is not supported in your browser.');
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                document.getElementById(inputId).value = speechResult;
+            };
+        }
+
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US';
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const txt = input.value.trim();
+            if(!txt) return;
+            const box = document.getElementById('chatMessageBox');
+            box.innerHTML += `
+                <div class="bg-emerald-950/40 p-3 rounded-xl border border-emerald-500/30">
+                    <p class="text-slate-200"><b>User:</b> ${txt}</p>
+                </div>
+            `;
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function updateGrandTotals() {
+            let pendingPabo = 0;
+            let pendingDebo = 0;
+            loanItems.forEach(i => {
+                if(i.status === 'due') {
+                    if(i.type === 'pabo') pendingPabo += i.amount;
+                    if(i.type === 'debo') pendingDebo += i.amount;
+                }
+            });
+
+            const totalInc = novIncome + octIncome + sepIncome;
+            const totalExp = novExpense + octExpense + sepExpense;
+            
+            const novNetBalance = novIncome - novExpense;
+            const totalAccountsSum = accountBalances.cash + accountBalances.bank1 + accountBalances.bank2 + accountBalances.bank3;
+
+            // Update November Row Dynamically
+            document.getElementById('rowNovInc').innerText = `৳ ${novIncome.toLocaleString('en-US')}.00`;
+            document.getElementById('rowNovExp').innerText = `৳ ${novExpense.toLocaleString('en-US')}.00`;
+            document.getElementById('rowNovPao').innerText = `৳ ${pendingPabo.toLocaleString('en-US')}.00`;
+            document.getElementById('rowNovRin').innerText = `৳ ${pendingDebo.toLocaleString('en-US')}.00`;
+            document.getElementById('rowNovNet').innerText = `৳ ${novNetBalance.toLocaleString('en-US')}.00`;
+
+            // Update Grand Totals (Top Row)
+            document.getElementById('grandTotalIncome').innerText = `৳ ${totalInc.toLocaleString('en-US')}.00`;
+            document.getElementById('grandTotalExpense').innerText = `৳ ${totalExp.toLocaleString('en-US')}.00`;
+            document.getElementById('grandTotalPao').innerText = `৳ ${pendingPabo.toLocaleString('en-US')}.00`;
+            document.getElementById('grandTotalRin').innerText = `৳ ${pendingDebo.toLocaleString('en-US')}.00`;
+            
+            document.getElementById('valCashTotal').innerText = `৳ ${accountBalances.cash.toLocaleString('en-US')}.00`;
+            document.getElementById('valBank1Total').innerText = `৳ ${accountBalances.bank1.toLocaleString('en-US')}.00`;
+            document.getElementById('valBank2Total').innerText = `৳ ${accountBalances.bank2.toLocaleString('en-US')}.00`;
+            document.getElementById('valBank3Total').innerText = `৳ ${accountBalances.bank3.toLocaleString('en-US')}.00`;
+
+            document.getElementById('grandTotalBalance').innerText = `৳ ${totalAccountsSum.toLocaleString('en-US')}.00`;
+        }
+
+        window.onload = function() {
+            updateBankLabelsUI();
+            renderLoans();
+        };
+    </script>
+</body>
+</html>
+```
