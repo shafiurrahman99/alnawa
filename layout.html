@@ -69,7 +69,7 @@
     <!-- MAIN WRAPPER CONTAINER -->
     <div id="sigmaMainWrapper" class="w-full max-w-5xl bg-white/95 backdrop-blur-md shadow-2xl rounded-xl border border-gray-400 flex flex-col min-h-[94vh] relative overflow-hidden">
 
-        <!-- HEADER (Sigma PhD Institutional Letterhead) -->
+        <!-- HEADER -->
         <header id="mainHeader" class="bg-white pt-3 px-3 sm:px-6 pb-2 flex-shrink-0 border-b-2 border-sigmaGreen">
             <div class="flex flex-row justify-between items-start gap-2">
                 <div class="flex items-center gap-3">
@@ -127,13 +127,13 @@
                 <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-emerald-300 text-center">
                     <div class="flex justify-between items-center mb-3">
                         <button onclick="backToGateway()" class="text-xs text-sigmaNavy font-bold hover:underline"><i class="fa-solid fa-arrow-left"></i> ব্যাক</button>
-                        <span class="text-xs font-bold text-emerald-700 font-mono">3-Column Database Auth</span>
+                        <span class="text-xs font-bold text-emerald-700 font-mono">Full Dynamic Database Auth</span>
                     </div>
 
                     <div class="mb-4 p-3 bg-gradient-to-r from-sigmaNavy to-sigmaGreen text-white rounded-xl shadow">
                         <i class="fa-solid fa-key text-3xl mb-1 text-amber-300"></i>
                         <h3 class="text-lg font-bold">কোম্পানি আইডি ও পাসওয়ার্ড লগইন</h3>
-                        <p class="text-[11px] text-gray-200">আইডি ও পাসওয়ার্ড দিয়ে ডাটাবেজ থেকে ফুল HTML লেআউট লোড করুন</p>
+                        <p class="text-[11px] text-gray-200">আইডি ও পাসওয়ার্ড দিয়ে ডেটাবেজ থেকে মডিউলার বা লেআউট কোড লোড করুন</p>
                     </div>
 
                     <div id="companyLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
@@ -147,7 +147,7 @@
                             <label class="block text-xs font-bold text-gray-700 mb-1">সিক্রেট পাসওয়ার্ড (Secret Password)</label>
                             <input type="password" id="loginCompanyPass" required placeholder="পাসওয়ার্ড দিন..." class="w-full p-2.5 text-sm font-semibold border rounded-lg bg-gray-50 font-mono">
                         </div>
-                        <button type="submit" id="companyLoginBtn" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold rounded-lg shadow-lg hover:opacity-95">লগইন ও ফুল প্যাড রেন্ডার করুন</button>
+                        <button type="submit" id="companyLoginBtn" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-bold rounded-lg shadow-lg hover:opacity-95">লগইন ও অ্যাপ রেন্ডার করুন</button>
                     </form>
                 </div>
             </div>
@@ -163,7 +163,7 @@
                     <div class="mb-4 p-3 bg-gradient-to-r from-sigmaNavy to-purple-900 text-white rounded-xl shadow">
                         <i class="fa-solid fa-user-shield text-3xl mb-1 text-amber-300"></i>
                         <h3 class="text-lg font-bold">সুপার এডমিন লগইন (Super Admin)</h3>
-                        <p class="text-[11px] text-gray-200">নতুন কোম্পানি এন্ট্রি ও লেআউট ম্যানেজমেন্টের জন্য লগইন করুন</p>
+                        <p class="text-[11px] text-gray-200">নতুন কোম্পানি এন্ট্রি ও মডিউল ম্যানেজমেন্টের জন্য লগইন করুন</p>
                     </div>
 
                     <div id="adminLoginError" class="hidden mb-4 p-3 bg-red-100 text-red-700 text-xs rounded-lg border border-red-200 text-left"></div>
@@ -182,7 +182,7 @@
                 </div>
             </div>
 
-            <!-- 4. SUPER ADMIN DASHBOARD & MANAGEMENT PANEL -->
+            <!-- 4. SUPER ADMIN DASHBOARD -->
             <div id="superAdminDashboard" class="hidden space-y-4 fade-in w-full">
                 
                 <div class="bg-white/95 backdrop-blur-md rounded-xl p-3 shadow-md border flex flex-col sm:flex-row justify-between items-center gap-3">
@@ -192,7 +192,7 @@
                         </div>
                         <div>
                             <span class="font-extrabold text-sigmaNavy text-sm">সুপার এডমিন মাস্টার কন্ট্রোল</span>
-                            <p class="text-[10px] text-gray-500">Sigma PhD 3-Column Database Manager</p>
+                            <p class="text-[10px] text-gray-500">Sigma PhD Full Column Database Manager</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2">
@@ -219,10 +219,10 @@
                     </div>
                 </div>
 
-                <!-- TAB 1: NEW COMPANY REGISTRATION FORM -->
+                <!-- TAB 1: NEW COMPANY REGISTRATION FORM (LAYOUT_SETTINGS + 5 MODULAR COLUMNS) -->
                 <div id="tabRegisterForm" class="bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-purple-300 fade-in">
                     <h3 class="text-sm font-bold text-sigmaNavy mb-4 border-b pb-2 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-plus text-sigmaGreen text-base"></i> নতুন কোম্পানি এন্ট্রি ফরম (৩-কলাম বিশিষ্ট ডেটাবেজ)
+                        <i class="fa-solid fa-circle-plus text-sigmaGreen text-base"></i> নতুন কোম্পানি এন্ট্রি ফরম (লেআউট সেটিং + ৫টি মডিউলার কলাম)
                     </h3>
                     
                     <form id="companyEntryForm" onsubmit="submitNewCompanyData(event)" class="space-y-4 text-xs">
@@ -237,18 +237,48 @@
                             </div>
                         </div>
 
-                        <div class="p-4 bg-purple-50 border-2 border-purple-200 rounded-xl space-y-3 shadow-sm">
-                            <div class="font-extrabold text-purple-900 border-b border-purple-200 pb-1 flex items-center gap-2">
-                                <i class="fa-solid fa-code text-purple-700"></i> লেআউট সেটিংস (`layout_settings` - সম্পূর্ণ HTML কোড):
-                            </div>
-                            <div>
-                                <label class="block font-bold text-gray-700 mb-1">সম্পূর্ণ এইচটিএমএল কোড (Full HTML Code for this Company)</label>
-                                <textarea id="cLayoutHtml" rows="6" required placeholder='<!DOCTYPE html><html>...আপনার কোম্পানির ফুল এইচটিএমএল কোড এখানে পেস্ট করুন...</html>' class="w-full border p-3 rounded font-mono bg-white text-xs"></textarea>
-                            </div>
+                        <!-- 0. ORIGINAL: layout_settings -->
+                        <div class="p-3 bg-slate-100 border-2 border-slate-300 rounded-xl space-y-2">
+                            <label class="block font-extrabold text-slate-800"><i class="fa-solid fa-sliders text-slate-700"></i> মূল লেআউট সেটিং (`layout_settings` - Full HTML JSON Payload):</label>
+                            <textarea id="cLayoutHtml" rows="3" placeholder='{"full_html": "<!DOCTYPE html>...</html>"}' class="w-full border p-2.5 rounded font-mono bg-white text-xs"></textarea>
+                        </div>
+
+                        <div class="text-xs font-bold text-purple-900 border-b pb-1 mt-4 flex items-center gap-2">
+                            <i class="fa-solid fa-cubes text-purple-700"></i> অতিরিক্ত ৫টি মডিউলার কলাম (Advanced Code Division):
+                        </div>
+
+                        <!-- 1. layout_html -->
+                        <div class="p-3 bg-purple-50 border border-purple-200 rounded-xl space-y-2">
+                            <label class="block font-extrabold text-purple-900"><i class="fa-solid fa-code text-purple-700"></i> ১. layout_html (.html) — এইচটিএমএল লেআউট ও স্ট্রাকচার:</label>
+                            <textarea id="cLayoutHtmlCol" rows="3" placeholder="<!DOCTYPE html>...</html>" class="w-full border p-2.5 rounded font-mono bg-white text-xs"></textarea>
+                        </div>
+
+                        <!-- 2. style_css -->
+                        <div class="p-3 bg-indigo-50 border border-indigo-200 rounded-xl space-y-2">
+                            <label class="block font-extrabold text-indigo-900"><i class="fa-solid fa-palette text-indigo-700"></i> ২. style_css (.css) — ভিজ্যুয়াল ডিজাইন ও থিম:</label>
+                            <textarea id="cStyleCss" rows="3" placeholder="body { background: #020617; ... }" class="w-full border p-2.5 rounded font-mono bg-white text-xs"></textarea>
+                        </div>
+
+                        <!-- 3. interfacebuttonlogic_js -->
+                        <div class="p-3 bg-emerald-50 border border-emerald-200 rounded-xl space-y-2">
+                            <label class="block font-extrabold text-emerald-900"><i class="fa-solid fa-hand-pointer text-emerald-700"></i> ৩. interfacebuttonlogic_js (.js) — ইউজার ইন্টারফেস ও বাটন লজিক:</label>
+                            <textarea id="cInterfaceJs" rows="3" placeholder="function handleLogin(e) { ... }" class="w-full border p-2.5 rounded font-mono bg-white text-xs"></textarea>
+                        </div>
+
+                        <!-- 4. databasefacing_js -->
+                        <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl space-y-2">
+                            <label class="block font-extrabold text-blue-900"><i class="fa-solid fa-database text-blue-700"></i> ৪. databasefacing_js (.js) — ডাটাবেজ অপারেশন ও এপিআই ফেচিং:</label>
+                            <textarea id="cDatabaseJs" rows="3" placeholder="async function saveIncomeEntry() { ... }" class="w-full border p-2.5 rounded font-mono bg-white text-xs"></textarea>
+                        </div>
+
+                        <!-- 5. advanceengine_js -->
+                        <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl space-y-2">
+                            <label class="block font-extrabold text-amber-900"><i class="fa-solid fa-gears text-amber-700"></i> ৫. advanceengine_js (.js) — গাণিতিক হিসাব ও সিকিউর লজিক ইঞ্জিন:</label>
+                            <textarea id="cAdvanceEngineJs" rows="3" placeholder="function calculateTransferFee() { ... }" class="w-full border p-2.5 rounded font-mono bg-white text-xs"></textarea>
                         </div>
 
                         <button type="submit" class="w-full py-3 bg-gradient-to-r from-sigmaGreen to-emerald-700 hover:opacity-95 text-white font-bold rounded-lg shadow-lg">
-                            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> ডেটাবেজে নতুন কোম্পানি সংরক্ষণ করুন
+                            <i class="fa-solid fa-cloud-arrow-up mr-1"></i> সকল ফিল্ডসহ নতুন কোম্পানি ডেটাবেজে সংরক্ষণ করুন
                         </button>
                     </form>
                 </div>
@@ -256,16 +286,19 @@
                 <!-- TAB 2: REGISTERED COMPANIES LIST -->
                 <div id="tabCompanyList" class="hidden bg-white/95 backdrop-blur-md rounded-2xl p-6 shadow-xl border border-purple-300 fade-in">
                     <h3 class="text-sm font-bold text-sigmaNavy mb-3 border-b pb-2 flex items-center justify-between">
-                        <span><i class="fa-solid fa-building text-sigmaBlue"></i> ডেটাবেজে নিবন্ধিত সকল কোম্পানির তালিকা (3 Columns)</span>
+                        <span><i class="fa-solid fa-building text-sigmaBlue"></i> নিবন্ধিত কোম্পানির তালিকা</span>
                         <button onclick="fetchAllCompanies()" class="px-3 py-1 bg-sigmaNavy text-white rounded text-[11px] font-bold"><i class="fa-solid fa-rotate"></i> রিফ্রেশ</button>
                     </h3>
                     <div class="overflow-x-auto custom-scrollbar">
                         <table class="w-full text-left text-xs border-collapse">
                             <thead class="bg-sigmaNavy text-white uppercase text-[10px]">
                                 <tr>
-                                    <th class="p-2.5">Company ID</th>
-                                    <th class="p-2.5">Secret Pass</th>
-                                    <th class="p-2.5">Layout Settings (HTML Payload Status)</th>
+                                    <th class="p-2.5">ID</th>
+                                    <th class="p-2.5">Pass</th>
+                                    <th class="p-2.5">layout_settings</th>
+                                    <th class="p-2.5">layout_html</th>
+                                    <th class="p-2.5">style_css</th>
+                                    <th class="p-2.5">interfacebuttonlogic_js</th>
                                 </tr>
                             </thead>
                             <tbody id="companyTableBody" class="divide-y divide-gray-200 text-[11px]"></tbody>
@@ -317,7 +350,7 @@
         </footer>
     </div>
 
-    <!-- FULLSCREEN DYNAMIC HOLDER FOR LOADED COMPANY HTML (সিগমা হেডার/ফুটার টোটালি হাইড করে কোম্পানি পেজ রেন্ডার করার জন্য) -->
+    <!-- FULLSCREEN DYNAMIC HOLDER FOR LOADED COMPANY CODE -->
     <div id="fullScreenCompanyHolder" class="hidden fixed inset-0 w-full h-full bg-white z-50 overflow-y-auto"></div>
 
     <!-- ADMIN PASSWORD CHANGE MODAL -->
@@ -373,7 +406,7 @@
             document.getElementById('gatewaySelectionView').classList.remove('hidden');
         }
 
-        // --- COMPANY LOGIN & FULLSCREEN RENDER (FIXED & MATCHING 3-COLUMN SCHEMA) ---
+        // --- COMPANY LOGIN & DYNAMIC RENDER ---
         async function handleCompanyLogin(e) {
             e.preventDefault();
             const compIdInput = document.getElementById('loginCompanyId').value.trim();
@@ -403,32 +436,63 @@
                     return;
                 }
 
-                // Extrapolate layout HTML from layout_settings JSONB column
-                let fullHtml = "";
-                const settings = data.layout_settings;
-                if (typeof settings === 'object' && settings !== null) {
-                    fullHtml = settings.full_html || settings.custom_html || "";
-                } else if (typeof settings === 'string') {
-                    try {
-                        let parsed = JSON.parse(settings);
-                        fullHtml = parsed.full_html || parsed.custom_html || settings;
-                    } catch(ex) {
-                        fullHtml = settings;
+                let assembledHtml = "";
+
+                // 1. Try assembling from 5 modular columns first
+                const htmlPart = data.layout_html || "";
+                const cssPart = data.style_css || "";
+                const uiJsPart = data.interfacebuttonlogic_js || "";
+                const dbJsPart = data.databasefacing_js || "";
+                const engineJsPart = data.advanceengine_js || "";
+
+                if (htmlPart || cssPart) {
+                    assembledHtml = `
+                        <!DOCTYPE html>
+                        <html lang="bn">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Company ID ${compId} - My Develop App</title>
+                            <script src="https://cdn.tailwindcss.com"><\/script>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+                            <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+                            <style>${cssPart}</style>
+                        </head>
+                        <body>
+                            ${htmlPart}
+                            <script>${uiJsPart}<\/script>
+                            <script>${dbJsPart}<\/script>
+                            <script>${engineJsPart}<\/script>
+                        </body>
+                        </html>
+                    `;
+                } else {
+                    // 2. Fallback to layout_settings if modular columns are empty
+                    const settings = data.layout_settings;
+                    if (typeof settings === 'object' && settings !== null) {
+                        assembledHtml = settings.full_html || settings.custom_html || "";
+                    } else if (typeof settings === 'string') {
+                        try {
+                            let parsed = JSON.parse(settings);
+                            assembledHtml = parsed.full_html || parsed.custom_html || settings;
+                        } catch(ex) {
+                            assembledHtml = settings;
+                        }
                     }
                 }
 
-                if (!fullHtml) {
-                    showCompanyError("এই কোম্পানির লেআউটে কোনো HTML কোড সংরক্ষিত নেই!");
+                if (!assembledHtml) {
+                    showCompanyError("এই কোম্পানির কোনো লেআউট বা মডিউলার কোড ডাটাবেজে সংরক্ষিত নেই!");
                     return;
                 }
 
-                // HIDE SIGMA WRAPPER & RENDER FULLSCREEN COMPANY LAYOUT
+                // HIDE SIGMA WRAPPER & RENDER FULLSCREEN COMPANY APP
                 document.getElementById('sigmaMainWrapper').classList.add('hidden');
                 const fullscreenHolder = document.getElementById('fullScreenCompanyHolder');
                 fullscreenHolder.classList.remove('hidden');
-                fullscreenHolder.innerHTML = fullHtml;
+                fullscreenHolder.innerHTML = assembledHtml;
 
-                // Execute embedded scripts safely
+                // Execute scripts safely
                 const scripts = fullscreenHolder.querySelectorAll("script");
                 scripts.forEach(oldScript => {
                     const newScript = document.createElement("script");
@@ -440,7 +504,7 @@
             } catch (err) {
                 showCompanyError("কানেকশন এরর: " + err.message);
             } finally {
-                submitBtn.innerText = "লগইন ও ফুল প্যাড রেন্ডার করুন";
+                submitBtn.innerText = "লগইন ও অ্যাপ রেন্ডার করুন";
                 submitBtn.disabled = false;
             }
         }
@@ -497,7 +561,6 @@
             document.getElementById('superAdminLoginView').classList.remove('hidden');
         }
 
-        // PASSWORD CHANGE MODAL & LOGIC
         function openAdminPasswordModal() {
             document.getElementById('adminVerifyMobile').value = '';
             document.getElementById('adminOldPass').value = '';
@@ -552,7 +615,6 @@
             handleAdminLogout();
         }
 
-        // NAV TABS SWITCHING
         function switchAdminNav(target) {
             document.getElementById('tabRegisterForm').classList.add('hidden');
             document.getElementById('tabCompanyList').classList.add('hidden');
@@ -571,20 +633,37 @@
             }
         }
 
-        // --- SUBMIT NEW COMPANY TO 3-COLUMN SUPABASE SCHEMA ---
+        // --- SUBMIT COMPANY DATA (LAYOUT_SETTINGS + 5 MODULAR COLUMNS) ---
         async function submitNewCompanyData(e) {
             e.preventDefault();
 
             const cId = parseInt(document.getElementById('cId').value);
             const cPass = document.getElementById('cPass').value.trim();
-            const cLayoutHtml = document.getElementById('cLayoutHtml').value.trim();
+            const rawLayoutSetting = document.getElementById('cLayoutHtml').value.trim();
+            const layoutHtml = document.getElementById('cLayoutHtmlCol').value.trim();
+            const styleCss = document.getElementById('cStyleCss').value.trim();
+            const interfaceJs = document.getElementById('cInterfaceJs').value.trim();
+            const databaseJs = document.getElementById('cDatabaseJs').value.trim();
+            const advanceEngineJs = document.getElementById('cAdvanceEngineJs').value.trim();
+
+            let layoutSettingsPayload = null;
+            if (rawLayoutSetting) {
+                try {
+                    layoutSettingsPayload = JSON.parse(rawLayoutSetting);
+                } catch(ex) {
+                    layoutSettingsPayload = { full_html: rawLayoutSetting };
+                }
+            }
 
             const companyPayload = {
                 company_id: cId,
                 secret_pass: cPass,
-                layout_settings: {
-                    full_html: cLayoutHtml
-                }
+                layout_settings: layoutSettingsPayload,
+                layout_html: layoutHtml,
+                style_css: styleCss,
+                interfacebuttonlogic_js: interfaceJs,
+                databasefacing_js: databaseJs,
+                advanceengine_js: advanceEngineJs
             };
 
             const { error } = await supabaseClient
@@ -596,32 +675,37 @@
                 return;
             }
 
-            alert(`কোম্পানি আইডি (${cId}) সফলভাবে ৩-কলাম বিশিষ্ট ডেটাবেজে সংরক্ষিত হয়েছে!`);
+            alert(`কোম্পানি আইডি (${cId}) এর লেআউট সেটিং ও ৫টি কলাম সফলভাবে ডেটাবেজে সংরক্ষিত হয়েছে!`);
             document.getElementById('companyEntryForm').reset();
         }
 
         // --- FETCH ALL REGISTERED COMPANIES ---
         async function fetchAllCompanies() {
             const tbody = document.getElementById('companyTableBody');
-            tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center">লোড হচ্ছে...</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center">লোড হচ্ছে...</td></tr>`;
 
             const { data, error } = await supabaseClient.from('companies').select('*').order('company_id', { ascending: true });
             tbody.innerHTML = '';
 
             if (error || !data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="3" class="p-3 text-center text-gray-500">কোনো কোম্পানি পাওয়া যায়নি।</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-3 text-center text-gray-500">কোনো কোম্পানি পাওয়া যায়নি।</td></tr>`;
                 return;
             }
 
             data.forEach(c => {
-                let htmlSnippet = JSON.stringify(c.layout_settings || {});
-                if (htmlSnippet.length > 60) htmlSnippet = htmlSnippet.substring(0, 60) + "...";
+                let settingSnippet = JSON.stringify(c.layout_settings || {}).substring(0, 20) + "...";
+                let htmlSnippet = (c.layout_html || "").substring(0, 20) + "...";
+                let cssSnippet = (c.style_css || "").substring(0, 20) + "...";
+                let uiSnippet = (c.interfacebuttonlogic_js || "").substring(0, 20) + "...";
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-gray-50">
                         <td class="p-2.5 font-mono font-bold text-sigmaNavy">${c.company_id}</td>
                         <td class="p-2.5 font-mono text-sigmaGreen">${c.secret_pass}</td>
+                        <td class="p-2.5 font-mono text-gray-600 text-[10px]">${settingSnippet}</td>
                         <td class="p-2.5 font-mono text-gray-600 text-[10px]">${htmlSnippet}</td>
+                        <td class="p-2.5 font-mono text-gray-600 text-[10px]">${cssSnippet}</td>
+                        <td class="p-2.5 font-mono text-gray-600 text-[10px]">${uiSnippet}</td>
                     </tr>
                 `;
             });
