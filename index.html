@@ -735,7 +735,7 @@
             if (data && data.length > 0) {
                 data.forEach(u => {
                     const mId = u.user_id || '1001';
-                    const name = u.name || u['নাম'] || 'User';
+                    const name = u.naam_text || u.name || u['নাম'] || 'User';
                     const opt = `<option value="${mId}">${mId} - ${name}</option>`;
                     if (witSel) witSel.innerHTML += opt;
                     if (invSel) invSel.innerHTML += opt;
@@ -747,7 +747,7 @@
                         const compId = u.company_id || u['Company ID'] || 1;
                         const uId = u.user_id || u['User ID'] || 1;
                         const mergedId = `${compId}${String(uId).padStart(3, '0')}`;
-                        const opt = `<option value="${mergedId}">${mergedId} - ${u.name || u['Name'] || u['নাম'] || 'User'}</option>`;
+                        const opt = `<option value="${mergedId}">${mergedId} - ${u.naam_text || u.name || u['Name'] || u['নাম'] || 'User'}</option>`;
                         if (witSel) witSel.innerHTML += opt;
                         if (invSel) invSel.innerHTML += opt;
                     });
@@ -869,7 +869,7 @@
 
                     document.getElementById('page1').classList.add('hidden');
                     document.getElementById('page2Container').classList.remove('hidden');
-                    document.getElementById('currentUserDisplay').innerText = userRecord.name || userRecord['Name'] || userRecord['নাম'] || `আইডি: ${fullMergedUserId}`;
+                    document.getElementById('currentUserDisplay').innerText = userRecord.naam_text || userRecord.name || userRecord['Name'] || userRecord['নাম'] || `আইডি: ${fullMergedUserId}`;
                     document.getElementById('userSubTitleRole').innerText = "আল নাওয়া কোম্পানী রেজিস্টার্ড ইনভেস্টর";
                     document.getElementById('autoUser').value = fullMergedUserId;
                     document.getElementById('withdrawUserDisplay').value = fullMergedUserId;
@@ -905,10 +905,10 @@
         }
 
         async function renderUserProfile(data) {
-            const nid = data.nid || data['জাতীয় পরিচয়পত্র'] || data['NID'] || 'সংরক্ষিত নেই';
-            const nomineeNid = data.nominee_nid || data['নমিনীর জাতীয় পরিচয়পত্র'] || data['Nominee NID'] || 'সংরক্ষিত নেই';
-            const mobile = data.mobile || data['মোবাইল নাম্বার '] || data['Mobile Number'] || 'N/A';
-            const nomineeMobile = data.nominee_mobile || data['নমিনীর মোবাইল নাম্বার'] || data['Wife Mobile'] || 'সংরক্ষিত নেই';
+            const nid = data.nid_no || data.nid || data['জাতীয় পরিচয়পত্র'] || data['NID'] || 'সংরক্ষিত নেই';
+            const mobile = data.mobile_no || data.mobile || data['মোবাইল নাম্বার '] || data['Mobile Number'] || 'N/A';
+            const nomineeNid = data.nominee_name || data.nominee_nid || data['নমিনীর জাতীয় পরিচয়পত্র'] || data['Nominee NID'] || 'সংরক্ষিত নেই';
+            const nomineeMobile = data['Wife Mobile'] || data.wife_mobile || data.nominee_mobile || data['নমিনীর মোবাইল নাম্বার'] || 'সংরক্ষিত নেই';
             
             let totalInv = data.total_investment || 0;
             const { data: invs } = await supabaseClient.from('investments').select('amount').or(`user_id.eq.${fullMergedUserId},user_id.eq.${loggedInUserId}`);
@@ -964,7 +964,6 @@
             document.getElementById('loginForm').reset();
         }
 
-        // --- EXCLUSIVE VIEW SWITCHING FOR USER SUB-PAGES ---
         function switchSubPage(target) {
             const pages = ['subPageSubmission', 'subPageWithdrawal', 'subPageSummary'];
             pages.forEach(id => {
@@ -985,7 +984,6 @@
             }
         }
 
-        // --- EXCLUSIVE VIEW SWITCHING FOR ADMIN TABS ---
         function switchAdminTab(target) {
             if (!isAdmin) { alert('Access Denied!'); return; }
             
@@ -1030,7 +1028,6 @@
             }
         }
 
-        // --- EXCLUSIVE VIEW SWITCHING FOR MD TABS ---
         function switchMdTab(target) {
             if (!isMd) { alert('Access Denied!'); return; }
 
@@ -1145,7 +1142,7 @@
 
             if (newPass !== confirmPass) { alert('নতুন পাসওয়ার্ড ও কনফার্ম পাসওয়ার্ড এক নয়!'); return; }
             
-            const registeredMobile = currentUserData.mobile || currentUserData['মোবাইল নাম্বার '] || currentUserData['mobile'];
+            const registeredMobile = currentUserData.mobile_no || currentUserData.mobile || currentUserData['মোবাইল নাম্বার '];
             if (mobileInput !== registeredMobile) { alert('মোবাইল নম্বরটি সঠিক নয়!'); return; }
 
             const { error } = await supabaseClient.from('IND').update({ password: newPass }).eq('company_id', loggedInCompanyId).eq('user_id', loggedInUserId);
@@ -1171,7 +1168,7 @@
                 const compId = u.company_id || u['Company ID'] || 1;
                 const uId = u.user_id || u['User ID'] || 1;
                 const formattedId = `${compId}${String(uId).padStart(3, '0')}`;
-                const userName = u.name || u['Name'] || u['নাম'] || 'N/A';
+                const userName = u.naam_text || u.name || u['Name'] || u['নাম'] || 'N/A';
                 
                 const userPerm = permData ? permData.find(p => p.user_id === formattedId) : null;
                 const invChecked = userPerm ? userPerm.can_invest : true;
@@ -1181,7 +1178,7 @@
                     <tr>
                         <td class="p-2 font-mono font-bold">${formattedId}</td>
                         <td class="p-2 font-bold text-gray-800">${userName}</td>
-                        <td class="p-2 font-mono">${u['মোবাইল নাম্বার '] || u['mobile'] || ''}</td>
+                        <td class="p-2 font-mono">${u.mobile_no || u['মোবাইল নাম্বার '] || u['mobile'] || ''}</td>
                         <td class="p-2 font-mono">${u.password || u['Password'] || '1234#'}</td>
                         <td class="p-2 space-x-2">
                             <label><input type="checkbox" id="inv_perm_${formattedId}" ${invChecked ? 'checked' : ''}> Investment</label> 
@@ -1229,12 +1226,12 @@
             data.forEach(row => {
                 const memberNo = row.member_no || row['সদস্য নং'] || '-';
                 const masterId = row.user_id || '-';
-                const name = row.name || row['নাম'] || '-';
-                const mobile = row.mobile || row['মোবাইল নাম্বার'] || '-';
-                const nid = row.nid || row['জাতীয় পরিচয়পত্র'] || '-';
+                const name = row.naam_text || row.name || row['নাম'] || '-';
+                const mobile = row.mobile_no || row.mobile || row['মোবাইল নাম্বার'] || '-';
+                const nid = row.nid_no || row.nid || row['জাতীয় পরিচয়পত্র'] || '-';
                 const address = row.address || row['বর্তমান ঠিকানা'] || '-';
-                const nominee = row.nominee || row['নমিনী / ওয়াইফ'] || '-';
-                const nomineeMobile = row.nominee_mobile || row['নমিনীর মোবাইল নাম্বার'] || '-';
+                const nominee = row.nominee_name || row.nominee || row['নমিনী / ওয়াইফ'] || '-';
+                const nomineeMobile = row['Wife Mobile'] || row.wife_mobile || row.nominee_mobile || row['নমিনীর মোবাইল নাম্বার'] || '-';
                 const totInv = Number(row.total_investment || 0);
                 const totWit = Number(row.total_withdrawal || 0);
                 const exp2001 = Number(row.exp_2001 || 0);
@@ -1351,7 +1348,6 @@
             } catch (err) { alert("Error executing query: " + err.message); }
         }
 
-        // --- এডমিন ট্রানজেকশন সামারি (ধারাবাহিক রানিং ব্যালেন্স সহ) ---
         async function fetchAdminAllTransactions() {
             const tbody = document.getElementById('adminTransactionTableBody');
             if(!tbody) return;
@@ -1394,7 +1390,6 @@
                 });
             }
 
-            // প্রাচীন থেকে লেটেস্ট সাজিয়ে ধারাবাহিক রানিং ব্যালেন্স হিসাব করা
             allTransactions.sort((a, b) => a.rawDate - b.rawDate);
 
             let runningSum = 0;
@@ -1406,7 +1401,6 @@
                 t.cumulative = (t.status === 'approved (+)' || t.status === 'approved') ? runningSum : '-';
             });
 
-            // ডিসপ্লে করার জন্য আবার সর্বশেষ লেনদেন প্রথমে (Descending Order) সাজানো
             allTransactions.sort((a, b) => b.rawDate - a.rawDate);
 
             tbody.innerHTML = '';
@@ -1430,7 +1424,6 @@
             });
         }
 
-        // --- ইউজার ট্রানজেকশন সামারি (ধারাবাহিক রানিং ব্যালেন্স সহ) ---
         async function fetchTransactionsFromSupabase() {
             const tbody = document.getElementById('transactionTableBody');
             tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center">লোড হচ্ছে...</td></tr>`;
@@ -1470,7 +1463,6 @@
                 });
             }
 
-            // প্রাচীন থেকে লেটেস্ট সাজিয়ে ধারাবাহিক যোগফল বা রানিং ব্যালেন্স হিসাব করা
             allTransactions.sort((a, b) => a.rawDate - b.rawDate);
 
             let runningSum = 0, totalApp = 0, totalPend = 0, totalWit = 0;
@@ -1484,7 +1476,6 @@
                 t.cumulative = (t.status === 'approved (+)' || t.status === 'approved') ? runningSum : '-';
             });
 
-            // ডিসপ্লে করার জন্য আবার সর্বশেষ লেনদেন প্রথমে (Descending Order) সাজানো
             allTransactions.sort((a, b) => b.rawDate - a.rawDate);
 
             tbody.innerHTML = '';
@@ -1511,7 +1502,6 @@
             document.getElementById('reportWithdraw').innerText = `৳ ${totalWit.toLocaleString()}`;
         }
 
-        // --- নিখুঁত বাংলা ফন্ট সাপোর্টেড প্রিন্ট / PDF ফাংশন ---
         function printTableData(containerId, reportTitle) {
             const divContents = document.getElementById(containerId).innerHTML;
             const printWindow = window.open('', '', 'height=700,width=900');
@@ -1535,7 +1525,6 @@
             }, 500);
         }
 
-        // --- Excel Download Function ---
         function exportUserSummaryExcel() {
             const table = document.getElementById('userTransactionTable');
             const wb = XLSX.utils.table_to_book(table, { sheet: "Transaction Summary" });
