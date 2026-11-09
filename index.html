@@ -904,10 +904,12 @@
             errBox.classList.remove('hidden');
         }
 
+        // --- আপডেটকৃত renderUserProfile ফাংশন (সঠিক কলাম ম্যাপিং সহ) ---
         async function renderUserProfile(data) {
+            // ডাটাবেজের সঠিক কলাম (nid_no, mobile_no, nominee_name, Wife Mobile) থেকে ডেটা ফেচ করা
             const nid = data.nid_no || data.nid || data['জাতীয় পরিচয়পত্র'] || data['NID'] || 'সংরক্ষিত নেই';
             const mobile = data.mobile_no || data.mobile || data['মোবাইল নাম্বার '] || data['Mobile Number'] || 'N/A';
-            const nomineeNid = data.nominee_name || data.nominee_nid || data['নমিনীর জাতীয় পরিচয়পত্র'] || data['Nominee NID'] || 'সংরক্ষিত নেই';
+            const nomineeNid = data.nominee_name || data.nominee_nid || data['নমিনীর নাম'] || data['Nominee Name'] || 'সংরক্ষিত নেই';
             const nomineeMobile = data['Wife Mobile'] || data.wife_mobile || data.nominee_mobile || data['নমিনীর মোবাইল নাম্বার'] || 'সংরক্ষিত নেই';
             
             let totalInv = data.total_investment || 0;
@@ -920,7 +922,7 @@
                 <tr class="bg-emerald-50/50">
                     <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r">১. জাতীয় পরিচয়পত্র (NID)</td>
                     <td class="p-2 font-mono font-bold text-gray-800">${nid}</td>
-                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">২. নমিনীর জাতীয় পরিচয়পত্র</td>
+                    <td class="p-2 font-bold text-alnawaNavy w-1/4 border-r border-l">২. নমিনীর নাম</td>
                     <td class="p-2 font-mono font-bold text-gray-800">${nomineeNid}</td>
                 </tr>
                 <tr class="bg-white">
